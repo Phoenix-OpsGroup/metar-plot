@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.METAR = exports.RVR = exports.Cloud = exports.Weather = exports.Variation = exports.Wind = void 0;
+exports.METAR = exports.WEATHER = exports.RVR = exports.Cloud = exports.Weather = exports.Variation = exports.Wind = void 0;
 var Wind = /** @class */ (function () {
     function Wind() {
     }
@@ -60,7 +60,7 @@ var CLOUDS = {
     OVC: "overcast",
     VV: "vertical visibility",
 };
-var WEATHER = {
+exports.WEATHER = {
     // Intensity
     "-": "light intensity",
     "+": "heavy intensity",
@@ -252,7 +252,7 @@ var METAR = /** @class */ (function () {
     }
     METAR.prototype.parseWeatherAbbrv = function (s, res) {
         var _a;
-        var weather = this.parseAbbreviation(s, WEATHER);
+        var weather = this.parseAbbreviation(s, exports.WEATHER);
         if (weather != null) {
             res = res || [];
             res.push(weather);

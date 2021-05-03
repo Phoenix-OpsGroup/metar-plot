@@ -2,3 +2,4 @@ node_modules/
 scrap/
 coverage/
 .nyc_output/
+*.tgz
