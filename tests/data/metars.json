@@ -5,4 +5,23 @@
     "station": "WBWI",
     "wind_direction": 120,
     "wind_speed": 20
-}]
+},
+{
+    "wx": "FU"
+},
+{
+    "wx": "VA"
+},
+{
+    "wx": "HZ"
+},
+{
+    "wx": "DU"
+},
+{
+    "wx": "SA"
+},
+{
+    "wx": "BLDU"
+}
+]

@@ -1,4 +1,5 @@
 import { METAR } from "./Metar";
+import { getWeatherSVG } from "./Weather"
 /**
  * Extracted Metar message
  */
@@ -19,6 +20,7 @@ const WS_WIDTH = 4;
 
 export function rawMetarToSVG(rawMetar: string) : string {
     let metar = new METAR(rawMetar);
+    let wx = metar.weather[0]?.abbreviation ?? ""
 
     let plot : MetarPlot = 
         {
@@ -28,7 +30,8 @@ export function rawMetarToSVG(rawMetar: string) : string {
             station: metar.station,
             wind_direction: (typeof metar.wind.direction === "number") ? metar.wind.direction : undefined,
             wind_speed: metar.wind.speed,
-            gust_speed: metar.wind.gust
+            gust_speed: metar.wind.gust,
+            wx: wx
         }
     
     return metarToSVG(plot);
@@ -55,6 +58,7 @@ export function metarToSVG(metar: MetarPlot) : string{
             .vis{ fill: violet }
          </style>
          ${genWind(metar)}
+         ${getWeatherSVG(metar.wx ?? "")}
          <g id="text">
             <text class="vis txt" fill="#000000" stroke="#000" stroke-width="0" x="80"   y="260" text-anchor="start" xml:space="preserve">${VIS}</text>
             <text class="tmp txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="220" text-anchor="start" xml:space="preserve" >${TMP}</text>

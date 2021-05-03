@@ -1,65 +1,55 @@
-export class Wind {
-    public speed?: number;
-    public gust?: number;
-    public direction?: string | number;
-    public variation?: Variation | boolean;
-    public unit?: string;
-}
-
-export class Variation {
-    public min?: number;
-    public max?: number;
-}
-
-export class Weather {
-    public abbreviation?: string;
-    public meaning?: string;
-}
-
-export class Cloud {
-    public abbreviation?: string;
-    public meaning?: string;
-    public altitude?: number;
-    public cumulonimbus?: boolean;
-}
-
-export class RVR {
-    public runway?: string
-    public direction?: string
-    public seperator?: string
-    public minIndicator?: string
-    public minValue?: string
-    public variableIndicator?: string
-    public maxIndicator?: string
-    public maxValue?: string
-    public trend?: string
-    public unitsOfMeasure?: string
-
-    private re = /(R\d{2})([L|R|C])?(\/)([P|M])?(\d+)(?:([V])([P|M])?(\d+))?([N|U|D])?(FT)?/g;
-
-    constructor(rvrString: string) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.METAR = exports.RVR = exports.Cloud = exports.Weather = exports.Variation = exports.Wind = void 0;
+var Wind = /** @class */ (function () {
+    function Wind() {
+    }
+    return Wind;
+}());
+exports.Wind = Wind;
+var Variation = /** @class */ (function () {
+    function Variation() {
+    }
+    return Variation;
+}());
+exports.Variation = Variation;
+var Weather = /** @class */ (function () {
+    function Weather() {
+    }
+    return Weather;
+}());
+exports.Weather = Weather;
+var Cloud = /** @class */ (function () {
+    function Cloud() {
+    }
+    return Cloud;
+}());
+exports.Cloud = Cloud;
+var RVR = /** @class */ (function () {
+    function RVR(rvrString) {
+        this.re = /(R\d{2})([L|R|C])?(\/)([P|M])?(\d+)(?:([V])([P|M])?(\d+))?([N|U|D])?(FT)?/g;
         var matches;
         while ((matches = this.re.exec(rvrString)) != null) {
             if (matches.index === this.re.lastIndex) {
                 this.re.lastIndex++;
             }
-            this.runway = matches[1]
-            this.direction = matches[2]
-            this.seperator = matches[3]
-            this.minIndicator = matches[4]
-            this.minValue = matches[5]
-            this.variableIndicator = matches[6]
-            this.maxIndicator = matches[7]
-            this.maxValue = matches[8]
-            this.trend = matches[9]
-            this.unitsOfMeasure = matches[10]
+            this.runway = matches[1];
+            this.direction = matches[2];
+            this.seperator = matches[3];
+            this.minIndicator = matches[4];
+            this.minValue = matches[5];
+            this.variableIndicator = matches[6];
+            this.maxIndicator = matches[7];
+            this.maxValue = matches[8];
+            this.trend = matches[9];
+            this.unitsOfMeasure = matches[10];
         }
     }
-}
-
-const TYPES = ["METAR", "SPECI"];
-
-const CLOUDS: any = {
+    return RVR;
+}());
+exports.RVR = RVR;
+var TYPES = ["METAR", "SPECI"];
+var CLOUDS = {
     NCD: "no clouds",
     SKC: "sky clear",
     CLR: "no clouds under 12,000 ft",
@@ -70,13 +60,11 @@ const CLOUDS: any = {
     OVC: "overcast",
     VV: "vertical visibility",
 };
-
-export const WEATHER: any = {
+var WEATHER = {
     // Intensity
     "-": "light intensity",
     "+": "heavy intensity",
     VC: "in the vicinity",
-
     // Descriptor
     MI: "shallow",
     PR: "partial",
@@ -86,7 +74,6 @@ export const WEATHER: any = {
     SH: "showers",
     TS: "thunderstorm",
     FZ: "freezing",
-
     // Precipitation
     RA: "rain",
     DZ: "drizzle",
@@ -97,7 +84,6 @@ export const WEATHER: any = {
     GR: "hail",
     GS: "small hail",
     UP: "unknown precipitation",
-
     // Obscuration
     FG: "fog",
     VA: "volcanic ash",
@@ -107,7 +93,6 @@ export const WEATHER: any = {
     FU: "smoke",
     SA: "sand",
     PY: "spray",
-
     // Other
     SQ: "squall",
     PO: "dust or sand whirls",
@@ -115,8 +100,7 @@ export const WEATHER: any = {
     SS: "sandstorm",
     FC: "funnel cloud",
 };
-
-const RECENT_WEATHER: any = {
+var RECENT_WEATHER = {
     REBLSN: "Moderate/heavy blowing snow (visibility significantly reduced)reduced",
     REDS: "Dust Storm",
     REFC: "Funnel Cloud",
@@ -141,89 +125,75 @@ const RECENT_WEATHER: any = {
     REUP: "Unidentified precipitation (AUTO obs. only)",
     REVA: "Volcanic Ash",
 };
-
-
-export class METAR {
-    public type: string;
-    public correction?: boolean;
-    public station: string;
-    public time: Date;
-    public auto?: boolean
-    public wind: Wind = new Wind();
-    public cavok?: boolean;
-    public visibility?: number;
-    public visibilityVariation?: number;
-    public visibilityVariationDirection?: number;
-    public weather: Array<Weather> = new Array<Weather>();
-    public clouds: Array<Cloud> = new Array<Weather>();
-    public temperature?: number;
-    public dewpoint?: number;
-    public altimeterInHpa?: number;
-    public recentSignificantWeather?: string;
-    public recentSignificantWeatherDescription?: string;
-    public rvr?: RVR;
-
-    constructor(metarString: string) {
-        let fields = metarString
+var METAR = /** @class */ (function () {
+    function METAR(metarString) {
+        this.wind = new Wind();
+        this.weather = new Array();
+        this.clouds = new Array();
+        var fields = metarString
             .split(" ")
             .map(function (f) {
-                return f.trim();
-            })
+            return f.trim();
+        })
             .filter(function (f) {
-                return !!f;
-            });
-        let i = 0;
-
+            return !!f;
+        });
+        var i = 0;
         //Parse Type
         if (TYPES.indexOf(fields[i]) !== -1) {
             this.type = fields[i];
-            i++
-        } else {
+            i++;
+        }
+        else {
             this.type = "METAR";
         }
         //Parse Correction
         if (fields[i].lastIndexOf("CC", 0) == 0) {
-            this.correction = true
-            i++
+            this.correction = true;
+            i++;
         }
         if (fields[i].lastIndexOf("COR", 0) == 0) {
-            this.correction = true
-            i++
+            this.correction = true;
+            i++;
         }
         //Parse Station
         this.station = fields[i];
-        i++
+        i++;
         //Parse Date
         var d = new Date();
         d.setUTCDate(parseInt(fields[i].slice(0, 2), 10));
         d.setUTCHours(parseInt(fields[i].slice(2, 4), 10));
         d.setUTCMinutes(parseInt(fields[i].slice(4, 6), 10));
         this.time = d;
-        i++
+        i++;
         //Parse Auto
         this.auto = fields[i] === "AUTO";
-        if (this.auto) { i++ }
+        if (this.auto) {
+            i++;
+        }
         //Parse Correction: Second possible position for the correction
         if (fields[i].lastIndexOf("CC", 0) == 0) {
-            this.correction = true
-            i++
+            this.correction = true;
+            i++;
         }
         if (fields[i].lastIndexOf("COR", 0) == 0) {
-            this.correction = true
-            i++
+            this.correction = true;
+            i++;
         }
         //Parse Wind
         i = this.parseWind(fields, i);
         //Parse CAVOK
         this.cavok = fields[i] === "CAVOK";
-        if (this.cavok) { i++ }
+        if (this.cavok) {
+            i++;
+        }
         //Parse Visablility
         var re = /^([0-9]+)([A-Z]{1,2})/g;
         if (this.cavok === false && fields[i] !== "////") {
             this.visibility = parseInt(fields[i].slice(0, 4));
             // Look for a directional variation report
             if (fields[i + 1].match(/^[0-9]+[N|E|S|W|NW|NE|SW|SE]/)) {
-                i++
+                i++;
                 var matches;
                 while ((matches = re.exec(fields[i])) != null) {
                     if (matches.index === re.lastIndex) {
@@ -235,14 +205,14 @@ export class METAR {
                     //this.visibilityVariationDirection = matches[2];
                 }
             }
-            i++
+            i++;
         }
         //Parse Runway VIS
         if (this.cavok === false) {
             if (fields[i].match(/^R[0-9]+/)) {
                 this.rvr = new RVR(fields[i]);
                 // TODO: peek is more than one RVR in METAR and parse
-                i++
+                i++;
             }
         }
         //Parse Weather
@@ -255,7 +225,7 @@ export class METAR {
         if (2 === a.length) {
             this.temperature = parseInt(a[0], 10);
             this.dewpoint = parseInt(a[1], 10);
-            i++
+            i++;
         }
         //Parse ALtimeter
         var temp;
@@ -266,7 +236,8 @@ export class METAR {
                 temp += ".";
                 temp += fields[i].substr(3, 5);
                 this.altimeterInHpa = parseFloat(temp);
-            } else if (fields[i].length && "Q" === fields[i][0]) {
+            }
+            else if (fields[i].length && "Q" === fields[i][0]) {
                 temp = fields[i].substr(1);
                 this.altimeterInHpa = parseInt(temp, 10);
             }
@@ -279,20 +250,20 @@ export class METAR {
             }
         }
     }
-
-    private parseWeatherAbbrv(s: string, res?: Array<Weather>): Array<Weather> | undefined {
+    METAR.prototype.parseWeatherAbbrv = function (s, res) {
+        var _a;
         var weather = this.parseAbbreviation(s, WEATHER);
         if (weather != null) {
             res = res || [];
             res.push(weather);
-            return this.parseWeatherAbbrv(s.slice(weather.abbreviation?.length), res);
+            return this.parseWeatherAbbrv(s.slice((_a = weather.abbreviation) === null || _a === void 0 ? void 0 : _a.length), res);
         }
         return res;
-    }
-
-    private parseAbbreviation(s: string, map: any) {
+    };
+    METAR.prototype.parseAbbreviation = function (s, map) {
         var abbreviation, meaning, length = 3;
-        if (!s) return;
+        if (!s)
+            return;
         while (length && !meaning) {
             abbreviation = s.slice(0, length);
             meaning = map[abbreviation];
@@ -304,39 +275,36 @@ export class METAR {
                 meaning: meaning,
             };
         }
-    }
-
-    private parseWeather(fields: any, i: number): number {
+    };
+    METAR.prototype.parseWeather = function (fields, i) {
         if (this.cavok === false) {
             var weather = this.parseWeatherAbbrv(fields[i]);
             if (weather != null) {
-                if (!this.weather) this.weather = [];
-
+                if (!this.weather)
+                    this.weather = [];
                 this.weather = this.weather.concat(weather);
-                i++
+                i++;
                 return this.parseWeather(fields, i);
             }
         }
         return i;
-    }
-
-    private parseClouds(fields: any, i: number): number {
+    };
+    METAR.prototype.parseClouds = function (fields, i) {
+        var _a;
         if (this.cavok === false) {
-            var cloud: Cloud | undefined = this.parseAbbreviation(fields[i], CLOUDS);
+            var cloud = this.parseAbbreviation(fields[i], CLOUDS);
             if (cloud !== undefined) {
-                cloud.altitude = parseInt(fields[i].slice(cloud.abbreviation?.length)) * 100;
+                cloud.altitude = parseInt(fields[i].slice((_a = cloud.abbreviation) === null || _a === void 0 ? void 0 : _a.length)) * 100;
                 cloud.cumulonimbus = /CB$/.test(fields[i]);
-
                 this.clouds = this.clouds || [];
                 this.clouds.push(cloud);
-                i++
+                i++;
                 return this.parseClouds(fields, i);
             }
         }
         return i;
-    }
-
-    private parseWind(field: string[], i: number): number {
+    };
+    METAR.prototype.parseWind = function (field, i) {
         var variableWind = /^([0-9]{3})V([0-9]{3})$/;
         if (field[i].match(/^[0-9]{1,4}(SM?)/)) {
             return i;
@@ -345,36 +313,36 @@ export class METAR {
         if (direction === "VRB") {
             this.wind.direction = "VRB";
             this.wind.variation = true;
-        } else {
+        }
+        else {
             this.wind.direction = parseInt(direction, 10);
         }
-
         var gust = field[i].slice(5, 8);
         if (gust[0] === "G") {
             this.wind.gust = parseInt(gust.slice(1), 10);
         }
-
         this.wind.speed = parseInt(field[i].slice(3, 5), 10);
-
         var unitMatch;
         if ((unitMatch = field[i].match(/KT|MPS|KPH|SM$/))) {
             this.wind.unit = unitMatch[0];
-        } else {
+        }
+        else {
             throw new Error("Bad wind unit: " + field[i]);
         }
-        i++
+        i++;
         var varMatch;
         if ((varMatch = field[i].match(variableWind))) {
             this.wind.variation = {
                 min: parseInt(varMatch[1], 10),
                 max: parseInt(varMatch[2], 10),
             };
-            i++
+            i++;
         }
         return i;
-    }
-}
-
+    };
+    return METAR;
+}());
+exports.METAR = METAR;
 // http://www.met.tamu.edu/class/metar/metar-pg10-sky.html
 // https://ww8.fltplan.com/AreaForecast/abbreviations.htm
 // http://en.wikipedia.org/wiki/METAR
