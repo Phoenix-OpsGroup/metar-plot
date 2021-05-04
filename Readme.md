@@ -89,3 +89,7 @@ var svg2 : string = rawMetarToSVG("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012
 
 var metar : METAR = new METAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006")
 ```
+# Contributors
+
+* Speacial thanks to [metar.js](https://github.com/skydivejkl/metar.js),
+parsing code was forked and converted to TypeScript from this project
