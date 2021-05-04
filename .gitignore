@@ -3,3 +3,4 @@ scrap/
 coverage/
 .nyc_output/
 *.tgz
+dist/
