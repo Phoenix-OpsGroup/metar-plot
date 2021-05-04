@@ -1,3 +1,9 @@
+# Demo
+
+Demo: [https://jgunzelman-phoenix.github.io/metar-plot-demo/](https://jgunzelman-phoenix.github.io/metar-plot-demo/)
+
+React example code: [https://github.com/jgunzelman-phoenix/metar-plot-demo](https://github.com/jgunzelman-phoenix/metar-plot-demo)
+
 # Install
 npm 
 
