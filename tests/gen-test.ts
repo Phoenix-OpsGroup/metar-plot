@@ -1,6 +1,7 @@
 import { MetarPlot, metarToSVG, rawMetarToSVG } from "../src/MetarPlot"
 import * as fs from 'fs';
-
+const WIDTH = "100"
+const HEIGHT = "100"
 /**
  * These Tests always pass they create a sample data to be viewed from the metars.json file
  * in tests/data/metars.json
@@ -22,7 +23,7 @@ describe('Generate Images', () => {
     it("Gen Images - Metar Plots", () => {
         metars.forEach(
             (metar: MetarPlot) => {
-                let svg = metarToSVG(metar)
+                let svg = metarToSVG(metar, WIDTH, HEIGHT)
                 addRow(metar, svg)
             }
         )
@@ -33,7 +34,7 @@ describe('Generate Images', () => {
     it("Gen Images - Raw Metar", () => {
         rawMetars.forEach(
             (metar: any) => {
-                let svg = rawMetarToSVG(metar.raw)
+                let svg = rawMetarToSVG(metar.raw, WIDTH, HEIGHT)
                 addRow(metar.raw, svg)
             }
         )
