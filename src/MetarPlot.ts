@@ -18,6 +18,13 @@ export class MetarPlot {
 const GUST_WIDTH = 2;
 const WS_WIDTH = 4;
 
+/**
+ * Turns a raw METAR to an SVG image
+ * @param rawMetar RAW metar
+ * @param width css width of svg
+ * @param height css height of svg
+ * @returns 
+ */
 export function rawMetarToSVG(rawMetar: string, width: string, height: string) : string {
     let metar = new METAR(rawMetar);
     let wx = metar.weather[0]?.abbreviation ?? ""
@@ -37,7 +44,13 @@ export function rawMetarToSVG(rawMetar: string, width: string, height: string) :
     return metarToSVG(plot, width, height);
 }
 
-
+/**
+ * Turns a Metar plot object to a SVG image
+ * @param metar MetarPlot Object
+ * @param width css width for svg
+ * @param height css height for svg
+ * @returns 
+ */
 export function metarToSVG(metar: MetarPlot, width: string, height: string) : string{
     const VIS = metar.visablity ?? ""
     const TMP = metar.temp ?? ""

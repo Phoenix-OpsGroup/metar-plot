@@ -1,6 +1,6 @@
 {
   "name": "metar-plot",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "METAR parsing and ploting library",
   "keywords": ["METAR", "Weather", "SVG", "Parse"],
   "types": "src/index.d.ts",
