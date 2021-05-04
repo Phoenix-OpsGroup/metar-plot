@@ -1,12 +1,13 @@
 {
   "name": "metar-plot",
-  "version": "1.0.1",
+  "version": "1.0.8",
   "description": "METAR parsing and ploting library",
-  "main": "dist/index.js",
   "keywords": ["METAR", "Weather", "SVG", "Parse"],
-  "types": "dist/index.d.ts",
+  "types": "src/index.d.ts",
+  "main": "dist/index.js",
   "files": [
     "/dist",
+    "/src",
     "/Readme.md"
   ],
   "scripts": {
