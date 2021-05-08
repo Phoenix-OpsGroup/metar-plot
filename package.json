@@ -1,8 +1,8 @@
 {
   "name": "metar-plot",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "METAR parsing and ploting library",
-  "keywords": ["METAR", "Weather", "SVG", "Parse"],
+  "keywords": ["METAR", "Weather", "SVG", "parse", "metar"],
   "types": "src/index.d.ts",
   "main": "dist/index.js",
   "files": [
@@ -11,7 +11,7 @@
     "/Readme.md"
   ],
   "scripts": {
-    "build": "tsc & npm pack",
+    "build": "tsc",
     "test": "npx nyc --reporter lcov mocha -r ts-node/register 'tests/**/*.ts'"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
 import { MetarPlot, metarToSVG, rawMetarToSVG } from "../src/MetarPlot"
 import * as fs from 'fs';
+import { assert } from 'chai';
 const WIDTH = "100"
 const HEIGHT = "100"
 /**
@@ -8,10 +9,16 @@ const HEIGHT = "100"
  */
 
 let rows: string = "";
-let metars : Array<MetarPlot> = require("./data/metars.json")
+let metars: Array<MetarPlot> = require("./data/metars.json")
 let rawMetars: Array<any> = require("./data/rawMetars.json")
+
 before(() => {
-    fs.mkdir("./coverage/image-debug/", () => { return })
+    if (fs.existsSync("./coverage") === false) {
+        fs.mkdirSync("./coverage")
+    }
+    if (fs.existsSync("./coverage/image-debug") === false) {
+        fs.mkdirSync("./coverage/image-debug")
+    }
 })
 
 after(() => {
@@ -32,12 +39,18 @@ describe('Generate Images', () => {
 
 describe('Generate Images', () => {
     it("Gen Images - Raw Metar", () => {
+        let errors: any = {}
         rawMetars.forEach(
             (metar: any) => {
-                let svg = rawMetarToSVG(metar.raw, WIDTH, HEIGHT)
-                addRow(metar.raw, svg)
+                try {
+                    let svg = rawMetarToSVG(metar.raw, WIDTH, HEIGHT)
+                    addRow(metar.raw, svg)
+                } catch (error) {
+                    errors[metar.raw] = error.message
+                }
             }
         )
+        assert(Object.keys(errors).length === 0, `Error Parsing the following metars:\n${JSON.stringify(errors, null, 1)}`)
     })
 })
 

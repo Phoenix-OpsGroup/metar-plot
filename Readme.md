@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/jgunzelman-phoenix/metar-plot.svg?style=svg)](https://circleci.com/gh/jgunzelman-phoenix/metar-plot)
 # Demo
 
 Demo: [https://jgunzelman-phoenix.github.io/metar-plot-demo/](https://jgunzelman-phoenix.github.io/metar-plot-demo/)
@@ -43,8 +44,8 @@ export function rawMetarToSVG(rawMetar: string, width: string, height: string) :
  * @returns 
  */
 export function metarToSVG(metar: MetarPlot, width: string, height: string) : string {}
-
 ```
+
 
 # Examples
 
@@ -89,6 +90,41 @@ var svg2 : string = rawMetarToSVG("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012
 
 var metar : METAR = new METAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006")
 ```
+
+METAR Parse Output
+```javascript 
+ {
+  "wind": {
+   "direction": 50,
+   "speed": 11,
+   "unit": "KT"
+  },
+  "weather": [
+   {
+    "abbreviation": "BR",
+    "meaning": "mist"
+   }
+  ],
+  "clouds": [
+   {
+    "abbreviation": "OVC",
+    "meaning": "overcast",
+    "altitude": 600,
+    "cumulonimbus": false
+   }
+  ],
+  "type": "METAR",
+  "station": "KJCT",
+  "time": "2021-05-12T09:51:00.570Z",
+  "auto": true,
+  "cavok": false,
+  "visibility": 3,
+  "temperature": -2,
+  "dewpoint": -4,
+  "altimeterInHpa": 30.13
+ }
+```
+
 # Contributors
 
 * Speacial thanks to [metar.js](https://github.com/skydivejkl/metar.js),

@@ -14,7 +14,25 @@ jobs:
       - run:
           name: Run tests
           command: npm test
+  deploy-tag:
+    docker:
+      - image: cimg/node:15.1
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          name: publish library
+          command: npm run build && npm publish
 workflows:
-  sample:
+  test:
     jobs:
       - build-and-test
+  deploy:
+    jobs:
+      - deploy-tag:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/ 
+          
