@@ -14,7 +14,19 @@ jobs:
       - run:
           name: Run tests
           command: npm test
+  deploy-tag:
+    filters:
+      tags: /^v[0-9]+(\.[0-9]+)*$/
+    docker:
+      - image: cimg/node:15.1
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          name: publish library
+          command: npm run build && npm publish
 workflows:
   sample:
     jobs:
       - build-and-test
+      - deploy-tag

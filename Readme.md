@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/jgunzelman-phoenix/metar-plot.svg?style=svg)](https://circleci.com/gh/jgunzelman-phoenix/metar-plot)
 # Demo
 
 Demo: [https://jgunzelman-phoenix.github.io/metar-plot-demo/](https://jgunzelman-phoenix.github.io/metar-plot-demo/)
