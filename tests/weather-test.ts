@@ -8,8 +8,9 @@ import * as fs from 'fs';
  */
 
 let rows: string = "";
-before(() => {
-    fs.mkdir("./coverage/image-debug/", () => {return})
+before(async () => {
+    await fs.mkdir("./coverage", () => { return })
+    await fs.mkdir("./coverage/image-debug", () => { return })
 })
 
 after(() => {

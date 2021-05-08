@@ -9,8 +9,9 @@ import * as fs from 'fs';
 let metars = require("./data/rawMetars.json")
 let results = new Array<METAR>()
 
-before(() => {
-    fs.mkdir("./coverage/parse/", () => { return })
+before(async () => {
+    await fs.mkdir("./coverage", () => { return })
+    await fs.mkdir("./coverage/image-debug", () => { return })
 })
 
 after(() => {

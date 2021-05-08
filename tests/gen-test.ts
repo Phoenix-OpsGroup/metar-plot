@@ -11,8 +11,10 @@ const HEIGHT = "100"
 let rows: string = "";
 let metars : Array<MetarPlot> = require("./data/metars.json")
 let rawMetars: Array<any> = require("./data/rawMetars.json")
-before(() => {
-    fs.mkdir("./coverage/image-debug/", () => { return })
+
+before(async () => {
+    await fs.mkdir("./coverage", () => { return })
+    await fs.mkdir("./coverage/image-debug", () => { return })
 })
 
 after(() => {
