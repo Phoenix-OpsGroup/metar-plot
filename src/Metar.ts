@@ -338,7 +338,7 @@ export class METAR {
 
     private parseWind(field: string[], i: number): number {
         var variableWind = /^([0-9]{3})V([0-9]{3})$/;
-        if (field[i].match(/^[0-9]{1,4}(SM?)/)) {
+        if (field[i].length < 7) {
             return i;
         }
         var direction = field[i].slice(0, 3);

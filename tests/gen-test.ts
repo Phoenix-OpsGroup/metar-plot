@@ -1,5 +1,6 @@
 import { MetarPlot, metarToSVG, rawMetarToSVG } from "../src/MetarPlot"
 import * as fs from 'fs';
+import { assert } from 'chai';
 const WIDTH = "100"
 const HEIGHT = "100"
 /**
@@ -32,12 +33,18 @@ describe('Generate Images', () => {
 
 describe('Generate Images', () => {
     it("Gen Images - Raw Metar", () => {
+        let errors : any = {}
         rawMetars.forEach(
             (metar: any) => {
-                let svg = rawMetarToSVG(metar.raw, WIDTH, HEIGHT)
-                addRow(metar.raw, svg)
+                try{
+                    let svg = rawMetarToSVG(metar.raw, WIDTH, HEIGHT)
+                    addRow(metar.raw, svg)
+                }catch(error){
+                    errors[metar.raw] = error.message
+                }
             }
         )
+        assert(Object.keys(errors).length === 0, `Error Parsing the following metars:\n${JSON.stringify(errors, null, 1)}`)
     })
 })
 
