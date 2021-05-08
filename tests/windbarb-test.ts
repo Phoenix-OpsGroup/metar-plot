@@ -11,8 +11,12 @@ const HEIGHT = "100"
 
 let rows: string = "";
 before(async () => {
-    await fs.mkdir("./coverage", () => { return })
-    await fs.mkdir("./coverage/image-debug", () => { return })
+    if (fs.existsSync("./coverage") === false) {
+        fs.mkdirSync("./coverage")
+    }
+    if (fs.existsSync("./coverage/image-debug") === false) {
+        fs.mkdirSync("./coverage/image-debug")
+    }
 })
 
 after(() => {

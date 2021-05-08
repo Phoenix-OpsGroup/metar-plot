@@ -9,12 +9,16 @@ const HEIGHT = "100"
  */
 
 let rows: string = "";
-let metars : Array<MetarPlot> = require("./data/metars.json")
+let metars: Array<MetarPlot> = require("./data/metars.json")
 let rawMetars: Array<any> = require("./data/rawMetars.json")
 
-before(async () => {
-    await fs.mkdir("./coverage", () => { return })
-    await fs.mkdir("./coverage/image-debug", () => { return })
+before(() => {
+    if (fs.existsSync("./coverage") === false) {
+        fs.mkdirSync("./coverage")
+    }
+    if (fs.existsSync("./coverage/image-debug") === false) {
+        fs.mkdirSync("./coverage/image-debug")
+    }
 })
 
 after(() => {
@@ -35,13 +39,13 @@ describe('Generate Images', () => {
 
 describe('Generate Images', () => {
     it("Gen Images - Raw Metar", () => {
-        let errors : any = {}
+        let errors: any = {}
         rawMetars.forEach(
             (metar: any) => {
-                try{
+                try {
                     let svg = rawMetarToSVG(metar.raw, WIDTH, HEIGHT)
                     addRow(metar.raw, svg)
-                }catch(error){
+                } catch (error) {
                     errors[metar.raw] = error.message
                 }
             }

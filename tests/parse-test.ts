@@ -10,8 +10,12 @@ let metars = require("./data/rawMetars.json")
 let results = new Array<METAR>()
 
 before(async () => {
-    await fs.mkdir("./coverage", () => { return })
-    await fs.mkdir("./coverage/image-debug", () => { return })
+    if (fs.existsSync("./coverage") === false) {
+        fs.mkdirSync("./coverage")
+    }
+    if (fs.existsSync("./coverage/parse") === false) {
+        fs.mkdirSync("./coverage/parse")
+    }
 })
 
 after(() => {
