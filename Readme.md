@@ -129,3 +129,7 @@ METAR Parse Output
 
 * Speacial thanks to [metar.js](https://github.com/skydivejkl/metar.js),
 parsing code was forked and converted to TypeScript from this project
+
+# Change Log
+
+* [Change Log](https://github.com/jgunzelman-phoenix/metar-plot/releases)

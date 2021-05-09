@@ -198,6 +198,8 @@ export class METAR {
         d.setUTCDate(parseInt(fields[i].slice(0, 2), 10));
         d.setUTCHours(parseInt(fields[i].slice(2, 4), 10));
         d.setUTCMinutes(parseInt(fields[i].slice(4, 6), 10));
+        d.setUTCSeconds(0)
+        d.setUTCMilliseconds(0)
         this.time = d;
         i++
         //Parse Auto
