@@ -1,9 +1,9 @@
 [![CircleCI](https://circleci.com/gh/jgunzelman-phoenix/metar-plot.svg?style=svg)](https://circleci.com/gh/jgunzelman-phoenix/metar-plot)
 # Demo
 
-Demo: [https://jgunzelman-phoenix.github.io/metar-plot-demo/](https://jgunzelman-phoenix.github.io/metar-plot-demo/)
+Demo: [https://phoenix-ops.github.io/metar-plot-demo/](https://phoenix-opsgroup.github.io/metar-plot-demo/)
 
-React example code: [https://github.com/jgunzelman-phoenix/metar-plot-demo](https://github.com/jgunzelman-phoenix/metar-plot-demo)
+React example code: [https://github.com/phoenix-opsgroup/metar-plot-demo](https://github.com/phoenix-opsgroup/metar-plot-demo)
 
 # Install
 npm 
@@ -132,4 +132,4 @@ parsing code was forked and converted to TypeScript from this project
 
 # Change Log
 
-* [Change Log](https://github.com/jgunzelman-phoenix/metar-plot/releases)
+* [Change Log](https://github.com/phoenix-opsgroup/metar-plot/releases)
