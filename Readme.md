@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/jgunzelman-phoenix/metar-plot.svg?style=svg)](https://circleci.com/gh/jgunzelman-phoenix/metar-plot)
+[![Build Status](https://travis-ci.org/Phoenix-OpsGroup/metar-plot.svg?branch=main)](https://travis-ci.org/Phoenix-OpsGroup/metar-plot)
 # Demo
 
 Demo: [https://phoenix-ops.github.io/metar-plot-demo/](https://phoenix-opsgroup.github.io/metar-plot-demo/)
@@ -6,44 +6,10 @@ Demo: [https://phoenix-ops.github.io/metar-plot-demo/](https://phoenix-opsgroup.
 React example code: [https://github.com/phoenix-opsgroup/metar-plot-demo](https://github.com/phoenix-opsgroup/metar-plot-demo)
 
 # Install
-npm 
+[npm](https://www.npmjs.com/package/metar-plot) 
 
 ```sh
 npm install metar-plot
-```
-
-# Documentation
-
-```javascript
-export class MetarPlot {
-    public visablity?: number;
-    public temp?: number;
-    public dew_point?: number;
-    public station?: string;
-    public wind_direction?: number;
-    public wind_speed?: number;
-    public gust_speed?: number;
-    public wx?: string;
-    public condition?: string;
-}
-
-/**
- * Turns a raw METAR to an SVG image
- * @param rawMetar RAW metar
- * @param width css width of svg
- * @param height css height of svg
- * @returns 
- */
-export function rawMetarToSVG(rawMetar: string, width: string, height: string) : string {}
-
-/**
- * Turns a Metar plot object to a SVG image
- * @param metar MetarPlot Object
- * @param width css width for svg
- * @param height css height for svg
- * @returns 
- */
-export function metarToSVG(metar: MetarPlot, width: string, height: string) : string {}
 ```
 
 
@@ -91,7 +57,7 @@ var svg2 : string = rawMetarToSVG("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012
 var metar : METAR = new METAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006")
 ```
 
-METAR Parse Output
+METAR Example Object
 ```javascript 
  {
   "wind": {
@@ -124,6 +90,14 @@ METAR Parse Output
   "altimeterInHpa": 30.13
  }
 ```
+
+# Documentation
+
+Data Types:
+   * METAR: Object contains extracted METAR data
+      * If your data source is a raw metar and you wish to display human readable values this class will give that data.  This object is displayed in the metar demo. It's definition is found here [Metar.ts](./src/Metar.ts)
+   * MetarPlot: Object maps out all data to the svg plot.
+      * This allows you to use pre extracted data and map it as you please to the plot.  if you have your own METAR structure and want to map it to the plot use this object. It's definitioncan be found here [MetarPlot.ts](./src/Metar.ts)
 
 # Contributors
 
