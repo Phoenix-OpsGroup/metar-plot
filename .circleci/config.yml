@@ -1,0 +1,54 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.1
+jobs:
+  test:
+    docker:
+      - image: cimg/node:$NODE_VERSION
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          name: Run tests
+          command: npm test
+  build:
+    docker:
+      - image: cimg/node:$NODE_VERSION
+    working_directory: /tmp
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          name: Compile ts
+          command: npm run build
+      - store_artifacts:
+          path: /tmp/dist
+  deploy:
+    docker:
+      - image: cimg/node:$NODE_VERSION
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          name: Build
+          command: npm run build
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/.npmrc
+      - run:
+          name: publish library
+          command: npm publish
+workflows:
+  test:
+    jobs:
+      - test
+      - build
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
