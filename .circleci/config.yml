@@ -15,7 +15,6 @@ jobs:
   build:
     docker:
       - image: cimg/node:$NODE_VERSION
-    working_directory: /tmp
     steps:
       - checkout
       - node/install-packages
