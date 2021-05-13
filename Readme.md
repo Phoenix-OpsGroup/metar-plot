@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/Phoenix-OpsGroup/metar-plot.svg?branch=main)](https://travis-ci.org/Phoenix-OpsGroup/metar-plot)
+[![METAR-PLOT](https://circleci.com/gh/Phoenix-OpsGroup/metar-plot.svg?style=svg)](https://circleci.com/gh/Phoenix-OpsGroup/metar-plot)
+
 # Demo
 
 Demo: [https://phoenix-ops.github.io/metar-plot-demo/](https://phoenix-opsgroup.github.io/metar-plot-demo/)
@@ -11,7 +12,6 @@ React example code: [https://github.com/phoenix-opsgroup/metar-plot-demo](https:
 ```sh
 npm install metar-plot
 ```
-
 
 # Examples
 
