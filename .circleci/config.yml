@@ -22,8 +22,6 @@ jobs:
       - run:
           name: Compile ts
           command: npm run build
-      - store_artifacts:
-          path: /tmp/dist
   deploy:
     docker:
       - image: cimg/node:$NODE_VERSION
