@@ -11,6 +11,8 @@ export class MetarPlot {
     public wind_direction?: number;
     public wind_speed?: number;
     public gust_speed?: number;
+    public pressure?: number;
+    public ceiling?: number;
     public wx?: string;
     public condition?: string;
 }
@@ -25,22 +27,27 @@ const WS_WIDTH = 4;
  * @param height css height of svg
  * @returns 
  */
-export function rawMetarToSVG(rawMetar: string, width: string, height: string) : string {
+export function rawMetarToSVG(rawMetar: string, width: string, height: string): string {
     let metar = new METAR(rawMetar);
     let wx = metar.weather[0]?.abbreviation ?? ""
 
-    let plot : MetarPlot = 
-        {
-            visablity: metar.visibility,
-            temp: metar.temperature,
-            dew_point: metar.dewpoint,
-            station: metar.station,
-            wind_direction: (typeof metar.wind.direction === "number") ? metar.wind.direction : undefined,
-            wind_speed: metar.wind.speed,
-            gust_speed: metar.wind.gust,
-            wx: wx
-        }
-    
+    //Set Pressure
+    let pressure = metar.altimeterInHpa?.toString()
+    pressure = pressure == null ? "" : pressure.replace("\.","").substr(1,pressure.length)
+
+    let plot: MetarPlot =
+    {
+        visablity: metar.visibility,
+        temp: metar.temperature,
+        dew_point: metar.dewpoint,
+        station: metar.station,
+        wind_direction: (typeof metar.wind.direction === "number") ? metar.wind.direction : undefined,
+        wind_speed: metar.wind.speed,
+        gust_speed: metar.wind.gust,
+        wx: wx,
+        pressure: Number.parseInt(pressure)
+    }
+
     return metarToSVG(plot, width, height);
 }
 
@@ -51,32 +58,30 @@ export function rawMetarToSVG(rawMetar: string, width: string, height: string) :
  * @param height css height for svg
  * @returns 
  */
-export function metarToSVG(metar: MetarPlot, width: string, height: string) : string{
+export function metarToSVG(metar: MetarPlot, width: string, height: string): string {
     const VIS = metar.visablity ?? ""
     const TMP = metar.temp ?? ""
     const DEW = metar.dew_point ?? ""
     const STA = metar.station ?? ""
 
-    let svg =
-        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 500 500">
-         <style>
-            .txt{ font-size: 47.5px; font-family: sans-serif; }
-            .tmp{ fill: red; }
-            .sta{ fill: grey }
-            .dew{ fill: blue }
-            .vis{ fill: violet }
-         </style>
-         ${genWind(metar)}
-         ${getWeatherSVG(metar.wx ?? "")}
-         <g id="text">
-            <text class="vis txt" fill="#000000" stroke="#000" stroke-width="0" x="80"   y="260" text-anchor="start" xml:space="preserve">${VIS}</text>
-            <text class="tmp txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="220" text-anchor="start" xml:space="preserve" >${TMP}</text>
-            <text class="dew txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="315" text-anchor="start" xml:space="preserve">${DEW}</text>
-            <text class="sta txt" fill="#000000" stroke="#000" stroke-width="0" x="270"  y="315" text-anchor="start" xml:space="preserve">${STA}</text>
-            <text class="alt txt" fill="#000000" stroke="#000" stroke-width="0" x="270"  y="220"  text-anchor="start" xml:space="preserve">${""}</text>
-         </g>
-      </svg>`
-    return svg
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 500 500">
+                <style>
+                    .txt{ font-size: 47.5px; font-family: sans-serif; }
+                    .tmp{ fill: red; }
+                    .sta{ fill: grey }
+                    .dew{ fill: blue }
+                    .vis{ fill: violet }
+                </style>
+                ${genWind(metar)}
+                ${getWeatherSVG(metar.wx ?? "")}
+                <g id="text">
+                    <text class="vis txt" fill="#000000" stroke="#000" stroke-width="0" x="80"   y="260" text-anchor="start" xml:space="preserve">${VIS}</text>
+                    <text class="tmp txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="220" text-anchor="start" xml:space="preserve" >${TMP}</text>
+                    <text class="dew txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="315" text-anchor="start" xml:space="preserve">${DEW}</text>
+                    <text class="sta txt" fill="#000000" stroke="#000" stroke-width="0" x="270"  y="315" text-anchor="start" xml:space="preserve">${STA}</text>
+                    <text class="alt txt" fill="#000000" stroke="#000" stroke-width="0" x="270"  y="220"  text-anchor="start" xml:space="preserve">${""}</text>
+                </g>
+            </svg>`
 }
 
 /**

@@ -3,7 +3,6 @@
 const sine = 
 `<path style="fill: none; stroke: black; stroke-width: 10;" d="M 216.17 233.33 C 215.262 200.358 184.821 179.749 160.469 196.236 C 149.167 203.887 142.205 218.026 142.205 233.33"></path>
   <path style="fill: none; stroke: black; stroke-width: 10;" d="M 293.922 221.457 C 293.922 253.281 260.978 273.173 234.622 257.26 C 222.391 249.874 214.857 236.229 214.857 221.457"></path>`
-
 //Smoke or volcanic ash
 const FU_VA = 
     `<g id="FU_VA">
@@ -322,28 +321,25 @@ export const weather : any = {
 }
 export function getWeatherSVG(key: string): string {
     const WEATHER = weather[key] ?? "";
-    const svg = 
-    `<svg width="65" height="65" viewBox="0 0 500 500" x="160" y="220">
-        <style>
-            .wx_text{ 
-                color: black;
-                font-size: 300px;
-                font-family: "Noto Sans";
-                white-space: pre;
-            }
-            .wx_graphic {
-                stroke: black;
-                fill: none;
-                stroke-width: 30
-            }
-            .wx_graphic_thin {
-                stroke: black;
-                fill: none;
-                stroke-width: 5
-            }
-        </style>
-        ${WEATHER}
-    </svg>`
-    return svg
-    
+    return `<svg width="65" height="65" viewBox="0 0 500 500" x="160" y="220">
+                <style>
+                    .wx_text{ 
+                        color: black;
+                        font-size: 300px;
+                        font-family: "Noto Sans";
+                        white-space: pre;
+                    }
+                    .wx_graphic {
+                        stroke: black;
+                        fill: none;
+                        stroke-width: 30
+                    }
+                    .wx_graphic_thin {
+                        stroke: black;
+                        fill: none;
+                        stroke-width: 5
+                    }
+                </style>
+                ${WEATHER}
+            </svg>`
 }
