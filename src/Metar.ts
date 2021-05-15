@@ -313,7 +313,6 @@ export class METAR {
             var weather = this.parseWeatherAbbrv(fields[i]);
             if (weather != null) {
                 if (!this.weather) this.weather = [];
-
                 this.weather = this.weather.concat(weather);
                 i++
                 return this.parseWeather(fields, i);
