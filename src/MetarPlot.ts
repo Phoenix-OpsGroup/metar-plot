@@ -29,7 +29,7 @@ const WS_WIDTH = 4;
  */
 export function rawMetarToSVG(rawMetar: string, width: string, height: string): string {
     let metar = new METAR(rawMetar);
-    let wx = metar.weather[0]?.abbreviation ?? ""
+    let wx = metar.weather.map(weather => weather.abbreviation).join();
 
     //Set Pressure
     let pressure = metar.altimeterInHpa?.toString()
