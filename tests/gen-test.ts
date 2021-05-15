@@ -1,8 +1,9 @@
-import { MetarPlot, metarToSVG, rawMetarToSVG } from "../src/MetarPlot"
+import { MetarPlot, metarToSVG, rawMetarToSVG, rawMetarToMetarPlot } from "../src/MetarPlot"
+import { METAR } from "../src/Metar"
 import * as fs from 'fs';
 import { assert } from 'chai';
-const WIDTH = "100"
-const HEIGHT = "100"
+const WIDTH = "150"
+const HEIGHT = "150"
 /**
  * These Tests always pass they create a sample data to be viewed from the metars.json file
  * in tests/data/metars.json
@@ -22,7 +23,12 @@ before(() => {
 })
 
 after(() => {
-    let content = `<table>${rows}</table>`
+    let content = `
+        <div class="container">
+            <div>Plot-data</div><div>Metar</div><div>Raw</div><div>Plot</div>
+            ${rows}
+        </div>
+    `
     writeHtml("coverage/image-debug/generated.html", content)
 })
 
@@ -31,7 +37,7 @@ describe('Generate Images', () => {
         metars.forEach(
             (metar: MetarPlot) => {
                 let svg = metarToSVG(metar, WIDTH, HEIGHT)
-                addRow(metar, svg)
+                addRow(metar, svg, undefined)
             }
         )
     })
@@ -43,8 +49,9 @@ describe('Generate Images', () => {
         rawMetars.forEach(
             (metar: any) => {
                 try {
+                    let plot = rawMetarToMetarPlot(metar.raw)
                     let svg = rawMetarToSVG(metar.raw, WIDTH, HEIGHT)
-                    addRow(metar.raw, svg)
+                    addRow(plot, svg, new METAR(metar.raw), metar.raw)
                 } catch (error) {
                     errors[metar.raw] = error.message
                 }
@@ -54,15 +61,25 @@ describe('Generate Images', () => {
     })
 })
 
-function addRow(metar: MetarPlot, svg: string) {
-    rows += `<tr><td><pre>${JSON.stringify(metar, null, 1)}</pre></td><td>${svg}</td></tr>`
+function addRow(plot: MetarPlot, svg: string, metar?: METAR, raw?: String) {
+    rows += `<pre>${JSON.stringify(plot, null, 1)}</pre><pre>${metar == null ? "" : JSON.stringify(metar, null, 1)}</pre><pre>${raw == null ? "" : JSON.stringify(raw, null, 1)}</pre><pre>${svg}</pre>`
 }
 
 function writeHtml(filename: string, content: string) {
     let html =
         `<!DOCTYPE html>
     <html lang="en">
-        <head><title></title></head><body>${content}</body>
+        <head>
+            <title>Generated</title>
+            <style>
+                .container{
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                    grid-auto-rows: auto;
+                }
+            </style>
+        </head>
+        <body>${content}</body>
     </html>`
     fs.writeFileSync(filename, html);
 }

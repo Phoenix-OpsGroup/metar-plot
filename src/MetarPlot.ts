@@ -28,27 +28,29 @@ const WS_WIDTH = 4;
  * @returns 
  */
 export function rawMetarToSVG(rawMetar: string, width: string, height: string): string {
+    let plot = rawMetarToMetarPlot(rawMetar)
+    return metarToSVG(plot, width, height);
+}
+
+export function rawMetarToMetarPlot(rawMetar: string): MetarPlot{
     let metar = new METAR(rawMetar);
-    let wx = metar.weather.map(weather => weather.abbreviation).join();
+    let wx = metar.weather.map(weather => weather.abbreviation).join("");
 
     //Set Pressure
     let pressure = metar.altimeterInHpa?.toString()
     pressure = pressure == null ? "" : pressure.replace("\.","").substr(1,pressure.length)
 
-    let plot: MetarPlot =
-    {
-        visablity: metar.visibility,
-        temp: metar.temperature,
-        dew_point: metar.dewpoint,
-        station: metar.station,
-        wind_direction: (typeof metar.wind.direction === "number") ? metar.wind.direction : undefined,
-        wind_speed: metar.wind.speed,
-        gust_speed: metar.wind.gust,
-        wx: wx,
-        pressure: Number.parseInt(pressure)
-    }
-
-    return metarToSVG(plot, width, height);
+    return { 
+                visablity: metar.visibility,
+                temp: metar.temperature,
+                dew_point: metar.dewpoint,
+                station: metar.station,
+                wind_direction: (typeof metar.wind.direction === "number") ? metar.wind.direction : undefined,
+                wind_speed: metar.wind.speed,
+                gust_speed: metar.wind.gust,
+                wx: wx,
+                pressure: Number.parseInt(pressure)
+            }
 }
 
 /**
