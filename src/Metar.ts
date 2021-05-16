@@ -137,7 +137,7 @@ export class METAR {
         //Parse Weather
         this.weather = this.parseWeather(metarString);
         //Parse Clouds
-        //                                              i = this.parseClouds(fields, i);
+        this.clouds = this.parseClouds(metarString);
         //Parse Temp Point Internations 
         let temps_int = this.parseTempInternation(metarString)
         if (temps_int != null) {
@@ -209,11 +209,12 @@ export class METAR {
     }
 
     private parseWeather(metar: string): Array<Weather> {
-        let obs_keys = Object.keys(weather).join('|').replace(/\+/g, "\\+")
-        let re = new RegExp(`(${obs_keys})`, 'g')
+        let obs_keys = Object.keys(weather).join(' | ').replace(/\+/g, "\\+")
+        let re = new RegExp(`( ${obs_keys} )`, 'g')
         let matches = metar.match(re)
         if (matches != null) {
-            return matches.map(key => {
+            return matches.map(match => {
+                let key = match.trim()
                 return {
                     abbreviation: key,
                     meaning: weather[key].text
@@ -230,56 +231,36 @@ export class METAR {
         if (this.cavok === false && metar.match(re)) {
             let vis_parts = re.exec(metar)
             if (vis_parts != null) {
-                let num = parseInt(vis_parts[2])
-                return vis_parts[3] === "SM" ? num : Math.round(num * 0.000621371)
+                if (vis_parts[1] != null) {
+                    return parseFloat(eval(vis_parts[1]))
+                } else {
+                    let num = parseInt(vis_parts[2])
+                    return vis_parts[3] === "SM" ? num : Math.round(num * 0.000621371)
+                }
             }
         }
         return undefined
     }
 
-    private parseAbbreviation(s: string, map: any) {
-        var abbreviation, meaning, length = 3;
-        if (!s) return;
-        while (length && !meaning) {
-            abbreviation = s.slice(0, length);
-            meaning = map[abbreviation];
-            length--;
-        }
-        if (meaning) {
-            return {
-                abbreviation: abbreviation,
-                meaning: meaning,
-            };
-        }
-    }
 
-    /*private parseWeather(fields: any, i: number): number {
-        if (this.cavok === false) {
-            var weather = this.parseWeatherAbbrv(fields[i]);
-            if (weather != null) {
-                if (!this.weather) this.weather = [];
-                this.weather = this.weather.concat(weather);
-                i++
-                return this.parseWeather(fields, i);
-            }
+    private parseClouds(metarString: string): Cloud[] {
+        let re = /(NCD|SKC|CLR|NSC|FEW|SCT|BKN|OVC|VV)(\d{3})/g
+        let matches = metarString.match(re)
+        let clouds = new Array<Cloud>()
+        if (matches != null) {
+            matches.forEach(match => {
+                let parts = re.exec(match)
+                if (parts != null) {
+                    let cloud: Cloud = {
+                        abbreviation: parts[1],
+                        meaning: CLOUDS[parts[1]],
+                        altitude: parseInt(parts[2]) * 100
+                    }
+                    clouds.push(cloud)
+                }
+            })
         }
-        return i;
-    }*/
-
-    private parseClouds(fields: any, i: number): number {
-        if (this.cavok === false) {
-            var cloud: Cloud | undefined = this.parseAbbreviation(fields[i], CLOUDS);
-            if (cloud !== undefined) {
-                cloud.altitude = parseInt(fields[i].slice(cloud.abbreviation?.length)) * 100;
-                cloud.cumulonimbus = /CB$/.test(fields[i]);
-
-                this.clouds = this.clouds || [];
-                this.clouds.push(cloud);
-                i++
-                return this.parseClouds(fields, i);
-            }
-        }
-        return i;
+        return clouds
     }
 
     private parseWind(metar: string): Wind {
