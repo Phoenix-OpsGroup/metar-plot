@@ -2,26 +2,9 @@
     "visablity": 9,
     "temp": 12,
     "dew_point": 7,
+    "wx": "-SN",
     "station": "WBWI",
     "wind_direction": 120,
     "wind_speed": 20
-},
-{
-    "wx": "+RA"
-},
-{
-    "wx": "-SN"
-},
-{
-    "wx": "HZ"
-},
-{
-    "wx": "DU"
-},
-{
-    "wx": "SA"
-},
-{
-    "wx": "BLDU"
 }
 ]

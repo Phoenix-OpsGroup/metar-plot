@@ -1,3 +1,5 @@
+import { weather } from "./Weather"
+
 export class Wind {
     public speed?: number;
     public gust?: number;
@@ -71,51 +73,6 @@ const CLOUDS: any = {
     VV: "vertical visibility",
 };
 
-export const WEATHER: any = {
-    // Intensity
-    "-": "light intensity",
-    "+": "heavy intensity",
-    VC: "in the vicinity",
-
-    // Descriptor
-    MI: "shallow",
-    PR: "partial",
-    BC: "patches",
-    DR: "low drifting",
-    BL: "blowing",
-    SH: "showers",
-    TS: "thunderstorm",
-    FZ: "freezing",
-
-    // Precipitation
-    RA: "rain",
-    DZ: "drizzle",
-    SN: "snow",
-    SG: "snow grains",
-    IC: "ice crystals",
-    PL: "ice pellets",
-    GR: "hail",
-    GS: "small hail",
-    UP: "unknown precipitation",
-
-    // Obscuration
-    FG: "fog",
-    VA: "volcanic ash",
-    BR: "mist",
-    HZ: "haze",
-    DU: "widespread dust",
-    FU: "smoke",
-    SA: "sand",
-    PY: "spray",
-
-    // Other
-    SQ: "squall",
-    PO: "dust or sand whirls",
-    DS: "duststorm",
-    SS: "sandstorm",
-    FC: "funnel cloud",
-};
-
 const RECENT_WEATHER: any = {
     REBLSN: "Moderate/heavy blowing snow (visibility significantly reduced)reduced",
     REDS: "Dust Storm",
@@ -142,9 +99,8 @@ const RECENT_WEATHER: any = {
     REVA: "Volcanic Ash",
 };
 
-
 export class METAR {
-    public type: string;
+    public type?: string
     public correction?: boolean;
     public station: string;
     public time: Date;
@@ -164,132 +120,121 @@ export class METAR {
     public rvr?: RVR;
 
     constructor(metarString: string) {
-        let fields = metarString
-            .split(" ")
-            .map(function (f) {
-                return f.trim();
-            })
-            .filter(function (f) {
-                return !!f;
-            });
-        let i = 0;
-
-        //Parse Type
-        if (TYPES.indexOf(fields[i]) !== -1) {
-            this.type = fields[i];
-            i++
-        } else {
-            this.type = "METAR";
-        }
-        //Parse Correction
-        if (fields[i].lastIndexOf("CC", 0) == 0) {
-            this.correction = true
-            i++
-        }
-        if (fields[i].lastIndexOf("COR", 0) == 0) {
-            this.correction = true
-            i++
-        }
         //Parse Station
-        this.station = fields[i];
-        i++
+        this.station = this.parseStation(metarString)
         //Parse Date
-        var d = new Date();
-        d.setUTCDate(parseInt(fields[i].slice(0, 2), 10));
-        d.setUTCHours(parseInt(fields[i].slice(2, 4), 10));
-        d.setUTCMinutes(parseInt(fields[i].slice(4, 6), 10));
-        d.setUTCSeconds(0)
-        d.setUTCMilliseconds(0)
-        this.time = d;
-        i++
+        this.time = this.parseDate(metarString);
         //Parse Auto
-        this.auto = fields[i] === "AUTO";
-        if (this.auto) { i++ }
-        //Parse Correction: Second possible position for the correction
-        if (fields[i].lastIndexOf("CC", 0) == 0) {
-            this.correction = true
-            i++
-        }
-        if (fields[i].lastIndexOf("COR", 0) == 0) {
-            this.correction = true
-            i++
-        }
+        this.auto = this.parseAuto(metarString)
         //Parse Wind
-        i = this.parseWind(fields, i);
+        this.wind = this.parseWind(metarString);
         //Parse CAVOK
-        this.cavok = fields[i] === "CAVOK";
-        if (this.cavok) { i++ }
+        this.cavok = this.parseCavok(metarString)
         //Parse Visablility
-        var re = /^([0-9]+)([A-Z]{1,2})/g;
-        if (this.cavok === false && fields[i] !== "////") {
-            this.visibility = parseInt(fields[i].slice(0, 4));
-            // Look for a directional variation report
-            if (fields[i + 1].match(/^[0-9]+[N|E|S|W|NW|NE|SW|SE]/)) {
-                i++
-                var matches;
-                while ((matches = re.exec(fields[i])) != null) {
-                    if (matches.index === re.lastIndex) {
-                        re.lastIndex++;
-                    }
-                    if (matches[1] !== null) {
-                        //  this.visibilityVariation = matches[1]
-                    }
-                    //this.visibilityVariationDirection = matches[2];
-                }
-            }
-            i++
-        }
+        this.visibility = this.parseVisibility(metarString)
         //Parse Runway VIS
-        if (this.cavok === false) {
-            if (fields[i].match(/^R[0-9]+/)) {
-                this.rvr = new RVR(fields[i]);
-                // TODO: peek is more than one RVR in METAR and parse
-                i++
-            }
-        }
+        //TODO
         //Parse Weather
-        i = this.parseWeather(fields, i);
+        this.weather = this.parseWeather(metarString);
         //Parse Clouds
-        i = this.parseClouds(fields, i);
-        //Parse Temp Point
-        var replaced = fields[i].replace(/M/g, "-");
-        var a = replaced.split("/");
-        if (2 === a.length) {
-            this.temperature = parseInt(a[0], 10);
-            this.dewpoint = parseInt(a[1], 10);
-            i++
+        //                                              i = this.parseClouds(fields, i);
+        //Parse Temp Point Internations 
+        let temps_int = this.parseTempInternation(metarString)
+        if (temps_int != null) {
+            this.temperature = temps_int[0];
+            this.dewpoint = temps_int[1];
         }
-        //Parse ALtimeter
-        var temp;
-        if (fields[i] !== undefined && fields[i] !== null) {
-            // inches of mercury if AXXXX
-            if (fields[i].length === 5 && "A" === fields[i][0]) {
-                temp = fields[i].substr(1, 2);
-                temp += ".";
-                temp += fields[i].substr(3, 5);
-                this.altimeterInHpa = parseFloat(temp);
-            } else if (fields[i].length && "Q" === fields[i][0]) {
-                temp = fields[i].substr(1);
-                this.altimeterInHpa = parseInt(temp, 10);
-            }
-        }
-        //Parse Sig Weather
-        if (fields[i] !== undefined && fields[i] !== null) {
-            if (RECENT_WEATHER[fields[i]]) {
-                this.recentSignificantWeather = fields[i];
-                this.recentSignificantWeatherDescription = RECENT_WEATHER[fields[i]];
-            }
+        //Parse Temp North american Will overwirte international since it is more precise
+        let temps_ne = this.parseTempNA(metarString)
+        if (temps_ne != null) {
+            this.temperature = temps_ne[0];
+            this.dewpoint = temps_ne[1];
         }
     }
 
-    private parseWeatherAbbrv(s: string, res?: Array<Weather>): Array<Weather> | undefined {
-        var weather = this.parseAbbreviation(s, WEATHER);
-        if (weather != null) {
-            res = res || [];
-            res.push(weather);
-            return this.parseWeatherAbbrv(s.slice(weather.abbreviation?.length), res);
+    private parseStation(metar: string): string {
+        let re = /^(METAR\s)?([A-Z]{1,4})\s/g
+        let matches = re.exec(metar)
+        if (matches != null) {
+            return matches[2]
+        } else {
+            throw new Error("Station could not be found invalid metar")
         }
-        return res;
+    }
+
+    private parseDate(metar: string): Date {
+        let re = /([\d]{2})([\d]{2})([\d]{2})Z/g
+        let matches = re.exec(metar)
+        if (matches != null) {
+            var d = new Date();
+            d.setUTCDate(parseInt(matches[1]));
+            d.setUTCHours(parseInt(matches[2]));
+            d.setUTCMinutes(parseInt(matches[3]));
+            d.setUTCSeconds(0)
+            d.setUTCMilliseconds(0)
+            return d
+        } else {
+            throw new Error("Failed to parse Date")
+        }
+    }
+
+    private parseCavok(metar: string): boolean {
+        let re = /\sCAVOK\s/g
+        return metar.match(re) != null ? true : false
+    }
+
+    private parseAuto(metar: string): boolean {
+        let re = /\s(AUTO)?(AO1)?(AO2)?\s/g
+        return metar.match(re) != null ? true : false
+    }
+
+    private parseTempInternation(metar: string): [number, number] | undefined {
+        let re = /\s(M)?(\d{2})\/(M)?(\d{2})\s/g
+        let matches = re.exec(metar)
+        if (matches != null) {
+            let temp = parseInt(matches[2]) * (matches[1] == null ? 1 : -1)
+            let dew_point = parseInt(matches[4]) * (matches[3] == null ? 1 : -1)
+            return [temp, dew_point]
+        }
+    }
+
+    private parseTempNA(metar: string): [number, number] | undefined {
+        let re = /(T)(\d{1})(\d{2})(\d{1})(\d{1})(\d{2})(\d{1})/g
+        let matches = re.exec(metar)
+        if (matches != null) {
+            let temp = parseInt(matches[3] + "." + matches[4]) * (matches[2] === "0" ? 1 : -1)
+            let dew_point = parseInt(matches[6] + "." + matches[7]) * (matches[5] === "0" ? 1 : -1)
+            return [temp, dew_point]
+        }
+    }
+
+    private parseWeather(metar: string): Array<Weather> {
+        let obs_keys = Object.keys(weather).join('|').replace(/\+/g, "\\+")
+        let re = new RegExp(`(${obs_keys})`, 'g')
+        let matches = metar.match(re)
+        if (matches != null) {
+            return matches.map(key => {
+                return {
+                    abbreviation: key,
+                    meaning: weather[key].text
+                }
+            })
+        } else {
+            return new Array<Weather>()
+        }
+
+    }
+
+    private parseVisibility(metar: string): number | undefined {
+        var re = /\s([0-9]{1,2}\/[0-9]{1,2})?([0-9]{1,4})?(SM)?\s/g;
+        if (this.cavok === false && metar.match(re)) {
+            let vis_parts = re.exec(metar)
+            if (vis_parts != null) {
+                let num = parseInt(vis_parts[2])
+                return vis_parts[3] === "SM" ? num : Math.round(num * 0.000621371)
+            }
+        }
+        return undefined
     }
 
     private parseAbbreviation(s: string, map: any) {
@@ -308,7 +253,7 @@ export class METAR {
         }
     }
 
-    private parseWeather(fields: any, i: number): number {
+    /*private parseWeather(fields: any, i: number): number {
         if (this.cavok === false) {
             var weather = this.parseWeatherAbbrv(fields[i]);
             if (weather != null) {
@@ -319,7 +264,7 @@ export class METAR {
             }
         }
         return i;
-    }
+    }*/
 
     private parseClouds(fields: any, i: number): number {
         if (this.cavok === false) {
@@ -337,46 +282,15 @@ export class METAR {
         return i;
     }
 
-    private parseWind(field: string[], i: number): number {
-        var variableWind = /^([0-9]{3})V([0-9]{3})$/;
-        if (field[i].length < 7) {
-            return i;
+    private parseWind(metar: string): Wind {
+        let wind: Wind = new Wind()
+        let re = /\s(\d{3})(\d{2})(G)?(\d{2})?(KT|MPS)\s/g
+        let matches = re.exec(metar)
+        if (matches != null) {
+            wind.direction = parseInt(matches[1]);
+            wind.speed = parseInt(matches[2]);
+            wind.unit = matches[5]
         }
-        var direction = field[i].slice(0, 3);
-        if (direction === "VRB") {
-            this.wind.direction = "VRB";
-            this.wind.variation = true;
-        } else {
-            this.wind.direction = parseInt(direction, 10);
-        }
-
-        var gust = field[i].slice(5, 8);
-        if (gust[0] === "G") {
-            this.wind.gust = parseInt(gust.slice(1), 10);
-        }
-
-        this.wind.speed = parseInt(field[i].slice(3, 5), 10);
-
-        var unitMatch;
-        if ((unitMatch = field[i].match(/KT|MPS|KPH|SM$/))) {
-            this.wind.unit = unitMatch[0];
-        } else {
-            throw new Error("Bad wind unit: " + field[i]);
-        }
-        i++
-        var varMatch;
-        if ((varMatch = field[i].match(variableWind))) {
-            this.wind.variation = {
-                min: parseInt(varMatch[1], 10),
-                max: parseInt(varMatch[2], 10),
-            };
-            i++
-        }
-        return i;
+        return wind
     }
 }
-
-// http://www.met.tamu.edu/class/metar/metar-pg10-sky.html
-// https://ww8.fltplan.com/AreaForecast/abbreviations.htm
-// http://en.wikipedia.org/wiki/METAR
-// http://www.unc.edu/~haines/metar.html

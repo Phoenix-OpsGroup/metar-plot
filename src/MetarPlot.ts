@@ -4,8 +4,11 @@ import { getWeatherSVG } from "./Weather"
  * Extracted Metar message
  */
 export class MetarPlot {
+    //visability in SM
     public visablity?: number;
+    //temp in C
     public temp?: number;
+    //dew point in C
     public dew_point?: number;
     public station?: string;
     public wind_direction?: number;
@@ -27,12 +30,12 @@ const WS_WIDTH = 4;
  * @param height css height of svg
  * @returns 
  */
-export function rawMetarToSVG(rawMetar: string, width: string, height: string): string {
+export function rawMetarToSVG(rawMetar: string, width: string, height: string, metric?: boolean): string {
     let plot = rawMetarToMetarPlot(rawMetar)
     return metarToSVG(plot, width, height);
 }
 
-export function rawMetarToMetarPlot(rawMetar: string): MetarPlot{
+export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPlot{
     let metar = new METAR(rawMetar);
     let wx = metar.weather.map(weather => weather.abbreviation).join("");
 
@@ -40,8 +43,13 @@ export function rawMetarToMetarPlot(rawMetar: string): MetarPlot{
     let pressure = metar.altimeterInHpa?.toString()
     pressure = pressure == null ? "" : pressure.replace("\.","").substr(1,pressure.length)
 
+    let vis = metar.visibility
+    if(metric){
+        vis = (vis != null) ? Math.round(vis * 1609.34) : undefined
+    }
+    
     return { 
-                visablity: metar.visibility,
+                visablity: vis,
                 temp: metar.temperature,
                 dew_point: metar.dewpoint,
                 station: metar.station,
@@ -60,7 +68,7 @@ export function rawMetarToMetarPlot(rawMetar: string): MetarPlot{
  * @param height css height for svg
  * @returns 
  */
-export function metarToSVG(metar: MetarPlot, width: string, height: string): string {
+export function metarToSVG(metar: MetarPlot, width: string, height: string, metric?: boolean): string {
     const VIS = metar.visablity ?? ""
     const TMP = metar.temp ?? ""
     const DEW = metar.dew_point ?? ""

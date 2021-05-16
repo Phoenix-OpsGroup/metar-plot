@@ -31,6 +31,7 @@ describe('Test Parse of METARs', () => {
                     let result = new METAR(metar.raw)
                     results.push(result)
                 } catch (error) {
+                    console.log(error)
                     errors[metar.raw] = error.message
                 }
             }
