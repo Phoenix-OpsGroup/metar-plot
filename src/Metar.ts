@@ -86,8 +86,11 @@ export function parseMetar(metarString: string, ref?: METAR): METAR {
     }
     return ref;
 }
-
-
+/**
+ * Parses the station name form the metar
+ * @param metar raw metar
+ * @returns 
+ */
 export function parseStation(metar: string): string {
     let re = /^(METAR\s)?([A-Z]{1,4})\s/g
     let matches = re.exec(metar)
@@ -97,7 +100,12 @@ export function parseStation(metar: string): string {
         throw new Error("Station could not be found invalid metar")
     }
 }
-
+/**
+ * Parse Date object from metar. 
+ * NOTE: Raw metar data does not contain month or year data. So this function assumes this metar was created in the current month and current year
+ * @param metar raw metar
+ * @returns 
+ */
 export function parseDate(metar: string): Date {
     let re = /([\d]{2})([\d]{2})([\d]{2})Z/g
     let matches = re.exec(metar)
@@ -113,17 +121,29 @@ export function parseDate(metar: string): Date {
         throw new Error("Failed to parse Date")
     }
 }
-
+/**
+ * Parses for CAVOK (Ceiling and visabiliy OK)
+ * @param metar raw metar
+ * @returns 
+ */
 export function parseCavok(metar: string): boolean {
     let re = /\sCAVOK\s/g
     return metar.match(re) != null ? true : false
 }
-
+/**
+ * Parses for Autmnaton
+ * @param metar raw metar
+ * @returns 
+ */
 export function parseAuto(metar: string): boolean {
     let re = /\s(AUTO)?(AO1)?(AO2)?\s/g
     return metar.match(re) != null ? true : false
 }
-
+/**
+ * Parse international temp dewp point format.
+ * @param metar raw metar
+ * @returns 
+ */
 export function parseTempInternation(metar: string): [number, number] | undefined {
     let re = /\s(M)?(\d{2})\/(M)?(\d{2})\s/g
     let matches = re.exec(metar)
@@ -133,7 +153,11 @@ export function parseTempInternation(metar: string): [number, number] | undefine
         return [temp, dew_point]
     }
 }
-
+/**
+ * Parse North American temp dew point format
+ * @param metar raw metar
+ * @returns 
+ */
 export function parseTempNA(metar: string): [number, number] | undefined {
     let re = /(T)(\d{1})(\d{2})(\d{1})(\d{1})(\d{2})(\d{1})/g
     let matches = re.exec(metar)
@@ -143,10 +167,14 @@ export function parseTempNA(metar: string): [number, number] | undefined {
         return [temp, dew_point]
     }
 }
-
+/**
+ * Parse Weather items
+ * @param metar raw metar
+ * @returns 
+ */
 export function parseWeather(metar: string): Array<Weather> {
-    let obs_keys = Object.keys(WEATHER).join(' | ').replace(/\+/g, "\\+")
-    let re = new RegExp(`( ${obs_keys} )`, 'g')
+    let obs_keys = Object.keys(WEATHER).join('|').replace(/\+/g, "\\+")
+    let re = new RegExp(` (${obs_keys})`, 'g')
     let matches = metar.match(re)
     if (matches != null) {
         return matches.map(match => {
@@ -159,9 +187,12 @@ export function parseWeather(metar: string): Array<Weather> {
     } else {
         return new Array<Weather>()
     }
-
 }
-
+/**
+ * Parse visability 
+ * @param metar raw metar
+ * @returns 
+ */
 export function parseVisibility(metar: string): number | undefined {
     var re = /\s([0-9]{1,2}\/[0-9]{1,2})?([0-9]{1,4})?(SM)?\s/g;
     if (metar.match(re)) {
@@ -177,27 +208,30 @@ export function parseVisibility(metar: string): number | undefined {
     }
     return undefined
 }
-
+/**
+ * Parse cloud coverages
+ * @param metarString raw metar
+ * @returns 
+ */
 export function parseClouds(metarString: string): Cloud[] {
     let re = /(NCD|SKC|CLR|NSC|FEW|SCT|BKN|OVC|VV)(\d{3})/g
-    let matches = metarString.match(re)
     let clouds = new Array<Cloud>()
-    if (matches != null) {
-        matches.forEach(match => {
-            let parts = re.exec(match)
-            if (parts != null) {
-                let cloud: Cloud = {
-                    abbreviation: parts[1],
-                    meaning: CLOUDS[parts[1]],
-                    altitude: parseInt(parts[2]) * 100
-                }
-                clouds.push(cloud)
-            }
-        })
+    let matches
+    while((matches = re.exec(metarString)) != null){
+        let cloud: Cloud = {
+            abbreviation: matches[1],
+            meaning: CLOUDS[matches[1]],
+            altitude: parseInt(matches[2]) * 100
+        }
+        clouds.push(cloud)
     }
     return clouds
 }
-
+/**
+ * Parse wind data
+ * @param metar raw metar
+ * @returns 
+ */
 export function parseWind(metar: string): Wind {
     let wind: Wind = new Wind()
     let re = /\s(\d{3})(\d{2})(G)?(\d{2})?(KT|MPS)\s/g
