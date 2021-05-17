@@ -8,25 +8,39 @@ const TYPES = ["METAR", "SPECI"];
 
 //Metar Object
 export class METAR {
+    //Type of message 
     public type?: string
+    //Designates that this metar is a correction
     public correction?: boolean;
+    //Station ID
     public station: string;
+    /*Time of report 
+    *METARs are only accurate to the day, hour, minute, and sec
+    *This will assume the metar was produced today*/
     public time: Date;
+    //Designated if this metar was from an automated station
     public auto?: boolean
+    //Wind speed, direction and unit
     public wind: Wind = new Wind();
+    //Designated if ceiling & visablility are OK
     public cavok?: boolean;
+    //Visability in Miles
     public visibility?: number;
     public visibilityVariation?: number;
     public visibilityVariationDirection?: number;
+    //List of weather conditions reported
     public weather: Array<Weather> = new Array<Weather>();
+    //List of Cloud observations
     public clouds: Array<Cloud> = new Array<Weather>();
+    //Tempuature (ºC)
     public temperature?: number;
+    //Dew Point (ºC)
     public dewpoint?: number;
+    //Altimeter reading (pressure) in inHg
     public altimeter?: number;
     public recentSignificantWeather?: string;
     public recentSignificantWeatherDescription?: string;
     public rvr?: RVR;
-
     /**
      * Extracted Metar data in a human readable format.
      * @param metarString raw metar string if provided station and time will be ignored and replaced with the content in the raw METAR

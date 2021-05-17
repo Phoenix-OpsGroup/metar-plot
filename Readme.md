@@ -60,36 +60,34 @@ var metar : METAR = new METAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT
 
 METAR Example Object
 ```javascript 
- {
-  "wind": {
-   "direction": 50,
-   "speed": 11,
-   "unit": "KT"
-  },
-  "weather": [
-   {
-    "abbreviation": "BR",
-    "meaning": "mist"
-   }
-  ],
-  "clouds": [
-   {
-    "abbreviation": "OVC",
-    "meaning": "overcast",
-    "altitude": 600,
-    "cumulonimbus": false
-   }
-  ],
-  "type": "METAR",
-  "station": "KJCT",
-  "time": "2021-05-12T09:51:00.570Z",
-  "auto": true,
-  "cavok": false,
-  "visibility": 3,
-  "temperature": -2,
-  "dewpoint": -4,
-  "altimeterInHpa": 30.13
- }
+{
+ "wind": {
+  "direction": 70,
+  "speed": 7,
+  "unit": "KT"
+ },
+ "weather": [
+  {
+   "abbreviation": "+RA",
+   "meaning": "Heavy Rain"
+  }
+ ],
+ "clouds": [
+  {
+   "abbreviation": "OVC",
+   "meaning": "overcast",
+   "altitude": 700
+  }
+ ],
+ "station": "KLQK",
+ "time": "2021-05-12T09:55:00.000Z",
+ "auto": true,
+ "cavok": false,
+ "visibility": 10,
+ "temperature": 3,
+ "dewpoint": 3,
+ "altimeter": 30.05
+}
 ```
 
 # Documentation
