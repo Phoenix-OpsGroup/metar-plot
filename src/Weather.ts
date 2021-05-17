@@ -284,7 +284,7 @@ export const weather: any = {
     "VCSH": { svg: VCSH, text: "Vicinity showers" },
     "TS": { svg: TS, text: "Thunderstorm" },
     "SQ": { svg: SQ, text: "Squall" },
-    "FC": { svg: FC, text: "Funnel Cloud/ Tornado" },
+    "FC": { svg: FC, text: "Funnel Cloud/Tornado"},
     "SS": { svg: SS, text: "Sand/Dust Storm" },
     "+SS": { svg: PLUS_SS, text: "Strong Sand/Dust Storm" },
     "BLSN": { svg: BLSN, text: "Blowing Snow" },

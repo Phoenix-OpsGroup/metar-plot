@@ -1,4 +1,4 @@
-import { METAR } from "../src/Metar"
+import { METAR, parseWeather } from "../src/Metar"
 import { assert } from "chai"
 import * as fs from 'fs';
 
@@ -49,33 +49,16 @@ describe('METAR Parse Tests', () => {
         let keys =
             [
                 [],
-                [{
-                    "abbreviation": "+RA",
-                    "meaning": "Heavy Rain"
-                }],
-                [{
-                    "abbreviation": "BR",
-                    "meaning": "Mist or light fog"
-                },
-                {
-                    "abbreviation": "FC",
-                    "meaning": "Funnel Cloud"
-                }
-                ],
-                [{
-                    "abbreviation": "BR",
-                    "meaning": "Mist or light fog"
-                },
-                {
-                    "abbreviation": "FC",
-                    "meaning": "Funnel Cloud"
-                },
-                {
-                    "abbreviation": "+RA",
-                    "meaning": "Heavy Rain"
-                }
-                ]
+                [{ "abbreviation": "+RA", "meaning": "Heavy Rain" }],
+                [{ "abbreviation": "BR", "meaning": "Mist or light fog" }, { "abbreviation": "FC", "meaning": "Funnel Cloud/Tornado" }],
+                [{ "abbreviation": "BR", "meaning": "Mist or light fog" }, { "abbreviation": "FC", "meaning": "Funnel Cloud/Tornado" }, { "abbreviation": "+RA", "meaning": "Heavy Rain" }]
             ]
+        for (let i = 0; i < metars.length; i++) {
+            let raw = metars[i]
+            let exp = JSON.stringify(keys[i])
+            let rst = JSON.stringify(parseWeather(raw))
+            assert(exp === rst, `Exp is not equal result\nEXP:${exp}\nRST:${rst}`)
+        }
     })
 })
 
