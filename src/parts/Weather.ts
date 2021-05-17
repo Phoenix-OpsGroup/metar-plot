@@ -14,9 +14,15 @@
  */
  export function getWeatherSVG(key: string): string {
     const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
-    return `<svg width="65" height="65" viewBox="0 0 500 500" x="160" y="220">
+    return `<svg width="65" height="65" viewBox="0 0 500 500" x="140" y="220">
                 <style>
                     .wx_text{ 
+                        color: black;
+                        font-size: 400px;
+                        font-family: "Noto Sans";
+                        white-space: pre;
+                    }
+                    .snow{ 
                         color: black;
                         font-size: 300px;
                         font-family: "Noto Sans";
@@ -27,6 +33,7 @@
                         fill: none;
                         stroke-width: 30
                     }
+
                     .wx_graphic_thin {
                         stroke: black;
                         fill: none;
@@ -56,7 +63,7 @@ const FU_VA =
 //Haze
 const HZ =
     `<g id="HZ">
-        <text class="wx_text" x="100" y="365">♾️</text>
+        <text class="snow" x="100" y="365">♾️</text>
     </g>`
 //Dust or Sand
 const DU_SA =
@@ -104,7 +111,7 @@ const VIRGA = ""
 const VCSH =
     `<g id-"VCSS">
         <text class="wx_text" x="50" y="360">( )</text>
-        <circle style="fill: black" cx="180" cy="290" r="50"></circle>
+        <circle style="fill: black" cx="230" cy="260" r="50"></circle>
     </g>`
 //Thunderstorm with or without precipitation
 const TS = ""
@@ -258,21 +265,21 @@ const RASN = ""
 //Light snow
 const MIN_SN =
     `<g id="-SN">
-        <text class="wx_text" x="50" y="460">**</text>
+        <text class="snow" x="50" y="370">**</text>
     </g>
     `
 //Moderate snow
 const SN =
     `<g id="SN">
-        <text class="wx_text" x="50" y="460">**</text>
-        <text class="wx_text" x="120" y="325">*</text>
+        <text class="snow" x="50" y="460">**</text>
+        <text class="snow" x="120" y="325">*</text>
     </g>`
 //Heavy snow
 const PLUS_SN =
     `<g id="+SN">
-        <text class="wx_text" x="50" y="460">**</text>
-        <text class="wx_text" x="120" y="325">*</text>
-        <text class="wx_text" x="120" y="580">*</text>
+        <text class="snow" x="50" y="460">**</text>
+        <text class="snow" x="120" y="325">*</text>
+        <text class="snow" x="120" y="580">*</text>
     </g>`
 //Snow grains
 const SG = ""

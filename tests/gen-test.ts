@@ -24,7 +24,7 @@ before(() => {
 after(() => {
     let content = `
         <div class="container">
-            <div>Plot-data</div><div>Metar</div><div>Raw</div><div>Plot</div>
+            <div>Metar</div><div>Raw</div><div>Plot-data</div><div>Plot 'MERICAN</div><div>Plot Metic</div>
             ${rows}
         </div>
     `
@@ -36,7 +36,8 @@ describe('Generate Images', () => {
         metars.forEach(
             (metar: MetarPlot) => {
                 let svg = metarToSVG(metar, WIDTH, HEIGHT)
-                addRow(metar, svg, undefined)
+                let svgMetar = metarToSVG(metar, WIDTH, HEIGHT)
+                addRow(metar, svg, svgMetar, undefined)
             }
         )
     })
@@ -50,7 +51,8 @@ describe('Generate Images', () => {
                 try {
                     let plot = rawMetarToMetarPlot(metar.raw)
                     let svg = rawMetarToSVG(metar.raw, WIDTH, HEIGHT)
-                    addRow(plot, svg, new METAR(metar.raw), metar.raw)
+                    let svgMetric = rawMetarToSVG(metar.raw, WIDTH, HEIGHT, true)
+                    addRow(plot, svg, svgMetric, new METAR(metar.raw), metar.raw)
                 } catch (error) {
                     errors[metar.raw] = error.message
                 }
@@ -60,8 +62,8 @@ describe('Generate Images', () => {
     })
 })
 
-function addRow(plot: MetarPlot, svg: string, metar?: METAR, raw?: String) {
-    rows += `<pre>${JSON.stringify(plot, null, 1)}</pre><pre>${metar == null ? "" : JSON.stringify(metar, null, 1)}</pre><pre>${raw == null ? "" : JSON.stringify(raw, null, 1)}</pre><pre>${svg}</pre>`
+function addRow(plot: MetarPlot, svg: string, svgMetric: string, metar?: METAR, raw?: String) {
+    rows += `<pre>${JSON.stringify(plot, null, 1)}</pre><pre>${metar == null ? "" : JSON.stringify(metar, null, 1)}</pre><div>${raw ?? ""}</div><pre>${svg}</pre><pre>${svgMetric}</pre>`
 }
 
 function writeHtml(filename: string, content: string) {
@@ -73,7 +75,7 @@ function writeHtml(filename: string, content: string) {
             <style>
                 .container{
                     display: grid;
-                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
                     grid-auto-rows: auto;
                 }
             </style>

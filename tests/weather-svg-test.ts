@@ -1,5 +1,6 @@
 import { getWeatherSVG, WEATHER} from "../src/parts/Weather"
 import * as fs from 'fs';
+import { MetarPlot, metarToSVG } from "../src/MetarPlot";
 
 /**
  * Programatically tests the exsistance of the right svg elements
@@ -27,20 +28,45 @@ describe('Test Weather Icons', () => {
         Object.keys(WEATHER).forEach( 
             (wx) =>
             {
-                addRow(wx, getWeatherSVG(wx))
+                let metar : MetarPlot=
+                {
+                    station: "BLAM",
+                    temp: -12,
+                    dew_point: -12,
+                    wx: wx,
+                    visablity: 9999
+                }
+                addRow(wx, getWeatherSVG(wx), metarToSVG(metar, "150", "150"))
             })
     })
 })
 
-function addRow(wx: string, svg: string) {
-    rows += `<tr><td><pre>${wx}</pre></td><td>${svg}</td></tr>`
+function addRow(wx: string, svg: string, metar: string) {
+
+    rows += `<div>${wx+" : "+WEATHER[wx].text}</div><pre>${svg}</pre><pre>${metar}</pre>`
 }
 
 function writeHtml(filename: string, content: string){
     let html = 
     `<!DOCTYPE html>
     <html lang="en">
-        <head><title></title></head><body>${content}</body>
+        <head>
+            <title>Generated</title>
+            <style>
+                .container{
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-auto-rows: auto;
+                }
+            </style>
+        </head>
+        <body>
+        <div class="container">
+        <div>Weather</div><div>Symbol</div><div>METAR</div>
+        ${content}
+        </div>
+        </body>
     </html>`
+    
     fs.writeFileSync(filename, html);
 }

@@ -5,7 +5,7 @@ import { getWeatherSVG } from "./parts/Weather"
  */
 export class MetarPlot {
     //Visbailiy in SM or m if metric is true
-    public visablity?: number;
+    public visablity?: number | string;
     //temp in C
     public temp?: number;
     //dew point in C
@@ -27,7 +27,7 @@ export class MetarPlot {
     //Flight condition
     public condition?: string;
     //is this plot in metric or 'MERICAN
-    public metric?: string
+    public metric?: boolean 
 }
 
 const GUST_WIDTH = 2;
@@ -42,8 +42,8 @@ const WS_WIDTH = 4;
  * @returns 
  */
 export function rawMetarToSVG(rawMetar: string, width: string, height: string, metric?: boolean): string {
-    let plot = rawMetarToMetarPlot(rawMetar)
-    return metarToSVG(plot, width, height);
+    let plot = rawMetarToMetarPlot(rawMetar, metric)
+    return metarToSVG(plot, width, height,);
 }
 /**
  * 
@@ -56,16 +56,20 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
     let wx = metar.weather.map(weather => weather.abbreviation).join("");
     //Metric converion
     let pressure
-    let vis
+    let vis = undefined
     if(metric){
         pressure = (metar.altimeter != null) ? Math.round(metar.altimeter * 33.86) : undefined
-        vis = (metar.visibility != null) ? Math.round(metar.visibility * 1609.34) : undefined
+        if(metar.visibility != null){
+            let v = Math.round(metar.visibility * 1609.34)
+            vis = v > 9999 ? Math.round(v/1000)+"Km" : v
+        }
     }else{
         pressure = metar.altimeter
         vis = metar.visibility
     }
     
     return { 
+                metric: metric ?? false,
                 visablity: vis,
                 temp: metar.temperature,
                 dew_point: metar.dewpoint,
@@ -85,7 +89,7 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
  * @param height css height for svg
  * @returns 
  */
-export function metarToSVG(metar: MetarPlot, width: string, height: string, metric?: boolean): string {
+export function metarToSVG(metar: MetarPlot, width: string, height: string): string {
     const VIS = metar.visablity ?? ""
     const TMP = metar.temp ?? ""
     const DEW = metar.dew_point ?? ""
@@ -103,11 +107,11 @@ export function metarToSVG(metar: MetarPlot, width: string, height: string, metr
                 ${genWind(metar)}
                 ${getWeatherSVG(metar.wx ?? "")}
                 <g id="text">
-                    <text class="vis txt" fill="#000000" stroke="#000" stroke-width="0" x="80"   y="260" text-anchor="start" xml:space="preserve">${VIS}</text>
-                    <text class="tmp txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="220" text-anchor="start" xml:space="preserve" >${TMP}</text>
-                    <text class="dew txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="315" text-anchor="start" xml:space="preserve">${DEW}</text>
-                    <text class="sta txt" fill="#000000" stroke="#000" stroke-width="0" x="270"  y="315" text-anchor="start" xml:space="preserve">${STA}</text>
-                    <text class="sta txt" fill="#000000" stroke="#000" stroke-width="0" x="270"  y="220"  text-anchor="start" xml:space="preserve">${ALT}</text>
+                    <text class="vis txt" fill="#000000" stroke="#000" stroke-width="0" x="80"   y="260" text-anchor="middle" xml:space="preserve">${VIS}</text>
+                    <text class="tmp txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="220" text-anchor="middle" xml:space="preserve" >${TMP}</text>
+                    <text class="dew txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="315" text-anchor="middle" xml:space="preserve">${DEW}</text>
+                    <text class="sta txt" fill="#000000" stroke="#000" stroke-width="0" x="275"  y="315" text-anchor="start" xml:space="preserve">${STA}</text>
+                    <text class="sta txt" fill="#000000" stroke="#000" stroke-width="0" x="275"  y="220"  text-anchor="start" xml:space="preserve">${ALT}</text>
                 </g>
             </svg>`
 }
