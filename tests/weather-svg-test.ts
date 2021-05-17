@@ -1,4 +1,4 @@
-import { getWeatherSVG, weather} from "../src/Weather"
+import { getWeatherSVG, WEATHER} from "../src/parts/Weather"
 import * as fs from 'fs';
 
 /**
@@ -24,12 +24,11 @@ after(() => {
 
 describe('Test Weather Icons', () => {
     it("icon permutations", () => {
-        Object.keys(weather).forEach( 
+        Object.keys(WEATHER).forEach( 
             (wx) =>
             {
                 addRow(wx, getWeatherSVG(wx))
             })
-        
     })
 })
 
