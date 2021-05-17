@@ -1,4 +1,4 @@
-import { METAR } from "../src/Metar"
+import { METAR, parseClouds, parseWeather, parseAltimeter } from "../src/Metar"
 import { assert } from "chai"
 import * as fs from 'fs';
 
@@ -22,8 +22,8 @@ after(() => {
     fs.writeFileSync("./coverage/parse/results.json", JSON.stringify(results, null, 1))
 })
 
-describe('Test Parse of METARs', () => {
-    it("Parse Tests", () => {
+describe('METAR Parse Tests', () => {
+    it("Parse Test Data", () => {
         let errors: any = {}
         metars.forEach(
             (metar: any) => {
@@ -31,11 +31,71 @@ describe('Test Parse of METARs', () => {
                     let result = new METAR(metar.raw)
                     results.push(result)
                 } catch (error) {
+                    console.log(error)
                     errors[metar.raw] = error.message
                 }
             }
         )
         assert(Object.keys(errors).length === 0, `Error Parsing the following metars:\n${JSON.stringify(errors, null, 1)}`)
+    })
+    it("Parse weather", () => {
+        let metars =
+            [
+                "METAR KVDF 120935Z AUTO RMK AO2 PWINO",
+                "METAR KLQK 120955Z AUTO 07007KT 10SM +RA OVC007 04/04 A3005 RMK AO2 T00370037",
+                "METAR KJCT 120951Z AUTO 05011KT 3SM BR FC OVC006 M02/M04 A3013 RMK AO2 SLP201 I1000 T10221044",
+                "METAR KJCT 120951Z AUTO 05011KT 3SM BR FC +RA OVC006 M02/M04 A3013 RMK AO2 SLP201 I1000 T10221044"
+            ]
+        let keys =
+            [
+                [],
+                [{ "abbreviation": "+RA", "meaning": "Heavy Rain" }],
+                [{ "abbreviation": "BR", "meaning": "Mist or light fog" }, { "abbreviation": "FC", "meaning": "Funnel Cloud/Tornado" }],
+                [{ "abbreviation": "BR", "meaning": "Mist or light fog" }, { "abbreviation": "FC", "meaning": "Funnel Cloud/Tornado" }, { "abbreviation": "+RA", "meaning": "Heavy Rain" }]
+            ]
+        for (let i = 0; i < metars.length; i++) {
+            let exp = JSON.stringify(keys[i])
+            let rst = JSON.stringify(parseWeather(metars[i]))
+            assert(exp === rst, `Exp is not equal result\nEXP:${exp}\nRST:${rst}`)
+        }
+    })
+    it("Parse Clouds", () => {
+        let metars =
+            [
+                "METAR KVDF 120935Z AUTO RMK AO2 PWINO",
+                "METAR KLQK 120955Z AUTO 07007KT 10SM +RA OVC007 04/04 A3005 RMK AO2 T00370037",
+                "METAR KJCT 120951Z AUTO 05011KT 3SM BR OVC006 FEW020 M02/M04 A3013 RMK AO2 SLP201 I1000 T10221044",
+                "METAR KJCT 120951Z AUTO 05011KT 3SM BR OVC006 FEW040 SCT100 M02/M04 A3013 RMK AO2 SLP201 I1000 T10221044"
+            ]
+        let keys =
+            [
+                [],
+                [{ "abbreviation": "OVC", "meaning": "overcast", "altitude": 700 }],
+                [{ "abbreviation": "OVC", "meaning": "overcast", "altitude": 600 }, { "abbreviation": "FEW", "meaning": "few", "altitude": 2000 }],
+                [{ "abbreviation": "OVC", "meaning": "overcast", "altitude": 600 }, { "abbreviation": "FEW", "meaning": "few", "altitude": 4000 }, { "abbreviation": "SCT", "meaning": "scattered", "altitude": 10000 }]
+            ]
+        for (let i = 0; i < metars.length; i++) {
+            let exp = JSON.stringify(keys[i])
+            let rst = JSON.stringify(parseClouds(metars[i]))
+            assert(exp === rst, `Exp is not equal result\nEXP:${exp}\nRST:${rst}`)
+        }
+    })
+    it("Parse pressure", () => {
+        let metars =
+            [
+                "METAR KVDF 120935Z AUTO RMK Q1005 AO2 PWINO",
+                "METAR KLQK 120955Z AUTO 07007KT 10SM +RA OVC007 04/04 A3005 RMK AO2 T00370037"
+            ]
+        let keys =
+            [
+                29.68,
+                30.05
+            ]
+        for (let i = 0; i < metars.length; i++) {
+            let exp = JSON.stringify(keys[i])
+            let rst = JSON.stringify(parseAltimeter(metars[i]))
+            assert(exp === rst, `Exp is not equal result\nEXP:${exp}\nRST:${rst}`)
+        }
     })
 })
 
