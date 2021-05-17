@@ -22,7 +22,7 @@ export class METAR {
     public clouds: Array<Cloud> = new Array<Weather>();
     public temperature?: number;
     public dewpoint?: number;
-    public altimeterInHpa?: number;
+    public altimeter?: number;
     public recentSignificantWeather?: string;
     public recentSignificantWeatherDescription?: string;
     public rvr?: RVR;
@@ -84,6 +84,8 @@ export function parseMetar(metarString: string, ref?: METAR): METAR {
         ref.temperature = temps_ne[0];
         ref.dewpoint = temps_ne[1];
     }
+    //Parse Altimeter
+    ref.altimeter = parseAltimeter(metarString)
     return ref;
 }
 /**
@@ -242,4 +244,17 @@ export function parseWind(metar: string): Wind {
         wind.unit = matches[5]
     }
     return wind
+}
+
+export function parseAltimeter(metar: string): number | undefined{
+    let re = /(A|Q)(\d{2})(\d{2})/g
+    let matches = re.exec(metar)
+    if(matches != null){
+        if(matches[1] === "Q"){
+            let pressure = parseFloat(matches[2]+matches[3]) 
+            return parseFloat((pressure * 0.029529).toFixed(2)) 
+        }else{
+            return parseFloat(matches[2]+"."+matches[3])
+        }
+    }
 }

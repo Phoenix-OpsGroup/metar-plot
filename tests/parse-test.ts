@@ -1,4 +1,4 @@
-import { METAR, parseClouds, parseWeather } from "../src/Metar"
+import { METAR, parseClouds, parseWeather, parseAltimeter } from "../src/Metar"
 import { assert } from "chai"
 import * as fs from 'fs';
 
@@ -77,6 +77,23 @@ describe('METAR Parse Tests', () => {
         for (let i = 0; i < metars.length; i++) {
             let exp = JSON.stringify(keys[i])
             let rst = JSON.stringify(parseClouds(metars[i]))
+            assert(exp === rst, `Exp is not equal result\nEXP:${exp}\nRST:${rst}`)
+        }
+    })
+    it("Parse pressure", () => {
+        let metars =
+            [
+                "METAR KVDF 120935Z AUTO RMK Q1005 AO2 PWINO",
+                "METAR KLQK 120955Z AUTO 07007KT 10SM +RA OVC007 04/04 A3005 RMK AO2 T00370037"
+            ]
+        let keys =
+            [
+                29.68,
+                30.05
+            ]
+        for (let i = 0; i < metars.length; i++) {
+            let exp = JSON.stringify(keys[i])
+            let rst = JSON.stringify(parseAltimeter(metars[i]))
             assert(exp === rst, `Exp is not equal result\nEXP:${exp}\nRST:${rst}`)
         }
     })
