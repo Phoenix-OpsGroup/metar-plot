@@ -8,7 +8,6 @@ const HEIGHT = "150"
  * These Tests always pass they create a sample data to be viewed from the metars.json file
  * in tests/data/metars.json
  */
-
 let rows: string = "";
 let metars: Array<MetarPlot> = require("./data/metars.json")
 let rawMetars: Array<any> = require("./data/rawMetars.json")

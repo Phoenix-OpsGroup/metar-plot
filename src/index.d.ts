@@ -1,4 +1,4 @@
 export { MetarPlot, metarToSVG, rawMetarToSVG } from "./MetarPlot"
-export { METAR } from "./Metar"
-export { getWeatherSVG } from "./Weather"
+export { METAR, parseMetar } from "./Metar"
+export { getWeatherSVG } from "./parts/Weather"
 declare module "metar-plot"

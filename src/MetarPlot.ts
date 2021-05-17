@@ -1,5 +1,5 @@
 import { METAR } from "./Metar";
-import { getWeatherSVG } from "./Weather"
+import { getWeatherSVG } from "./parts/Weather"
 /**
  * Extracted Metar message
  */

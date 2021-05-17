@@ -1,5 +1,47 @@
-//DUST OR SAND
+/**
+ * Weather Descriptor
+ */
+ export class Weather {
+    //Raw data code
+    public abbreviation?: string;
+    //Human readable text
+    public meaning?: string;
+}
+/**
+ * Returns a SVG icon for the weather key provided
+ * @param key weather abbriviation
+ * @returns 
+ */
+ export function getWeatherSVG(key: string): string {
+    const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
+    return `<svg width="65" height="65" viewBox="0 0 500 500" x="160" y="220">
+                <style>
+                    .wx_text{ 
+                        color: black;
+                        font-size: 300px;
+                        font-family: "Noto Sans";
+                        white-space: pre;
+                    }
+                    .wx_graphic {
+                        stroke: black;
+                        fill: none;
+                        stroke-width: 30
+                    }
+                    .wx_graphic_thin {
+                        stroke: black;
+                        fill: none;
+                        stroke-width: 5
+                    }
+                </style>
+                ${weather}
+            </svg>`
+}
 
+/*
+SVG Icons
+*/
+
+//DUST OR SAND
 const sine =
     `<path style="fill: none; stroke: black; stroke-width: 10;" d="M 216.17 233.33 C 215.262 200.358 184.821 179.749 160.469 196.236 C 149.167 203.887 142.205 218.026 142.205 233.33"></path>
   <path style="fill: none; stroke: black; stroke-width: 10;" d="M 293.922 221.457 C 293.922 253.281 260.978 273.173 234.622 257.26 C 222.391 249.874 214.857 236.229 214.857 221.457"></path>`
@@ -267,7 +309,10 @@ const TSGR = ""
 //Thunderstorm with heavy rain
 const PLUS_TSRA = ""
 
-export const weather: any = {
+/**
+ * Map of weather abbriviation to SVG data and Full text
+ */
+ export const WEATHER: any = {
     "FU": { svg: FU_VA, text: "Smoke" },
     "VA": { svg: FU_VA, text: "Volcanic Ash" },
     "HZ": { svg: HZ, text: "Haze" },
@@ -319,27 +364,29 @@ export const weather: any = {
     "PE": { svg: PE_PL, text: "Ice Pellets" },
     "PL": { svg: PE_PL, text: "Ice Pellets" }
 }
-export function getWeatherSVG(key: string): string {
-    const WEATHER = weather[key] != null ? weather[key].svg : "";
-    return `<svg width="65" height="65" viewBox="0 0 500 500" x="160" y="220">
-                <style>
-                    .wx_text{ 
-                        color: black;
-                        font-size: 300px;
-                        font-family: "Noto Sans";
-                        white-space: pre;
-                    }
-                    .wx_graphic {
-                        stroke: black;
-                        fill: none;
-                        stroke-width: 30
-                    }
-                    .wx_graphic_thin {
-                        stroke: black;
-                        fill: none;
-                        stroke-width: 5
-                    }
-                </style>
-                ${WEATHER}
-            </svg>`
-}
+
+const RECENT_WEATHER: any = {
+    REBLSN: "Moderate/heavy blowing snow (visibility significantly reduced)reduced",
+    REDS: "Dust Storm",
+    REFC: "Funnel Cloud",
+    REFZDZ: "Freezing Drizzle",
+    REFZRA: "Freezing Rain",
+    REGP: "Moderate/heavy snow pellets",
+    REGR: "Moderate/heavy hail",
+    REGS: "Moderate/heavy small hail",
+    REIC: "Moderate/heavy ice crystals",
+    REPL: "Moderate/heavy ice pellets",
+    RERA: "Moderate/heavy rain",
+    RESG: "Moderate/heavy snow grains",
+    RESHGR: "Moderate/heavy hail showers",
+    RESHGS: "Moderate/heavy small hail showers",
+    // RESHGS: "Moderate/heavy snow pellet showers", // dual meaning?
+    RESHPL: "Moderate/heavy ice pellet showers",
+    RESHRA: "Moderate/heavy rain showers",
+    RESHSN: "Moderate/heavy snow showers",
+    RESN: "Moderate/heavy snow",
+    RESS: "Sandstorm",
+    RETS: "Thunderstorm",
+    REUP: "Unidentified precipitation (AUTO obs. only)",
+    REVA: "Volcanic Ash",
+};
