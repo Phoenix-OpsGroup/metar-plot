@@ -1,104 +1,12 @@
-import { weather } from "./Weather"
+import { Weather, WEATHER } from "./parts/Weather"
+import { Cloud , CLOUDS} from "./parts/Cloud"
+import { Wind } from "./parts/Wind"
+import { RVR } from "./parts/RVR"
 
-export class Wind {
-    public speed?: number;
-    public gust?: number;
-    public direction?: string | number;
-    public variation?: Variation | boolean;
-    public unit?: string;
-}
-
-export class Variation {
-    public min?: number;
-    public max?: number;
-}
-
-export class Weather {
-    public abbreviation?: string;
-    public meaning?: string;
-}
-
-export class Cloud {
-    public abbreviation?: string;
-    public meaning?: string;
-    public altitude?: number;
-    public cumulonimbus?: boolean;
-}
-
-export class RVR {
-    public runway?: string
-    public direction?: string
-    public seperator?: string
-    public minIndicator?: string
-    public minValue?: string
-    public variableIndicator?: string
-    public maxIndicator?: string
-    public maxValue?: string
-    public trend?: string
-    public unitsOfMeasure?: string
-
-    private re = /(R\d{2})([L|R|C])?(\/)([P|M])?(\d+)(?:([V])([P|M])?(\d+))?([N|U|D])?(FT)?/g;
-
-    constructor(rvrString: string) {
-        var matches;
-        while ((matches = this.re.exec(rvrString)) != null) {
-            if (matches.index === this.re.lastIndex) {
-                this.re.lastIndex++;
-            }
-            this.runway = matches[1]
-            this.direction = matches[2]
-            this.seperator = matches[3]
-            this.minIndicator = matches[4]
-            this.minValue = matches[5]
-            this.variableIndicator = matches[6]
-            this.maxIndicator = matches[7]
-            this.maxValue = matches[8]
-            this.trend = matches[9]
-            this.unitsOfMeasure = matches[10]
-        }
-    }
-}
-
+//Meassage types
 const TYPES = ["METAR", "SPECI"];
 
-const CLOUDS: any = {
-    NCD: "no clouds",
-    SKC: "sky clear",
-    CLR: "no clouds under 12,000 ft",
-    NSC: "no significant",
-    FEW: "few",
-    SCT: "scattered",
-    BKN: "broken",
-    OVC: "overcast",
-    VV: "vertical visibility",
-};
-
-const RECENT_WEATHER: any = {
-    REBLSN: "Moderate/heavy blowing snow (visibility significantly reduced)reduced",
-    REDS: "Dust Storm",
-    REFC: "Funnel Cloud",
-    REFZDZ: "Freezing Drizzle",
-    REFZRA: "Freezing Rain",
-    REGP: "Moderate/heavy snow pellets",
-    REGR: "Moderate/heavy hail",
-    REGS: "Moderate/heavy small hail",
-    REIC: "Moderate/heavy ice crystals",
-    REPL: "Moderate/heavy ice pellets",
-    RERA: "Moderate/heavy rain",
-    RESG: "Moderate/heavy snow grains",
-    RESHGR: "Moderate/heavy hail showers",
-    RESHGS: "Moderate/heavy small hail showers",
-    // RESHGS: "Moderate/heavy snow pellet showers", // dual meaning?
-    RESHPL: "Moderate/heavy ice pellet showers",
-    RESHRA: "Moderate/heavy rain showers",
-    RESHSN: "Moderate/heavy snow showers",
-    RESN: "Moderate/heavy snow",
-    RESS: "Sandstorm",
-    RETS: "Thunderstorm",
-    REUP: "Unidentified precipitation (AUTO obs. only)",
-    REVA: "Volcanic Ash",
-};
-
+//Metar Object
 export class METAR {
     public type?: string
     public correction?: boolean;
@@ -119,6 +27,12 @@ export class METAR {
     public recentSignificantWeatherDescription?: string;
     public rvr?: RVR;
 
+    /**
+     * Extracted Metar data in a human readable format.
+     * @param metarString raw metar string if provided station and time will be ignored and replaced with the content in the raw METAR
+     * @param station staion name for instance creation
+     * @param time time for instance creation
+     */
     constructor(metarString?: string, station?: string, time?: Date) {
         this.station = station ?? "----"
         this.time = time ?? new Date()
@@ -128,6 +42,13 @@ export class METAR {
     }
 }
 
+/**
+ * Parses a raw metar and binds or creates a METAR object
+ * @param metarString Raw METAR string
+ * @param ref Reference to a METAR object. This objects contents will be shallow replaced with the Raw metars values. 
+ *  Meaning values will be updated or added but not removed.
+ * @returns 
+ */
 export function parseMetar(metarString: string, ref?: METAR): METAR {
     let station = parseStation(metarString)
     let time = parseDate(metarString);
@@ -165,6 +86,7 @@ export function parseMetar(metarString: string, ref?: METAR): METAR {
     }
     return ref;
 }
+
 
 export function parseStation(metar: string): string {
     let re = /^(METAR\s)?([A-Z]{1,4})\s/g
@@ -223,7 +145,7 @@ export function parseTempNA(metar: string): [number, number] | undefined {
 }
 
 export function parseWeather(metar: string): Array<Weather> {
-    let obs_keys = Object.keys(weather).join(' | ').replace(/\+/g, "\\+")
+    let obs_keys = Object.keys(WEATHER).join(' | ').replace(/\+/g, "\\+")
     let re = new RegExp(`( ${obs_keys} )`, 'g')
     let matches = metar.match(re)
     if (matches != null) {
@@ -231,7 +153,7 @@ export function parseWeather(metar: string): Array<Weather> {
             let key = match.trim()
             return {
                 abbreviation: key,
-                meaning: weather[key].text
+                meaning: WEATHER[key].text
             }
         })
     } else {
