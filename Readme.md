@@ -95,6 +95,8 @@ METAR Example Object
 Data Types:
    * METAR: Object contains extracted METAR data
       * If your data source is a raw metar and you wish to display human readable values this class will give that data.  This object is displayed in the metar demo. It's definition is found here [Metar.ts](./src/Metar.ts)
+      * Weather codes: [Weather.ts](./src/parts/Weather.ts)
+      * Cloud Codes: [Cloud.ts](./src/parts/Cloud.ts)
    * MetarPlot: Object maps out all data to the svg plot.
       * This allows you to use pre extracted data and map it as you please to the plot.  if you have your own METAR structure and want to map it to the plot use this object. It's definitioncan be found here [MetarPlot.ts](./src/Metar.ts)
 
