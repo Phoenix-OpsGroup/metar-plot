@@ -57,6 +57,8 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
     //Metric converion
     let pressure
     let vis = undefined
+    let temp = metar.temperature
+    let dp = metar.dewpoint
     if(metric){
         pressure = (metar.altimeter != null) ? Math.round(metar.altimeter * 33.86) : undefined
         if(metar.visibility != null){
@@ -64,15 +66,16 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
             vis = v > 9999 ? Math.round(v/1000)+"Km" : v
         }
     }else{
+        temp = cToF(temp)
+        dp = cToF(dp)
         pressure = metar.altimeter
         vis = metar.visibility
     }
-    
     return { 
                 metric: metric ?? false,
                 visablity: vis,
-                temp: metar.temperature,
-                dew_point: metar.dewpoint,
+                temp: temp,
+                dew_point: dp,
                 station: metar.station,
                 wind_direction: (typeof metar.wind.direction === "number") ? metar.wind.direction : undefined,
                 wind_speed: metar.wind.speed,
@@ -241,3 +244,14 @@ function genBarb5(speed: number, gust: boolean): string {
     }
     return brab
 }
+
+/**
+ * Convert ºF to ºF
+ * @param celsius 
+ */
+ function cToF(celsius?: number) : number | undefined
+ {
+     if(celsius != null){
+        return Math.round(celsius * 9 / 5 + 32);
+     }
+ }
