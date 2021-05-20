@@ -178,8 +178,8 @@ export function parseTempNA(metar: string): [number, number] | undefined {
     let re = /(T)(\d{1})(\d{2})(\d{1})(\d{1})(\d{2})(\d{1})/g
     let matches = re.exec(metar)
     if (matches != null) {
-        let temp = parseInt(matches[3] + "." + matches[4]) * (matches[2] === "0" ? 1 : -1)
-        let dew_point = parseInt(matches[6] + "." + matches[7]) * (matches[5] === "0" ? 1 : -1)
+        let temp = parseFloat(matches[3] + "." + matches[4]) * (matches[2] === "0" ? 1 : -1)
+        let dew_point = parseFloat(matches[6] + "." + matches[7]) * (matches[5] === "0" ? 1 : -1)
         return [temp, dew_point]
     }
 }
