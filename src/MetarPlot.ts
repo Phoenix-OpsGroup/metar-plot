@@ -1,4 +1,5 @@
 import { METAR } from "./Metar";
+import { Cloud, CLOUDS } from "./parts/Cloud";
 import { getWeatherSVG } from "./parts/Weather"
 /**
  * Extracted Metar message
@@ -20,12 +21,14 @@ export class MetarPlot {
     public gust_speed?: number;
     //presure in inHg or hPa if metric is true
     public pressure?: number;
-    //CLoud Ceiling in ft
+    //Cloud Ceiling in ft
     public ceiling?: number;
     //Weather condition abbriviation 
     public wx?: string;
     //Flight condition
     public condition?: string;
+    //Prevailing cloud coverage
+    public coverage?: string;
     //is this plot in metric or 'MERICAN
     public metric?: boolean 
 }
@@ -71,6 +74,16 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
         pressure = metar.altimeter
         vis = metar.visibility
     }
+    let prevailingCoverage: Cloud
+    metar.clouds.forEach( (cloud : Cloud) =>{
+        if(prevailingCoverage != null){
+            let curr = CLOUDS[prevailingCoverage.abbreviation]
+            let rank = cloud.abbreviation
+        }
+        
+
+    })
+
     return { 
                 metric: metric ?? false,
                 visablity: vis,
@@ -81,7 +94,8 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
                 wind_speed: metar.wind.speed,
                 gust_speed: metar.wind.gust,
                 wx: wx,
-                pressure: pressure
+                pressure: pressure,
+                coverage: 
             }
 }
 

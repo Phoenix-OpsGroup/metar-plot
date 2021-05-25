@@ -236,7 +236,7 @@ export function parseClouds(metarString: string): Cloud[] {
     while((matches = re.exec(metarString)) != null){
         let cloud: Cloud = {
             abbreviation: matches[1],
-            meaning: CLOUDS[matches[1]],
+            meaning: CLOUDS[matches[1]]?.text,
             altitude: parseInt(matches[2]) * 100
         }
         clouds.push(cloud)
