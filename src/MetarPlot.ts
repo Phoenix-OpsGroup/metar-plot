@@ -30,7 +30,7 @@ export class MetarPlot {
     //Prevailing cloud coverage
     public coverage?: string;
     //is this plot in metric or 'MERICAN
-    public metric?: boolean 
+    public metric?: boolean
 }
 
 const GUST_WIDTH = 2;
@@ -54,7 +54,7 @@ export function rawMetarToSVG(rawMetar: string, width: string, height: string, m
  * @param metric true for metric units(m, hPa, mps), false for north american units (miles, inHg, Kts)
  * @returns 
  */
-export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPlot{
+export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPlot {
     let metar = new METAR(rawMetar);
     let wx = metar.weather.map(weather => weather.abbreviation).join("");
     //Metric converion
@@ -62,41 +62,43 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
     let vis = undefined
     let temp = metar.temperature
     let dp = metar.dewpoint
-    if(metric){
+    if (metric) {
         pressure = (metar.altimeter != null) ? Math.round(metar.altimeter * 33.86) : undefined
-        if(metar.visibility != null){
+        if (metar.visibility != null) {
             let v = Math.round(metar.visibility * 1609.34)
-            vis = v > 9999 ? Math.round(v/1000)+"Km" : v
+            vis = v > 9999 ? Math.round(v / 1000) + "Km" : v
         }
-    }else{
+    } else {
         temp = cToF(temp)
         dp = cToF(dp)
         pressure = metar.altimeter
         vis = metar.visibility
     }
-    let prevailingCoverage: Cloud
-    metar.clouds.forEach( (cloud : Cloud) =>{
-        if(prevailingCoverage != null){
-            let curr = CLOUDS[prevailingCoverage.abbreviation]
-            let rank = cloud.abbreviation
+    //Determine coverage
+    let prevailingCoverage: Cloud = new Cloud()
+    metar.clouds.forEach((cloud: Cloud) => {
+        let curr = prevailingCoverage.abbreviation != null ? CLOUDS[prevailingCoverage.abbreviation] : undefined
+        let rank = cloud.abbreviation != null ? CLOUDS[cloud.abbreviation] : undefined
+        if (curr != null && rank != null) {
+            if (rank > curr) {
+                prevailingCoverage = cloud
+            }
         }
-        
-
     })
 
-    return { 
-                metric: metric ?? false,
-                visablity: vis,
-                temp: temp,
-                dew_point: dp,
-                station: metar.station,
-                wind_direction: (typeof metar.wind.direction === "number") ? metar.wind.direction : undefined,
-                wind_speed: metar.wind.speed,
-                gust_speed: metar.wind.gust,
-                wx: wx,
-                pressure: pressure,
-                coverage: 
-            }
+    return {
+        metric: metric ?? false,
+        visablity: vis,
+        temp: temp,
+        dew_point: dp,
+        station: metar.station,
+        wind_direction: (typeof metar.wind.direction === "number") ? metar.wind.direction : undefined,
+        wind_speed: metar.wind.speed,
+        gust_speed: metar.wind.gust,
+        wx: wx,
+        pressure: pressure,
+        coverage: prevailingCoverage.abbreviation ?? ""
+    }
 }
 
 /**
@@ -116,13 +118,14 @@ export function metarToSVG(metar: MetarPlot, width: string, height: string): str
     return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 500 500">
                 <style>
                     .txt{ font-size: 47.5px; font-family: sans-serif; }
-                    .tmp{ fill: red; }
+                    .tmp{ fill: red }
                     .sta{ fill: grey }
                     .dew{ fill: blue }
                     .vis{ fill: violet }
                 </style>
                 ${genWind(metar)}
                 ${getWeatherSVG(metar.wx ?? "")}
+                ${genCoverage(metar.coverage, metar.condition)}
                 <g id="text">
                     <text class="vis txt" fill="#000000" stroke="#000" stroke-width="0" x="80"   y="260" text-anchor="middle" xml:space="preserve">${VIS}</text>
                     <text class="tmp txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="220" text-anchor="middle" xml:space="preserve" >${TMP}</text>
@@ -131,6 +134,21 @@ export function metarToSVG(metar: MetarPlot, width: string, height: string): str
                     <text class="sta txt" fill="#000000" stroke="#000" stroke-width="0" x="275"  y="220"  text-anchor="start" xml:space="preserve">${ALT}</text>
                 </g>
             </svg>`
+}
+
+
+function genCoverage(coverage?: string, condition?: string): string {
+    if (coverage != null) {
+        return `
+            <style>
+                .coverage{ 
+                    stoke-width: 5;stoke-color: black;
+                }
+            </style>
+            ${CLOUDS[coverage].svg}`
+    } else {
+        return ""
+    }
 }
 
 /**
@@ -263,9 +281,8 @@ function genBarb5(speed: number, gust: boolean): string {
  * Convert ºF to ºF
  * @param celsius 
  */
- function cToF(celsius?: number) : number | undefined
- {
-     if(celsius != null){
+function cToF(celsius?: number): number | undefined {
+    if (celsius != null) {
         return Math.round(celsius * 9 / 5 + 32);
-     }
- }
+    }
+}
