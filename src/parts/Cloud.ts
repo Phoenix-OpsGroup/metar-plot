@@ -12,12 +12,12 @@ export class Cloud {
     public cumulonimbus?: boolean;
 }
 
-const size = "100px";
+const size = 45;
 
 //clear
 const CLR = 
     `<g id="clr">
-        <rect width="${size}" height="${size} class="coverage"/>
+        <rect width="${size}" height="${size}" x="calc(250 - ${size/2})" y="calc(250 - ${size/2})" class="coverage"/>
     </g>`
 
 //Cloud abbreviation map
