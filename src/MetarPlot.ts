@@ -136,7 +136,6 @@ export function metarToSVG(metar: MetarPlot, width: string, height: string): str
             </svg>`
 }
 
-
 function genCoverage(coverage?: string, condition?: string): string {
     if (coverage != null) {
         return `

@@ -12,7 +12,18 @@ export class Cloud {
     public cumulonimbus?: boolean;
 }
 
-const size = 45;
+export const CONDITION: any = {
+    //Visual Flight Rules
+    VFR: "green",
+    //Marginal Visual Flight Rules
+    MVFR: "blue",
+    //Instrument Flight Rules
+    IFR: "red",
+    //Low Instrument flight Rules
+    LIFR: "purple"
+}
+
+const size = 40;
 
 //clear
 const CLR = 
