@@ -75,17 +75,6 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
         pressure = metar.altimeter
         vis = metar.visibility
     }
-    //Determine coverage
-    let prevailingCoverage: Cloud = new Cloud()
-    metar.clouds.forEach((cloud: Cloud) => {
-        let curr = prevailingCoverage.abbreviation != null ? CLOUDS[prevailingCoverage.abbreviation] : undefined
-        let rank = cloud.abbreviation != null ? CLOUDS[cloud.abbreviation] : undefined
-        if (curr != null && rank != null) {
-            if (rank > curr) {
-                prevailingCoverage = cloud
-            }
-        }
-    })
     return {
         metric: metric ?? false,
         visablity: vis,
@@ -97,8 +86,32 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
         gust_speed: metar.wind.gust,
         wx: wx,
         pressure: pressure,
-        coverage: prevailingCoverage.abbreviation ?? ""
+        coverage: determinCoverage(metar)
     }
+}
+
+/**
+ * Determines the coverage symbol
+ * @param metar 
+ * @returns 
+ */
+function determinCoverage(metar: METAR): string {
+    let prevailingCoverage: Cloud | undefined
+    metar.clouds.forEach((cloud: Cloud) => {
+        if (prevailingCoverage != null) {
+            let curr = prevailingCoverage.abbreviation != null ? CLOUDS[prevailingCoverage.abbreviation].rank : undefined
+            let rank = cloud.abbreviation != null ? CLOUDS[cloud.abbreviation].rank : undefined
+            console.log(`cur: ${curr}, rank: ${rank}`)
+            if (rank != null) {
+                if (rank > curr) {
+                    prevailingCoverage = cloud
+                }
+            }
+        }else{
+            prevailingCoverage = cloud;
+        }
+    })
+    return prevailingCoverage?.abbreviation ?? ""
 }
 
 /**
