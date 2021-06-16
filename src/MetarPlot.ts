@@ -1,5 +1,5 @@
 import { METAR } from "./Metar";
-import { Cloud, CLOUDS } from "./parts/Cloud";
+import { Cloud, CLOUDS, genCoverage } from "./parts/Cloud";
 import { getWeatherSVG } from "./parts/Weather"
 /**
  * Extracted Metar message
@@ -48,6 +48,7 @@ export function rawMetarToSVG(rawMetar: string, width: string, height: string, m
     let plot = rawMetarToMetarPlot(rawMetar, metric)
     return metarToSVG(plot, width, height,);
 }
+
 /**
  * 
  * @param rawMetar raw metar string
@@ -85,7 +86,6 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
             }
         }
     })
-
     return {
         metric: metric ?? false,
         visablity: vis,
@@ -134,20 +134,6 @@ export function metarToSVG(metar: MetarPlot, width: string, height: string): str
                     <text class="sta txt" fill="#000000" stroke="#000" stroke-width="0" x="275"  y="220"  text-anchor="start" xml:space="preserve">${ALT}</text>
                 </g>
             </svg>`
-}
-
-function genCoverage(coverage?: string, condition?: string): string {
-    if (coverage != null) {
-        return `
-            <style>
-                .coverage{ 
-                    stoke-width: 5;stoke-color: black;
-                }
-            </style>
-            ${CLOUDS[coverage].svg}`
-    } else {
-        return ""
-    }
 }
 
 /**
