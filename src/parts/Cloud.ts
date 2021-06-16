@@ -76,7 +76,7 @@ export const CLOUDS: any = {
     SCT: {svg: SCT, text: "scattered", rank: 2 },
     BKN: {svg: BRK, text: "broken", rank: 3},
     OVC: {svg: OVC, text: "overcast", rank: 4},
-    VV: {svg: "", text: "vertical visibility", rank: 5},
+    VV: {svg: OVC, text: "vertical visibility", rank: 5},
 };
 
 /**
@@ -87,7 +87,6 @@ export const CLOUDS: any = {
  */
  export function genCoverage(coverage?: string, condition?: string): string {
     if (coverage != null && coverage !== "") {
-        console.log(CLOUDS[coverage])
         return `
             <style>
                 .coverage{ 
