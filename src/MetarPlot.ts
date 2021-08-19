@@ -66,14 +66,13 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
     if (metric) {
         pressure = (metar.altimeter != null) ? Math.round(metar.altimeter * 33.86) : undefined
         if (metar.visibility != null) {
-            let v = Math.round(metar.visibility * 1609.34)
-            vis = v > 9999 ? Math.round(v / 1000) + "Km" : v
+            vis = metar.visibility > 9999 ? 9999 : Math.round(metar.visibility)
         }
     } else {
         temp = cToF(temp)
         dp = cToF(dp)
         pressure = metar.altimeter
-        vis = metar.visibility
+        vis = milePrettyPrint(metar.visibility?? -1)
     }
     return {
         metric: metric ?? false,
@@ -88,6 +87,20 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
         pressure: pressure,
         coverage: determinCoverage(metar)
     }
+}
+
+/**
+ * Pretty print Miles in fractions if under 1 mile
+ */
+function milePrettyPrint(meters: number): string{
+    let print = ""
+    if(meters === -1){
+        return print
+    }
+    let miles = meters * 0.0006213712
+    //round to nearest quarter
+    let text = (Math.round(miles * 4) / 4).toFixed(2).toString()
+    return text.replace(".00", "")
 }
 
 /**
