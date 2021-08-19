@@ -24,7 +24,7 @@ export class METAR {
     public wind: Wind = new Wind();
     //Designated if ceiling & visablility are OK
     public cavok?: boolean;
-    //Visability in Miles
+    //Visability in meters
     public visibility?: number;
     public visibilityVariation?: number;
     public visibilityVariationDirection?: number;
@@ -210,15 +210,30 @@ export function parseWeather(metar: string): Array<Weather> {
  * @returns 
  */
 export function parseVisibility(metar: string): number | undefined {
-    var re = /\s([0-9]{1,2}\/[0-9]{1,2})?([0-9]{1,4})?(SM)?\s/g;
+    var re = /\s([0-9]{1,2})?\s?([0-9]{1}\/[0-9]{1})?(SM)\s|\s([0-9]{1,4})\s/g;
     if (metar.match(re)) {
         let vis_parts = re.exec(metar)
         if (vis_parts != null) {
-            if (vis_parts[1] != null) {
-                return parseFloat(eval(vis_parts[1]))
-            } else {
-                let num = parseInt(vis_parts[2])
-                return vis_parts[3] === "SM" ? num : Math.round(num * 0.000621371)
+            let meters = vis_parts[4]
+            let miles = vis_parts[1];
+            let frac_miles = vis_parts[2]
+            
+            //Metric case ex: 1000, 9999 
+            if(meters != null){
+                return parseInt(meters)
+            }
+            //whole miles case ex: 1SM 10SM
+            else if(frac_miles != null){
+                let total = 0.0;
+                if(miles != null){
+                    total += parseFloat(miles)
+                }
+                total += parseFloat(eval(frac_miles))
+                return total * 1609.34
+            }
+            //factional miles case "1 1/2SM" "1/4SM"
+            else{
+                return parseInt(miles) * 1609.34
             }
         }
     }
