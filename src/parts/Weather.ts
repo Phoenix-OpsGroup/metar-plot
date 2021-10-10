@@ -37,7 +37,7 @@
                     .wx_graphic_thin {
                         stroke: black;
                         fill: none;
-                        stroke-width: 5
+                        stroke-width: 15
                     }
 
                 </style>
@@ -51,6 +51,8 @@ const BRK_DWN_ARW =
     <line class="wx_graphic" x1="350" y1="415" x2="250" y2="415"></line>
     <line class="wx_graphic" x1="350" y1="425" x2="350" y2="315"></line>`
 
+const TRANSFORM = `transform="matrix(1.4,0,0,1.2,-102.2,-30.3)"`
+
 const DWN_TRI = 
     `<polygon style="stroke: black" points="150 160 350 160 250 475"></polygon>`
 /*
@@ -59,8 +61,9 @@ SVG Icons
 
 //DUST OR SAND
 const sine =
-    `<path style="fill: none; stroke: black; stroke-width: 10;" d="M 216.17 233.33 C 215.262 200.358 184.821 179.749 160.469 196.236 C 149.167 203.887 142.205 218.026 142.205 233.33"></path>
-    <path style="fill: none; stroke: black; stroke-width: 10;" d="M 293.922 221.457 C 293.922 253.281 260.978 273.173 234.622 257.26 C 222.391 249.874 214.857 236.229 214.857 221.457"></path>`
+    `<path transform="matrix(1.4,0,0,1.6,-84,-118)" style="fill: none; stroke: black; stroke-width: 10" d="M 232.3 217.2 C 231.4 184.3 201 163.6 176.6 180.1 C 165.3 187.8 158.3 201.9 158.3 217.2"></path>
+    <path transform="matrix(1.4,0,0,1.6,-121,-147)" style="fill: none; stroke: black; stroke-width: 10" d="M 337.1 223.5 C 337.1 255.3 304.1 275.2 277.8 259.3 C 265.6 251.9 258 238.2 258 223.5"></path>    
+`
 //Smoke or volcanic ash
 const FU_VA =
     `<g id="FU_VA">
@@ -251,13 +254,13 @@ const PLUS_DZ =
     </g>`
 //Light freezing drizzle
 const MIN_FZDZ =
-    `<g id="-DZ">
+    `<g id="-DZ" ${TRANSFORM}>
         <text class="wx_text" x="130" y="240">,</text>
         ${sine}
     </g>`
 //Moderate to heavy freezing drizzle
 const FZDZ =
-    `<g id="-DZ">
+    `<g id="-DZ" ${TRANSFORM}>
         <text class="wx_text" x="130" y="240">,,</text>
         ${sine}    
     </g>`
@@ -297,13 +300,13 @@ const PLUS_RA =
     </g>`
 //Light freezing rain
 const MIN_FZRA =
-    `<g id="-RA">
+    `<g id="-RA" transform="matrix(1.4,0,0,1.2,-102.2,-30.3)">
         <text class="wx_text" x="130" y="240">.</text>
         ${sine}
     </g>`
 //Moderate to heavy freezing rain
 const FZRA =
-    `<g id="-RA">
+    `<g id="-RA" ${TRANSFORM}>
     <text class="wx_text" x="130" y="240">..</text>
     ${sine}
     </g>`
