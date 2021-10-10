@@ -57,7 +57,7 @@ const BRK =
 `<g id="few">
     <circle cx="250" cy="250" r="${size}" fill="#00000000" class="coverage"/>
     <circle cx="250" cy="250" r="${size/2}" fill="#00000000" 
-    stroke-dasharray="calc(49 * ${piD} / 100) calc(25 * ${piD} / 100) calc(25 * ${piD} / 100)"
+    stroke-dasharray="calc(49 * ${piD} / 100) calc(26 * ${piD} / 100) calc(25 * ${piD} / 100)"
     class="partial"/>
 </g>`
 // Overcast
