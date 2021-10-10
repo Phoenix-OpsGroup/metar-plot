@@ -147,7 +147,7 @@ export function parseCavok(metar: string): boolean {
     return metar.match(re) != null ? true : false
 }
 /**
- * Parses for Autmnaton
+ * Parses for Automation
  * @param metar raw metar
  * @returns 
  */
