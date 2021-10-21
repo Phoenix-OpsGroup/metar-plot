@@ -34,9 +34,7 @@ describe('Test Weather Icons', () => {
                     temp: -12,
                     dew_point: -12,
                     wx: wx,
-                    wind_direction: 260,
-                    wind_speed: 20,
-                    visablity: 9999
+                    wind_direction: 260
                 }
                 addRow(wx, getWeatherSVG(wx), metarToSVG(metar, "300", "300"))
             })
