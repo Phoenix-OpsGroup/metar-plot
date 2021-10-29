@@ -49,6 +49,11 @@ const BRK_DWN_ARW =
     <line class="wx_graphic" x1="350" y1="415" x2="250" y2="415"></line>
     <line class="wx_graphic" x1="350" y1="425" x2="350" y2="315"></line>`
 
+const RIGHT_ARROW =
+    `<line class="wx_graphic" x1="120" y1="250" x2="430" y2="250"></line>
+    <line class="wx_graphic" x1="380" y1="250" x2="465" y2="250" transform="rotate(-45, 450, 250)"></line>
+    <line class="wx_graphic" x1="380" y1="250" x2="450" y2="250" transform="rotate(45, 450, 250)"></line>`
+
 const TRANSFORM = `transform="matrix(1.4,0,0,1.2,-102.2,-30.3)"`
 
 const DWN_TRI = 
@@ -94,9 +99,7 @@ const PO =
 const VCSS =
     `<g id="VCSS">
         <text class="wx_text" x="50" y="360">($)</text>
-        <line class="wx_graphic_thin" x1="50" y1="250" x2="450" y2="250" ></line>
-        <line class="wx_graphic_thin" x1="450" y1="250" x2="420" y2="230"></line>
-        <line class="wx_graphic_thin" x1="450" y1="250" x2="420" y2="270"></line>
+        ${RIGHT_ARROW}
     </g>`
 //FOG OR SPEACIAL WEATHER
 
@@ -161,9 +164,7 @@ const FC =
 const SS =
     `<g id="SS">
         <text class="wx_text" x="160" y="360">S</text>
-        <line class="wx_graphic_thin" x1="50" y1="250" x2="450" y2="250" ></line>
-        <line class="wx_graphic_thin" x1="450" y1="250" x2="420" y2="230"></line>
-        <line class="wx_graphic_thin" x1="450" y1="250" x2="420" y2="270"></line>
+        ${RIGHT_ARROW}
     </g>`
 //Strong sand or dust storm
 const PLUS_SS =
@@ -173,16 +174,14 @@ const PLUS_SS =
 //Blowing snow
 const BLSN = 
     `<g id="BLSN">
-        <text x="338.947" y="264.945" style="white-space: pre; fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; font-size: 300px;" 
-        transform="matrix(0, -1, 1, 0, 101.453125, 738.945313)">→<tspan x="338.9469909667969" dy="1em">​</tspan></text>
-        <text style="font-size: 300px; font-family: Roboto; white-space: pre;" x="100" y="352.578">→</text>
+        <text x="0" y="350" class="wx_text" transform="rotate(270, 250, 250)">→</text>
+        <text x="50" y="450" class="wx_text">→</text>
     </g>`
 //Drifting snow
 const DRSN = 
     `<g id="DRSN">
-        <text style="font-size: 300px; font-family: Roboto; white-space: pre;" x="100" y="352.578">→</text>
-        <text x="338.947" y="264.945" style="white-space: pre; fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; 
-        font-size: 300px;" transform="matrix(0, 1, -1, 0, 398.546875, -238.945312)">→<tspan x="338.9469909667969" dy="1em">​</tspan></text>
+        <text x="110" y="350" class="wx_text" transform="rotate(90, 250, 250)">→</text>
+        <text x="110" y="400" class="wx_text">→</text>
     </g>
     `
 //FOG//////////////////////////////////////////////
