@@ -119,7 +119,7 @@ const VCTS = `<g id="VCTS">${BRK_DWN_ARW}</g>`
 //Virga or precipitation not hitting ground
 const VIRGA = 
     `<g id="VIGRA">
-        <text transform="matrix(0, -1, 1, 0, 366.40625, 389.09375)" style="fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; font-size: 300px; white-space: pre;" dx="-5.079 -9.094" dy="-40.192 0.51">(●</text>
+        <text transform="matrix(0, -1, 1, 0, 366, 389)" class="wx_text" style="font-size:300px;" dx="-5 -9" dy="-40 0.5">(●</text>
     </g>`
 //Vicinity showers
 const VCSH =
