@@ -33,13 +33,11 @@
                         fill: none;
                         stroke-width: 30
                     }
-
                     .wx_graphic_thin {
                         stroke: black;
                         fill: none;
                         stroke-width: 15
                     }
-
                 </style>
                 ${weather}
             </svg>`
@@ -50,6 +48,11 @@ const BRK_DWN_ARW =
     <line class="wx_graphic" x1="170" y1="245" x2="350" y2="415"></line>
     <line class="wx_graphic" x1="350" y1="415" x2="250" y2="415"></line>
     <line class="wx_graphic" x1="350" y1="425" x2="350" y2="315"></line>`
+
+const RIGHT_ARROW =
+    `<line class="wx_graphic" x1="120" y1="250" x2="430" y2="250"></line>
+    <line class="wx_graphic" x1="380" y1="250" x2="465" y2="250" transform="rotate(-45, 450, 250)"></line>
+    <line class="wx_graphic" x1="380" y1="250" x2="450" y2="250" transform="rotate(45, 450, 250)"></line>`
 
 const TRANSFORM = `transform="matrix(1.4,0,0,1.2,-102.2,-30.3)"`
 
@@ -90,15 +93,13 @@ const BLDU_BLSA =
 //Dust Devil
 const PO = 
     `<g id="PO">
-      <text style="fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; font-size: 250px; white-space: pre;" x="50" y="225">(●)</text>
+      <text class="wx_text" style="font-size: 375px;" x="50" y="360">(●)</text>
     </g>`
 //Vicinity sand storm
 const VCSS =
     `<g id="VCSS">
         <text class="wx_text" x="50" y="360">($)</text>
-        <line class="wx_graphic_thin" x1="50" y1="250" x2="450" y2="250" ></line>
-        <line class="wx_graphic_thin" x1="450" y1="250" x2="420" y2="230"></line>
-        <line class="wx_graphic_thin" x1="450" y1="250" x2="420" y2="270"></line>
+        ${RIGHT_ARROW}
     </g>`
 //FOG OR SPEACIAL WEATHER
 
@@ -121,7 +122,7 @@ const VCTS = `<g id="VCTS">${BRK_DWN_ARW}</g>`
 //Virga or precipitation not hitting ground
 const VIRGA = 
     `<g id="VIGRA">
-        <text transform="matrix(0, -1, 1, 0, 366.40625, 389.09375)" style="fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; font-size: 300px; white-space: pre;" dx="-5.079 -9.094" dy="-40.192 0.51">(●</text>
+        <text transform="matrix(0, -1, 1, 0, 366, 389)" class="wx_text" style="font-size:300px;" dx="-5 -9" dy="-40 0.5">(●</text>
     </g>`
 //Vicinity showers
 const VCSH =
@@ -163,9 +164,7 @@ const FC =
 const SS =
     `<g id="SS">
         <text class="wx_text" x="160" y="360">S</text>
-        <line class="wx_graphic_thin" x1="50" y1="250" x2="450" y2="250" ></line>
-        <line class="wx_graphic_thin" x1="450" y1="250" x2="420" y2="230"></line>
-        <line class="wx_graphic_thin" x1="450" y1="250" x2="420" y2="270"></line>
+        ${RIGHT_ARROW}
     </g>`
 //Strong sand or dust storm
 const PLUS_SS =
@@ -175,16 +174,14 @@ const PLUS_SS =
 //Blowing snow
 const BLSN = 
     `<g id="BLSN">
-        <text x="338.947" y="264.945" style="white-space: pre; fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; font-size: 300px;" 
-        transform="matrix(0, -1, 1, 0, 101.453125, 738.945313)">→<tspan x="338.9469909667969" dy="1em">​</tspan></text>
-        <text style="font-size: 300px; font-family: Roboto; white-space: pre;" x="100" y="352.578">→</text>
+        <text x="0" y="350" class="wx_text" transform="rotate(270, 250, 250)">→</text>
+        <text x="50" y="450" class="wx_text">→</text>
     </g>`
 //Drifting snow
 const DRSN = 
     `<g id="DRSN">
-        <text style="font-size: 300px; font-family: Roboto; white-space: pre;" x="100" y="352.578">→</text>
-        <text x="338.947" y="264.945" style="white-space: pre; fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; 
-        font-size: 300px;" transform="matrix(0, 1, -1, 0, 398.546875, -238.945312)">→<tspan x="338.9469909667969" dy="1em">​</tspan></text>
+        <text x="110" y="350" class="wx_text" transform="rotate(90, 250, 250)">→</text>
+        <text x="110" y="400" class="wx_text">→</text>
     </g>
     `
 //FOG//////////////////////////////////////////////
@@ -192,9 +189,9 @@ const DRSN =
 //Vicinity fog
 const VCFG =
     `<g id="VCFG">
-        <line class="wx_graphic" x1="75" y1="150" x2="425" y2="150"></line>
-        <line class="wx_graphic" x1="75" y1="250" x2="425" y2="250"></line>
-        <line class="wx_graphic" x1="75" y1="350" x2="425" y2="350"></line>
+        <line class="wx_graphic" x1="100" y1="150" x2="400" y2="150"></line>
+        <line class="wx_graphic" x1="100" y1="250" x2="400" y2="250"></line>
+        <line class="wx_graphic" x1="100" y1="350" x2="400" y2="350"></line>
         <path class="wx_graphic" d="M 60 135 C 15 165 15 335 65 365"></path>
         <path class="wx_graphic" d="M 435 135 C 485 150 500 345 435 365"></path>
     </g>`
@@ -340,9 +337,9 @@ const SN =
 //Heavy snow
 const PLUS_SN =
     `<g id="+SN">
-        <text class="snow" x="50" y="460">**</text>
-        <text class="snow" x="120" y="325">*</text>
-        <text class="snow" x="120" y="580">*</text>
+        <text class="snow" x="50" y="420">**</text>
+        <text class="snow" x="120" y="285">*</text>
+        <text class="snow" x="120" y="540">*</text>
     </g>`
 //Snow grains
 const SG = 
