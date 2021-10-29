@@ -44,19 +44,21 @@ describe('METAR Parse Tests', () => {
                 "METAR KVDF 120935Z AUTO RMK AO2 PWINO",
                 "METAR KLQK 120955Z AUTO 07007KT 10SM +RA OVC007 04/04 A3005 RMK AO2 T00370037",
                 "METAR KJCT 120951Z AUTO 05011KT 3SM BR FC OVC006 M02/M04 A3013 RMK AO2 SLP201 I1000 T10221044",
-                "METAR KJCT 120951Z AUTO 05011KT 3SM BR FC +RA OVC006 M02/M04 A3013 RMK AO2 SLP201 I1000 T10221044"
+                "METAR KJCT 120951Z AUTO 05011KT 3SM BR FC +RA OVC006 M02/M04 A3013 RMK AO2 SLP201 I1000 T10221044",
+                "METAR KBAZ 120951Z AUTO 02015G22KT 1/2SM -FZRA SCT007 A3011 RMK AO2 PK WND 02027/0922 RAB25E32FZRAB32 SLPNO P0000 I1002 $"
             ]
         let keys =
             [
                 [],
                 [{ "abbreviation": "+RA", "meaning": "Heavy Rain" }],
                 [{ "abbreviation": "BR", "meaning": "Mist or light fog" }, { "abbreviation": "FC", "meaning": "Funnel Cloud/Tornado" }],
-                [{ "abbreviation": "BR", "meaning": "Mist or light fog" }, { "abbreviation": "FC", "meaning": "Funnel Cloud/Tornado" }, { "abbreviation": "+RA", "meaning": "Heavy Rain" }]
+                [{ "abbreviation": "BR", "meaning": "Mist or light fog" }, { "abbreviation": "FC", "meaning": "Funnel Cloud/Tornado" }, { "abbreviation": "+RA", "meaning": "Heavy Rain" }],
+                [{ "abbreviation": "-FZRA", "meaning": "Light Freezing Rain"}]
             ]
         for (let i = 0; i < metars.length; i++) {
             let exp = JSON.stringify(keys[i])
             let rst = JSON.stringify(parseWeather(metars[i]))
-            assert(exp === rst, `Exp is not equal result\nEXP:${exp}\nRST:${rst}`)
+            assert(exp === rst, `Exp is not equal result\nMEATR: ${metars[i]}\nEXP:${exp}\nRST:${rst}`)
         }
     })
     it("Parse Clouds", () => {
