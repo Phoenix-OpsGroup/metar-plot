@@ -88,7 +88,7 @@ const BLDU_BLSA =
 //Dust Devil
 const PO = 
     `<g id="PO">
-      <text style="fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; font-size: 250px; white-space: pre;" x="50" y="225">(●)</text>
+      <text class="wx_text" style="font-size: 375px;" x="50" y="360">(●)</text>
     </g>`
 //Vicinity sand storm
 const VCSS =
