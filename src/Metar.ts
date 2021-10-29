@@ -2,6 +2,7 @@ import { Weather, WEATHER } from "./parts/Weather"
 import { Cloud , CLOUDS} from "./parts/Cloud"
 import { Wind } from "./parts/Wind"
 import { RVR } from "./parts/RVR"
+import { Console } from "console";
 
 //Meassage types
 const TYPES = ["METAR", "SPECI"];
@@ -190,7 +191,7 @@ export function parseTempNA(metar: string): [number, number] | undefined {
  */
 export function parseWeather(metar: string): Array<Weather> {
     let obs_keys = Object.keys(WEATHER).join('|').replace(/\+/g, "\\+")
-    let re = new RegExp(` (${obs_keys})`, 'g')
+    let re = new RegExp(`\\s?(${obs_keys})\\s`, 'g')
     let matches = metar.match(re)
     if (matches != null) {
         return matches.map(match => {
