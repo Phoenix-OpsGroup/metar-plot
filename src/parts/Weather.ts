@@ -33,13 +33,11 @@
                         fill: none;
                         stroke-width: 30
                     }
-
                     .wx_graphic_thin {
                         stroke: black;
                         fill: none;
                         stroke-width: 15
                     }
-
                 </style>
                 ${weather}
             </svg>`
@@ -192,9 +190,9 @@ const DRSN =
 //Vicinity fog
 const VCFG =
     `<g id="VCFG">
-        <line class="wx_graphic" x1="75" y1="150" x2="425" y2="150"></line>
-        <line class="wx_graphic" x1="75" y1="250" x2="425" y2="250"></line>
-        <line class="wx_graphic" x1="75" y1="350" x2="425" y2="350"></line>
+        <line class="wx_graphic" x1="100" y1="150" x2="400" y2="150"></line>
+        <line class="wx_graphic" x1="100" y1="250" x2="400" y2="250"></line>
+        <line class="wx_graphic" x1="100" y1="350" x2="400" y2="350"></line>
         <path class="wx_graphic" d="M 60 135 C 15 165 15 335 65 365"></path>
         <path class="wx_graphic" d="M 435 135 C 485 150 500 345 435 365"></path>
     </g>`
@@ -340,9 +338,9 @@ const SN =
 //Heavy snow
 const PLUS_SN =
     `<g id="+SN">
-        <text class="snow" x="50" y="460">**</text>
-        <text class="snow" x="120" y="325">*</text>
-        <text class="snow" x="120" y="580">*</text>
+        <text class="snow" x="50" y="420">**</text>
+        <text class="snow" x="120" y="285">*</text>
+        <text class="snow" x="120" y="540">*</text>
     </g>`
 //Snow grains
 const SG = 
