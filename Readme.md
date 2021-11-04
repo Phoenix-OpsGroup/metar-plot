@@ -19,7 +19,7 @@ npm install metar-plot
 Javascript
 ```javascript
 import metar_plot from 'metar-plot';
-const { METAR, metarToSVG, rawMetarToSVG } = metar_plot;
+const { METAR, metarToSVG, rawMetarToSVG, getWeatherLegend, genWind, WEATHER } = metar_plot;
 
 var metarPlot = 
 {
@@ -35,12 +35,15 @@ var svg1 = metarToSVG(metarPlot, "100", "100")
 var svg2 = rawMetarToSVG("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006", "100", "100")
 
 var metar = new METAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006")
+
+var weather = WEATHER["VCSH"]
+var weatherSymbol = getWeatherLegend("VCSH");
 ```
 
 TypeScript
 
 ```typescript
-import { METAR, MetarPlot, metarToSVG, rawMetarToSVG } from "metar-plot"
+import { METAR, MetarPlot, metarToSVG, rawMetarToSVG, getWeatherLegend, genWind, WEATHER } from "metar-plot"
 
 var metarPlot : MetarPlot = 
 {
@@ -56,37 +59,46 @@ var svg1 : string = metarToSVG(metarPlot, "100", "100")
 var svg2 : string = rawMetarToSVG("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006", "100", "100")
 
 var metar : METAR = new METAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006")
+
+var weather : string = WEATHER["VCSH"]
+var weatherSymbol : string = getWeatherLegend("VCSH");
+
 ```
 
 METAR Example Object
 ```javascript 
 {
- "wind": {
-  "direction": 70,
-  "speed": 7,
-  "unit": "KT"
- },
- "weather": [
-  {
-   "abbreviation": "+RA",
-   "meaning": "Heavy Rain"
-  }
- ],
- "clouds": [
-  {
-   "abbreviation": "OVC",
-   "meaning": "overcast",
-   "altitude": 700
-  }
- ],
- "station": "KLQK",
- "time": "2021-05-12T09:55:00.000Z",
- "auto": true,
- "cavok": false,
- "visibility": 10,
- "temperature": 3,
- "dewpoint": 3,
- "altimeter": 30.05
+   "wind": {
+      "direction": 350,
+      "speed": 6,
+      "unit": "KT"
+   },
+   "weather": [
+      {
+         "abbreviation": "VCSH",
+         "meaning": "Vicinity showers"
+      }
+   ],
+   "clouds": [
+      {
+         "abbreviation": "FEW",
+         "meaning": "few",
+         "altitude": 1800
+      },
+      {
+         "abbreviation": "BKN",
+         "meaning": "broken",
+         "altitude": 3600
+      }
+   ],
+   "station": "EGCC",
+   "time": "2021-11-03T17:20:00.000Z",
+   "auto": false,
+   "cavok": false,
+   "visibility": 9999,
+   "temperature": 8,
+   "dewpoint": 6,
+   "altimeter": 29.79
 }
 ```
 

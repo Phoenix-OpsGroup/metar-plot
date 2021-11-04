@@ -7,14 +7,49 @@
     //Human readable text
     public meaning?: string;
 }
+
 /**
- * Returns a SVG icon for the weather key provided
+ * Depricated - for internal use only please use getWeatherLegend(key: string)
  * @param key weather abbriviation
  * @returns 
  */
- export function getWeatherSVG(key: string): string {
+export function getWeatherSVG(key: string): string {
     const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
-    return `<svg width="65" height="65" viewBox="0 0 500 500" x="140" y="220">
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500" x="140" y="220">
+                <style>
+                    .wx_text{ 
+                        color: black;
+                        font-size: 400px;
+                        font-family: "Noto Sans";
+                        white-space: pre;
+                    }
+                    .snow{ 
+                        color: black;
+                        font-size: 300px;
+                        font-family: "Noto Sans";
+                        white-space: pre;
+                    }
+                    .wx_graphic {
+                        stroke: black;
+                        fill: none;
+                        stroke-width: 30
+                    }
+                    .wx_graphic_thin {
+                        stroke: black;
+                        fill: none;
+                        stroke-width: 15
+                    }
+                </style>
+                ${weather}
+            </svg>`
+}
+/**
+ * Returns SVG icon 
+ * @param key weather abbriviation
+ */
+export function getWeatherLegend(key: string){
+    const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500">
                 <style>
                     .wx_text{ 
                         color: black;

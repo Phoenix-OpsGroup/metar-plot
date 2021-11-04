@@ -54,7 +54,7 @@ describe('Generate Images', () => {
                     let svgMetric = rawMetarToSVG(metar.raw, WIDTH, HEIGHT, true)
                     addRow(plot, svg, svgMetric, new METAR(metar.raw), metar.raw)
                 } catch (error) {
-                    errors[metar.raw] = error.message
+                    errors[metar.raw] = error
                 }
             }
         )
