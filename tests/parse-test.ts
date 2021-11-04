@@ -32,7 +32,7 @@ describe('METAR Parse Tests', () => {
                     results.push(result)
                 } catch (error) {
                     console.log(error)
-                    errors[metar.raw] = error.message
+                    errors[metar.raw] = error
                 }
             }
         )
