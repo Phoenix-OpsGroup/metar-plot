@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="500.0px"
+   height="500.0px"
+   viewBox="0 0 500.0 500.0"
+   version="1.1"
+   id="SVGRoot"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs327" />
+  <g id="+RA">
+    <ellipse
+       style="fill:#000000"
+       cx="140"
+       cy="250"
+       rx="80"
+       ry="80" />
+    <ellipse
+       style="fill:#000000"
+       cx="250"
+       cy="100"
+       rx="80"
+       ry="80" />
+    <ellipse
+       style="fill:#000000"
+       cx="250"
+       cy="400"
+       rx="80"
+       ry="80" />
+    <ellipse
+       style="fill:#000000"
+       cx="360"
+       cy="250"
+       rx="80"
+       ry="80" />
+  </g>
+</svg>

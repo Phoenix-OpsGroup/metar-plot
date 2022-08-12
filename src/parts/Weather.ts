@@ -1,7 +1,7 @@
 /**
  * Weather Descriptor
  */
- export class Weather {
+export class Weather {
     //Raw data code
     public abbreviation?: string;
     //Human readable text
@@ -47,7 +47,7 @@ export function getWeatherSVG(key: string): string {
  * Returns SVG icon 
  * @param key weather abbriviation
  */
-export function getWeatherLegend(key: string){
+export function getWeatherLegend(key: string) {
     const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
     return `<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500">
                 <style>
@@ -78,7 +78,7 @@ export function getWeatherLegend(key: string){
             </svg>`
 }
 
-const BRK_DWN_ARW = 
+const BRK_DWN_ARW =
     `<line class="wx_graphic" x1="350" y1="50" x2="175" y2="250"></line>
     <line class="wx_graphic" x1="170" y1="245" x2="350" y2="415"></line>
     <line class="wx_graphic" x1="350" y1="415" x2="250" y2="415"></line>
@@ -91,7 +91,40 @@ const RIGHT_ARROW =
 
 const TRANSFORM = `transform="matrix(1.4,0,0,1.2,-102.2,-30.3)"`
 
-const DWN_TRI = 
+const COMMA =
+    `<ellipse
+      style="fill:#000000;"
+      cx="238"
+      cy="178"
+      rx="88"
+      ry="87" />
+    <path
+      style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:37;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+      d="m 174,335 c 9,2 19,3 30,3 h 2 c 56,0 101,-34 101,-76 v -68 c 0,-42 -45,-76 -101,-76 h -2" />`
+
+const STAR =
+    `<rect
+        style="fill:#000000"
+        width="50"
+        height="350"
+        x="225"
+        y="-25" />
+    <rect
+        style="fill:#000000"
+        width="50"
+        height="350"
+        x="235"
+        y="-300"
+        transform="rotate(55)" />
+    <rect
+        style="fill:#000000"
+        width="50"
+        height="350"
+        x="-10"
+        y="115"
+        transform="rotate(-55)" />`
+
+const DWN_TRI =
     `<polygon style="stroke: black" points="150 160 350 160 250 475"></polygon>`
 /*
 SVG Icons
@@ -99,9 +132,15 @@ SVG Icons
 
 //DUST OR SAND
 const sine =
-    `<path transform="matrix(1.4,0,0,1.6,-84,-118)" style="fill: none; stroke: black; stroke-width: 10" d="M 232.3 217.2 C 231.4 184.3 201 163.6 176.6 180.1 C 165.3 187.8 158.3 201.9 158.3 217.2"></path>
-    <path transform="matrix(1.4,0,0,1.6,-121,-147)" style="fill: none; stroke: black; stroke-width: 10" d="M 337.1 223.5 C 337.1 255.3 304.1 275.2 277.8 259.3 C 265.6 251.9 258 238.2 258 223.5"></path>    
-`
+    `<g>
+        <path
+            style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:35.986;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+            d="m 430.81439,229.48773 a 86.991272,90.886406 0 0 1 -43.49564,78.70994 86.991272,90.886406 0 0 1 -86.99127,0 86.991272,90.886406 0 0 1 -43.49563,-78.70994" />
+        <path
+            style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:35.986;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+            d="m -81.371765,-231.72963 a 86.991272,90.886406 0 0 1 -43.495635,78.70994 86.991272,90.886406 0 0 1 -86.99128,0 86.991272,90.886406 0 0 1 -43.49563,-78.70994"
+            transform="rotate(179.57901)" />
+    </g>`
 //Smoke or volcanic ash
 const FU_VA =
     `<g id="FU_VA">
@@ -126,9 +165,14 @@ const BLDU_BLSA =
         <text class="wx_text" x="160" y="360">$</text>
     </g>`
 //Dust Devil
-const PO = 
+const PO =
     `<g id="PO">
-      <text class="wx_text" style="font-size: 375px;" x="50" y="360">(●)</text>
+        <path
+            style="fill:none;stroke:#000000;stroke-width:30;paint-order:markers stroke fill"
+            d="M 371.02339,260.54119 327.623,186.08416 175.04878,186.71893 99.310495,319.1701 l 76.835945,131.81445 152.57421,-0.63281 42.2129,-73.82227" />
+        <path
+            style="fill:none;stroke:#000000;stroke-width:30;paint-order:markers stroke fill"
+            d="M 369.42563,141.09136 326.02524,66.634336 173.45102,67.269101 97.712737,199.72027 174.54868,331.53472 327.1229,330.90191 369.33579,257.07964" />
     </g>`
 //Vicinity sand storm
 const VCSS =
@@ -155,18 +199,39 @@ const MIFG =
 //Vicinity thunderstorm
 const VCTS = `<g id="VCTS">${BRK_DWN_ARW}</g>`
 //Virga or precipitation not hitting ground
-const VIRGA = 
+const VIRGA =
     `<g id="VIGRA">
-        <text transform="matrix(0, -1, 1, 0, 366, 389)" class="wx_text" style="font-size:300px;" dx="-5 -9" dy="-40 0.5">(●</text>
+        <ellipse
+            style="fill:#000000"
+            cx="250"
+            cy="250"
+            rx="80"
+            ry="80"/>
+        <path
+            style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:23.9684;stroke-opacity:1;"
+            d="M 417.45609,310.56368 A 183.93169,191.03438 26.298753 0 1 242.57816,413.45797 183.93169,191.03438 26.298753 0 1 78.722257,305.22703" />
     </g>`
 //Vicinity showers
 const VCSH =
-    `<g id="VCSS">
-        <text class="wx_text" x="50" y="360">( )</text>
-        <circle style="fill: black" cx="230" cy="260" r="50"></circle>
+    `<g id="VCSH"">
+        <ellipse
+            style="fill:#000000"
+            cx="250"
+            cy="250"
+            rx="80"
+            ry="80" />
+        <path
+            style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:25;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+            d="M 390,200 A 195,190 0 0 1 195,150 195,190 0 0 1 145,-40"
+            transform="matrix(0.72275549,0.69110383,-0.68757001,0.72611809,0,0)" />
+        <path
+            style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:23.9727;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+            id="path726-8"
+            d="M -285,225 A 190,185 0 0 1 -485,185 190,185 0 0 1 -540,-5"
+            transform="matrix(-0.65479651,-0.75580522,0.77314866,-0.63422485,0,0)"/>
     </g>`
 //Thunderstorm with or without precipitation
-const TS = 
+const TS =
     `<g id="TS">
         ${BRK_DWN_ARW}
         <line class="wx_graphic" x1="355" y1="50" x2="50" y2="50"></line>
@@ -174,7 +239,7 @@ const TS =
     </g>
     `
 //Squalls
-const SQ = 
+const SQ =
     `<g id="SQ">
         <line class="wx_graphic" x1="250" y1="450" x2="150" y2="50"></line>
         <line class="wx_graphic" x1="150" y1="50" x2="250" y2="125"></line>
@@ -182,7 +247,7 @@ const SQ =
         <line class="wx_graphic" x1="350" y1="50" x2="250" y2="450"></line>
     </g>`
 //Funnel cloud or tornado
-const FC = 
+const FC =
     `<g id="FC">
         <line class="wx_graphic" x1="200" y1="100" x2="200" y2="400"></line>
         <line class="wx_graphic" x1="300" y1="100" x2="300" y2="400"></line>
@@ -207,13 +272,13 @@ const PLUS_SS =
         <text class="wx_text" x="160" y="360">S</text>
     </g>`
 //Blowing snow
-const BLSN = 
+const BLSN =
     `<g id="BLSN">
         <text x="0" y="350" class="wx_text" transform="rotate(270, 250, 250)">→</text>
         <text x="50" y="450" class="wx_text">→</text>
     </g>`
 //Drifting snow
-const DRSN = 
+const DRSN =
     `<g id="DRSN">
         <text x="110" y="350" class="wx_text" transform="rotate(90, 250, 250)">→</text>
         <text x="110" y="400" class="wx_text">→</text>
@@ -269,45 +334,59 @@ const FZFG =
 //Light drizzle
 const MIN_DZ =
     `<g id="-DZ">
-        <text class="wx_text" x="130" y="240">,,</text>
+        <g transform="matrix(0.6,0,0,0.6,20,114)">${COMMA}</g>
+        <g transform="matrix(0.6,0,0,0.6,203,114)">${COMMA}</g>
     </g>`
 //Moderate drizzle
 const DZ =
-    `<g id="RA">
-        <text class="wx_text" x="130" y="285">,,</text>
-        <text class="wx_text" x="170" y="175">,</text>
+    `<g id="DZ">
+        <g transform="matrix(0.6,0,0,0.6,18,158)">${COMMA}</g>
+        <g transform="matrix(0.6,0,0,0.6,201,158)">${COMMA}</g>
+        <g transform="matrix(0.6,0,0,0.6,106,12)">${COMMA}</g>
     </g>`
 //Heavy drizzle
 const PLUS_DZ =
-    `<g id="RA">
-        <text class="wx_text" x="130" y="240">,,</text>
-        <text class="wx_text" x="170" y="145">,</text>
-        <text class="wx_text" x="170" y="320">,</text>
+    `<g id="+DZ">
+        <g transform="matrix(0.6,0,0,0.6,20,114)">${COMMA}</g>
+        <g transform="matrix(0.6,0,0,0.6,203,114)">${COMMA}</g>
+        <g transform="matrix(0.6,0,0,0.6,108,-31)">${COMMA}</g>
+        <g transform="matrix(0.6,0,0,0.6,108,261)">${COMMA}</g>
     </g>`
 //Light freezing drizzle
 const MIN_FZDZ =
-    `<g id="-DZ" ${TRANSFORM}>
-        <text class="wx_text" x="130" y="240">,</text>
+    `<g id="-FZDZ">
+        <g transform="matrix(0.6,0,0,0.6,28,136)">${COMMA}</g>
         ${sine}
     </g>`
 //Moderate to heavy freezing drizzle
 const FZDZ =
-    `<g id="-DZ" ${TRANSFORM}>
-        <text class="wx_text" x="130" y="240">,,</text>
+    `<g id="-DZ">
+        <g transform="matrix(0.6,0,0,0.6,28,136)">${COMMA}</g>
+        <g transform="matrix(0.6,0,0,0.6,204,66)">${COMMA}</g>
         ${sine}    
     </g>`
 //Light drizzle and rain
-const MIN_DZRA = 
-    `<g id="MIN_DZRA>
-        <text style="fill: rgb(51, 51, 51); font-family: Georgia; font-size: 300px; white-space: pre;" x="198.442" y="348.054" dx="0.743" dy="-39.081">,</text>
-        <text style="fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; font-size: 100px; white-space: pre;" x="313.598" y="154.93" dx="-105.782" dy="92.343">●</text>
+const MIN_DZRA =
+    `<g id="-DZRA">
+        <g transform="matrix(0.6,0,0,0.6,107,193)">${COMMA}</g>
+        <ellipse
+            style="fill:#000000"
+            cx="250"
+            cy="150"
+            rx="50"
+            ry="55"/>
     </g>`
 //Moderate to heavy drizzle and rain
-const DZRA = 
-    `<g id="MIN_DZRA>
-        <text x="198.442" y="348.054" style="white-space: pre; fill: rgb(51, 51, 51); font-family: &quot;Georgia&quot;; font-size: 300px;">,</text>
-        <text style="fill: rgb(51, 51, 51); font-family: Georgia; font-size: 300px; white-space: pre;" x="200.662" y="301.835" dx="-0.441" dy="-136.772">,</text>
-        <text style="fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; font-size: 100px; white-space: pre;" x="313.598" y="154.93" dx="-106.683" dy="133.71">●</text>
+const DZRA =
+    `<g id="DZRA" transform="matrix(1,0,0,0.9,0.6,120)">
+        <g transform="matrix(0.6,0,0,0.6,105,170)">${COMMA}</g>
+        <g transform="matrix(0.6,0,0,0.6,105,-140)">${COMMA}</g>
+        <ellipse
+            style="fill:#000000"
+            cx="250"
+            cy="150"
+            rx="50"
+            ry="55"/>
     </g>`
 
 //RAIN
@@ -315,83 +394,158 @@ const DZRA =
 //Light rain
 const MIN_RA =
     `<g id="-RA">
-        <text class="wx_text" x="130" y="240">..</text>
+        <ellipse
+            style="fill:#00000"
+            cx="130"
+            cy="245"
+            rx="80"
+            ry="80" />
+        <ellipse
+            style="fill:#000000"
+            cx="370"
+            cy="245"
+            rx="80"
+            ry="80" />
     </g>`
 //Moderate rain
 const RA =
     `<g id="RA">
-        <text class="wx_text" x="130" y="285">..</text>
-        <text class="wx_text" x="170" y="175">.</text>
+        <ellipse
+            style="fill:#000000"
+            cx="135"
+            cy="355"
+            rx="80"
+            ry="80" />
+        <ellipse
+            style="fill:#000000"
+            cx="250"
+            cy="145"
+            rx="80"
+            ry="80" />
+        <ellipse
+            style="fill:#000000"
+            cx="365"
+            cy="355"
+            rx="80"
+            ry="80" />
     </g>`
 //Heavy rain
 const PLUS_RA =
-    `<g id="RA">
-        <text class="wx_text" x="130" y="240">..</text>
-        <text class="wx_text" x="170" y="145">.</text>
-        <text class="wx_text" x="170" y="320">.</text>
+    `<g id="+RA">
+        <ellipse
+            style="fill:#000000"
+            cx="140"
+            cy="250"
+            rx="80"
+            ry="80" />
+        <ellipse
+            style="fill:#000000"
+            cx="250"
+            cy="100"
+            rx="80"
+            ry="80" />
+        <ellipse
+            style="fill:#000000"
+            cx="250"
+            cy="400"
+            rx="80"
+            ry="80" />
+        <ellipse
+            style="fill:#000000"
+            cx="360"
+            cy="250"
+            rx="80"
+            ry="80" />
     </g>`
 //Light freezing rain
 const MIN_FZRA =
-    `<g id="-RA" transform="matrix(1.4,0,0,1.2,-102.2,-30.3)">
-        <text class="wx_text" x="130" y="240">.</text>
+    `<g id="-FZRA">
+        <ellipse
+            style="fill:#000000"
+            cx="170"
+            cy="250"
+            rx="50"
+            ry="55"/>
         ${sine}
     </g>`
 //Moderate to heavy freezing rain
 const FZRA =
-    `<g id="-RA" ${TRANSFORM}>
-    <text class="wx_text" x="130" y="240">..</text>
-    ${sine}
+    `<g id="FZRA">
+        <ellipse
+            style="fill:#000000"
+            cx="170"
+            cy="250"
+            rx="50"
+            ry="55"/>
+        <ellipse
+            style="fill:#000000"
+            cx="345"
+            cy="215"
+            rx="50"
+            ry="55"/>
+        ${sine}
     </g>`
 //Light rain and snow
-const MIN_RASN =
-    `<g id="MIN_RASN">
-        <text style="fill: rgb(51, 51, 51); font-family: Georgia; font-size: 200px; white-space: pre;" x="198.442" y="348.054" dx="-0.648" dy="82.18">*</text>
-        <text style="fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; font-size: 200px; white-space: pre;" x="313.598" y="154.93" dx="-129.822" dy="98.015">●</text>
+const MIN_RASN = 
+    `<g id="-RASN" transform="translate(-0.45,160)">
+        <g transform="matrix(0.45,0,0,0.4,140,140)">${STAR}</g>
+        <ellipse
+            style="fill:#000000"
+            cx="250"
+            cy="-15"
+            rx="70"
+            ry="70" />
     </g>`
 //Moderate to heavy rain and snow
-const RASN = 
-    `<g id="RASN">
-        <text style="fill: rgb(51, 51, 51); font-family: Georgia; font-size: 200px; white-space: pre;" x="198.442" y="348.054" dx="6.111" dy="137.208">*</text>
-        <text style="fill: rgb(51, 51, 51); font-family: &quot;Roboto Slab&quot;; font-size: 200px; white-space: pre;" x="313.598" y="154.93" dx="-124.964" dy="158.382">●</text>
-        <text transform="matrix(1, 0, 0, 1, 11.82478, 80.656288)" style="fill: rgb(51, 51, 51); font-family: Georgia; font-size: 200px; white-space: pre;" x="198.442" y="348.054" dx="-10.654" dy="-182.434">*</text>
+const RASN =
+    `<g id="RASN" transform="translate(-0.43,155)">
+        <g transform="matrix(0.45,0,0,0.4,140,200)">${STAR}</g>
+        <g transform="matrix(0.45,0,0,0.4,140,-130)">${STAR}</g>
+        <ellipse
+            cx="250"
+            cy="95"
+            rx="70"
+            ry="70" />
     </g>`
 //SNOW and MISC FROZEN PERCIP
 
 //Light snow
 const MIN_SN =
-    `<g id="-SN">
-        <text class="snow" x="50" y="370">**</text>
-    </g>
-    `
+    `<g id="-SN" transform="translate(-0.435,100)">
+        <g transform="matrix(0.45,0,0,0.4,40,90)">${STAR}</g>
+        <g transform="matrix(0.45,0,0,0.4,240,90)">${STAR}</g>
+    </g>`
 //Moderate snow
 const SN =
-    `<g id="SN">
-        <text class="snow" x="50" y="460">**</text>
-        <text class="snow" x="120" y="325">*</text>
+    `<g id="SN" transform="translate(-0.435,170)">
+        <g transform="matrix(0.45,0,0,0.4,40,90)">${STAR}</g>
+        <g transform="matrix(0.45,0,0,0.4,240,90)">${STAR}</g>
+        <g transform="matrix(0.45,0,0,0.4,140,-55)">${STAR}</g>
     </g>`
 //Heavy snow
 const PLUS_SN =
-    `<g id="+SN">
-        <text class="snow" x="50" y="420">**</text>
-        <text class="snow" x="120" y="285">*</text>
-        <text class="snow" x="120" y="540">*</text>
+    `<g id="+SN" transform="translate(-0.435,100)">
+        <g transform="matrix(0.45,0,0,0.4,40,90)">${STAR}</g>
+        <g transform="matrix(0.45,0,0,0.4,240,90)">${STAR}</g>
+        <g transform="matrix(0.45,0,0,0.4,140,-55)">${STAR}</g>
+        <g transform="matrix(0.45,0,0,0.4,140,240)">${STAR}</g>
     </g>`
 //Snow grains
-const SG = 
+const SG =
     `<g id="SG">
         <polygon class="wx_graphic" points="250 150 150 300 350 300"></polygon>
         <line class="wx_graphic" x1="50" y1="230" x2="197" y2="230"></line>
         <line class="wx_graphic" x1="303" y1="230" x2="450" y2="230"></line>
     </g>`
 //Ice crystals
-const IC = 
+const IC =
     `<g id="IC">
         <line class="wx_graphic" x1="50" y1="250" x2="450" y2="250"></line>
         <line class="wx_graphic" x1="175" y1="175" x2="325" y2="325"></line>
         <line class="wx_graphic" x1="325" y1="175" x2="174" y2="325"></line>  
     </g>`
 //Ice pellets
-const PE_PL = 
+const PE_PL =
     `<g id="PE_PL">
       <polygon class="wx_graphic" points="250 150 150 300 350 300"></polygon>
       <text style="fill: black; font-size: 100px;" x="237.271" y="242.526" dx="-18.412" dy="32.137">●</text>
@@ -399,7 +553,7 @@ const PE_PL =
 //SHOWERY PERCIPITATION
 
 //Light rain showers
-const MIN_SHRA = 
+const MIN_SHRA =
     `<g id="MIN_SHRA">
         <polygon class="wx_graphic"  points="150 160 350 160 250 475"></polygon>
         <text x="190" y="140" style="font-size: 200px;">●</text>
@@ -431,7 +585,7 @@ const PLUS_TSRA = ""
 /**
  * Map of weather abbriviation to SVG data and Full text
  */
- export const WEATHER: any = {
+export const WEATHER: any = {
     "FU": { svg: FU_VA, text: "Smoke" },
     "VA": { svg: FU_VA, text: "Volcanic Ash" },
     "HZ": { svg: HZ, text: "Haze" },
@@ -448,7 +602,7 @@ const PLUS_TSRA = ""
     "VCSH": { svg: VCSH, text: "Vicinity showers" },
     "TS": { svg: TS, text: "Thunderstorm" },
     "SQ": { svg: SQ, text: "Squall" },
-    "FC": { svg: FC, text: "Funnel Cloud/Tornado"},
+    "FC": { svg: FC, text: "Funnel Cloud/Tornado" },
     "SS": { svg: SS, text: "Sand/Dust Storm" },
     "+SS": { svg: PLUS_SS, text: "Strong Sand/Dust Storm" },
     "BLSN": { svg: BLSN, text: "Blowing Snow" },
