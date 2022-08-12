@@ -635,7 +635,21 @@ export const WEATHER: any = {
     "SG": { svg: SG, text: "Snow Grains" },
     "IC": { svg: IC, text: "Ice Crystals" },
     "PE": { svg: PE_PL, text: "Ice Pellets" },
-    "PL": { svg: PE_PL, text: "Ice Pellets" }
+    "PL": { svg: PE_PL, text: "Ice Pellets" },
+    "-SHRA": { svg: MIN_SHRA, text: "Light rain showers" },
+    "SHRA": { svg: SHRA, text: "Moderate rain showers" },
+    "+SHRA": { svg: SHRA, text: "Heavy rain showers" },
+    "-SHRASN": { svg: MIN_SHRASN, text: "Light rain and snow showers" },
+    "SHRASN": { svg: SHRASN, text: "Moderate rain and snow showers" },
+    "+SHRASN": { svg: SHRASN, text: "Heavy rain and snow showers" },
+    "-SHSN": { svg: MIN_SHSN, text: "Light snow showers" },
+    "SHSN": { svg: SHSN, text: "Moderate snow showers" },
+    "+SHSN": { svg: SHSN, text: "Heavy snow showers" },
+    "-GR": { svg: MIN_GR, text: "Light showers with hail, not with thunder" },
+    "GR": { svg: GR, text: "Moderate to heavy showers with hail, not with thunder" },
+    "TSRA": { svg: TSRA, text: "Light to moderate thunderstorm with rain" },
+    "TSGR": { svg: TSGR, text: "Light to moderate thunderstorm with hail" },
+    "+TSRA": { svg: PLUS_TSRA, text: "Thunderstorm with heavy rain" }
 }
 
 const RECENT_WEATHER: any = {
