@@ -7,8 +7,31 @@
    viewBox="0 0 500.0 500.0"
    version="1.1"
    id="svg260"
+   sodipodi:docname="SHRASN.svg"
+   inkscape:version="1.2.1 (9c6d41e4, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview2820"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     showgrid="false"
+     inkscape:zoom="1.834"
+     inkscape:cx="202.01745"
+     inkscape:cy="250.54526"
+     inkscape:window-width="1390"
+     inkscape:window-height="1067"
+     inkscape:window-x="0"
+     inkscape:window-y="915"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g1827" />
   <defs
      id="defs264" />
   <g
@@ -22,10 +45,9 @@
        rx="51.278736"
        ry="50.12207" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:16.8379;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       style="fill:none;stroke:#000000;stroke-width:9.37977;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
        id="path543"
-       d="M 203.57273,348.54119 80.876504,138.69628 323.95563,137.36069 Z"
-       transform="matrix(0.41844795,0,0,0.76040415,156.00222,168.57788)" />
+       d="M 241.18739,433.71193 189.78427,278.27695 291.62135,277.28766 Z" />
     <rect
        style="fill:none;stroke:#000000;stroke-width:8.81141;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
        id="rect2676"

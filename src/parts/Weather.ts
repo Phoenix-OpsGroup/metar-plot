@@ -9,73 +9,41 @@ export class Weather {
 }
 
 /**
- * Depricated - for internal use only please use getWeatherLegend(key: string)
+ * Returns SVG icon 
  * @param key weather abbriviation
- * @returns 
  */
-export function getWeatherSVG(key: string): string {
+export function getWeatherSVG(key: string) {
     const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500" x="140" y="220">
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500">
                 <style>
-                    .wx_text{ 
-                        color: black;
-                        font-size: 400px;
-                        font-family: "Noto Sans";
-                        white-space: pre;
-                    }
-                    .snow{ 
-                        color: black;
-                        font-size: 300px;
-                        font-family: "Noto Sans";
-                        white-space: pre;
-                    }
                     .wx_graphic {
                         stroke: black;
                         fill: none;
                         stroke-width: 30
-                    }
-                    .wx_graphic_thin {
-                        stroke: black;
-                        fill: none;
-                        stroke-width: 15
                     }
                 </style>
                 ${weather}
             </svg>`
 }
+
 /**
- * Returns SVG icon 
- * @param key weather abbriviation
+ * Returns a raw base64 src for img tag
+ * @param key 
+ * @returns 
  */
-export function getWeatherLegend(key: string) {
+export function getWeatherImgSrc(key: string) {
     const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500">
+    let data = btoa(unescape(encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500">
                 <style>
-                    .wx_text{ 
-                        color: black;
-                        font-size: 400px;
-                        font-family: "Noto Sans";
-                        white-space: pre;
-                    }
-                    .snow{ 
-                        color: black;
-                        font-size: 300px;
-                        font-family: "Noto Sans";
-                        white-space: pre;
-                    }
                     .wx_graphic {
                         stroke: black;
                         fill: none;
                         stroke-width: 30
                     }
-                    .wx_graphic_thin {
-                        stroke: black;
-                        fill: none;
-                        stroke-width: 15
-                    }
                 </style>
                 ${weather}
-            </svg>`
+            </svg>`)))
+    return `data:image/svg+xml;base64,${data}`
 }
 
 const BRK_DWN_ARW =
@@ -89,58 +57,65 @@ const RIGHT_ARROW =
     <line class="wx_graphic" x1="380" y1="250" x2="465" y2="250" transform="rotate(-45, 450, 250)"></line>
     <line class="wx_graphic" x1="380" y1="250" x2="450" y2="250" transform="rotate(45, 450, 250)"></line>`
 
-const TRANSFORM = `transform="matrix(1.4,0,0,1.2,-102.2,-30.3)"`
-
 const COMMA =
     `<ellipse
-      style="fill:#000000;"
+      style="fill:black;"
       cx="238"
       cy="178"
       rx="88"
       ry="87" />
     <path
-      style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:37;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+      class="wx_graphic"
       d="m 174,335 c 9,2 19,3 30,3 h 2 c 56,0 101,-34 101,-76 v -68 c 0,-42 -45,-76 -101,-76 h -2" />`
 
 const STAR =
     `<rect
-        style="fill:#000000"
+        style="fill:black"
         width="50"
         height="350"
         x="225"
         y="-25" />
     <rect
-        style="fill:#000000"
+        style="fill:black"
         width="50"
         height="350"
         x="235"
         y="-300"
         transform="rotate(55)" />
     <rect
-        style="fill:#000000"
-        width="50"
-        height="350"
-        x="-10"
-        y="115"
+        style="fill:black"
+        width="50" height="350"
+        x="-10" y="115"
         transform="rotate(-55)" />`
 
 const DWN_TRI =
-    `<polygon style="stroke: black" points="150 160 350 160 250 475"></polygon>`
+`<path
+    class="wx_graphic" 
+    style="stroke-linecap:butt;stroke-linejoin:round"
+    d="M 245,420 175,150 320,146 Z" />`
+
+const DWN_TRI_SMALL = 
+    `<path
+        class="wx_graphic"
+        style="stroke-linecap:butt;stroke-linejoin:round"
+        d="M 240,435 190,275 290,275 Z"/>`
+
+const SINE =
+    `<g>
+        <path
+            class="wx_graphic" 
+            d="m 430,230 a 85,90 0 0 1 -45,80 85,90 0 0 1 -85,0 85,90 0 0 1 -45,-80"/>
+        <path
+            class="wx_graphic" 
+            d="m -80,-230 a 85,90 0 0 1 -45,80 85,90 0 0 1 -85,0 85,90 0 0 1 -45,-80"
+            transform="rotate(180)" />
+    </g>`
 /*
 SVG Icons
 */
 
 //DUST OR SAND
-const sine =
-    `<g>
-        <path
-            style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:35.986;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-            d="m 430.81439,229.48773 a 86.991272,90.886406 0 0 1 -43.49564,78.70994 86.991272,90.886406 0 0 1 -86.99127,0 86.991272,90.886406 0 0 1 -43.49563,-78.70994" />
-        <path
-            style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:35.986;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-            d="m -81.371765,-231.72963 a 86.991272,90.886406 0 0 1 -43.495635,78.70994 86.991272,90.886406 0 0 1 -86.99128,0 86.991272,90.886406 0 0 1 -43.49563,-78.70994"
-            transform="rotate(179.57901)" />
-    </g>`
+
 //Smoke or volcanic ash
 const FU_VA =
     `<g id="FU_VA">
@@ -152,26 +127,46 @@ const FU_VA =
 //Haze
 const HZ =
     `<g id="HZ">
-        <text class="snow" x="100" y="365">♾️</text>
+        <ellipse
+        class="wx_graphic" 
+        cx="155"
+        cy="255"
+        rx="90"
+        ry="75" />
+    <ellipse
+        class="wx_graphic" 
+        cx="340"
+        cy="255"
+        rx="90"
+        ry="75" />
     </g>`
 //Dust or Sand
 const DU_SA =
     `<g id="DU_SA">
-        <text class="wx_text" x="160" y="360">S</text>
+        <path
+        id="path342"
+        class="wx_graphic"
+        d="m 322.61133,125.13086 c -16.56384,-20.34934 -42.43354,-31.823704 -69.45117,-30.804688 -11.39949,0.429681 -22.58631,3.074347 -32.87305,7.771488 -35.54781,16.23274 -54.37418,53.88954 -45.19336,90.39648 9.18079,36.50727 43.87857,61.96066 83.29297,61.10156 m -69.90625,126.18555 c 23.94628,29.96696 67.31576,40.40903 104.10937,25.06641 36.79392,-15.34204 57.03041,-52.30668 48.57813,-88.73438 -8.45193,-36.42761 -43.29946,-62.43592 -83.65235,-62.43359" />
     </g>`
 //Blowing dust or sand
 const BLDU_BLSA =
     `<g id="BLDU_BLSA">
-        <text class="wx_text" x="160" y="360">$</text>
+        ${DU_SA}
+        <rect
+            class="wx_graphic"
+            width="0.75"
+            height="385"
+            x="255"
+            y="60" />
     </g>`
 //Dust Devil
 const PO =
     `<g id="PO">
         <path
-            style="fill:none;stroke:#000000;stroke-width:30;paint-order:markers stroke fill"
+            class="wx_graphic" 
             d="M 371.02339,260.54119 327.623,186.08416 175.04878,186.71893 99.310495,319.1701 l 76.835945,131.81445 152.57421,-0.63281 42.2129,-73.82227" />
         <path
-            style="fill:none;stroke:#000000;stroke-width:30;paint-order:markers stroke fill"
+            class="wx_graphic" 
             d="M 369.42563,141.09136 326.02524,66.634336 173.45102,67.269101 97.712737,199.72027 174.54868,331.53472 327.1229,330.90191 369.33579,257.07964" />
     </g>`
 //Vicinity sand storm
@@ -202,33 +197,32 @@ const VCTS = `<g id="VCTS">${BRK_DWN_ARW}</g>`
 const VIRGA =
     `<g id="VIGRA">
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="250"
             cy="250"
             rx="80"
             ry="80"/>
         <path
-            style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:23.9684;stroke-opacity:1;"
-            d="M 417.45609,310.56368 A 183.93169,191.03438 26.298753 0 1 242.57816,413.45797 183.93169,191.03438 26.298753 0 1 78.722257,305.22703" />
+            class="wx_graphic" 
+            d="M 415,310 A 185,190 25 0 1 245,415 185,190 25 0 1 80,305" />
     </g>`
 //Vicinity showers
 const VCSH =
-    `<g id="VCSH"">
+    `<g id="VCSH">
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="250"
             cy="250"
             rx="80"
             ry="80" />
         <path
-            style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:25;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+            class="wx_graphic" 
             d="M 390,200 A 195,190 0 0 1 195,150 195,190 0 0 1 145,-40"
-            transform="matrix(0.72275549,0.69110383,-0.68757001,0.72611809,0,0)" />
+            transform="matrix(0.7,0.7,-0.7,0.7,0,0)" />
         <path
-            style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:23.9727;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-            id="path726-8"
+            class="wx_graphic" 
             d="M -285,225 A 190,185 0 0 1 -485,185 190,185 0 0 1 -540,-5"
-            transform="matrix(-0.65479651,-0.75580522,0.77314866,-0.63422485,0,0)"/>
+            transform="matrix(-0.65,-0.75,0.75,-0.65,0,0)"/>
     </g>`
 //Thunderstorm with or without precipitation
 const TS =
@@ -263,25 +257,69 @@ const FC =
 //Sand or dust storm
 const SS =
     `<g id="SS">
-        <text class="wx_text" x="160" y="360">S</text>
-        ${RIGHT_ARROW}
+        ${DU_SA}
+        <path
+            class="wx_graphic"
+            d="m 130,245 240,-0.0781 -25,-50" />
     </g>`
 //Strong sand or dust storm
 const PLUS_SS =
-    `<g ="+SS">
-        <text class="wx_text" x="160" y="360">S</text>
+    `<g id="+SS">
+        ${DU_SA}
+        <path
+            class="wx_graphic"
+            d="m 135,230 c 80,-0.025 150,-0.050 240,-0.078 l -30,-50"/>
+        <path
+            class="wx_graphic"
+            d="m 135,285 240,0.078 -30,50" />
     </g>`
 //Blowing snow
 const BLSN =
     `<g id="BLSN">
-        <text x="0" y="350" class="wx_text" transform="rotate(270, 250, 250)">→</text>
-        <text x="50" y="450" class="wx_text">→</text>
+        <rect
+            class="wx_graphic"
+            width="336.96838"
+            height="3.2715375"
+            x="74.154854"
+            y="248.36423" />
+        <path
+            class="wx_graphic"
+            d="m 370.77355,286.68722 58.29491,-38.25 -58.29491,-34.99609" />
+        <g transform="rotate(-90,250,250)">
+            <rect
+                class="wx_graphic"
+                width="335"
+                height="5"
+                x="75"
+                y="250" />
+            <path
+                class="wx_graphic"
+                d="m 370.77355,286.68722 58.29491,-38.25 -58.29491,-34.99609" />
+        </g>
     </g>`
 //Drifting snow
 const DRSN =
     `<g id="DRSN">
-        <text x="110" y="350" class="wx_text" transform="rotate(90, 250, 250)">→</text>
-        <text x="110" y="400" class="wx_text">→</text>
+        <rect
+            class="wx_graphic"
+            width="336.96838"
+            height="3.2715375"
+            x="74.154854"
+            y="248.36423" />
+        <path
+            class="wx_graphic"
+            d="m 370.77355,286.68722 58.29491,-38.25 -58.29491,-34.99609" />
+        <g transform="rotate(90,250,250)">
+            <rect
+                class="wx_graphic"
+                width="335"
+                height="5"
+                x="75"
+                y="250" />
+            <path
+                class="wx_graphic"
+                d="m 370.77355,286.68722 58.29491,-38.25 -58.29491,-34.99609" />
+        </g>
     </g>
     `
 //FOG//////////////////////////////////////////////
@@ -356,21 +394,21 @@ const PLUS_DZ =
 const MIN_FZDZ =
     `<g id="-FZDZ">
         <g transform="matrix(0.6,0,0,0.6,28,136)">${COMMA}</g>
-        ${sine}
+        ${SINE}
     </g>`
 //Moderate to heavy freezing drizzle
 const FZDZ =
     `<g id="-DZ">
         <g transform="matrix(0.6,0,0,0.6,28,136)">${COMMA}</g>
         <g transform="matrix(0.6,0,0,0.6,204,66)">${COMMA}</g>
-        ${sine}    
+        ${SINE}    
     </g>`
 //Light drizzle and rain
 const MIN_DZRA =
     `<g id="-DZRA">
         <g transform="matrix(0.6,0,0,0.6,107,193)">${COMMA}</g>
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="250"
             cy="150"
             rx="50"
@@ -382,7 +420,7 @@ const DZRA =
         <g transform="matrix(0.6,0,0,0.6,105,170)">${COMMA}</g>
         <g transform="matrix(0.6,0,0,0.6,105,-140)">${COMMA}</g>
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="250"
             cy="150"
             rx="50"
@@ -401,7 +439,7 @@ const MIN_RA =
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="370"
             cy="245"
             rx="80"
@@ -411,19 +449,19 @@ const MIN_RA =
 const RA =
     `<g id="RA">
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="135"
             cy="355"
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="250"
             cy="145"
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="365"
             cy="355"
             rx="80"
@@ -433,25 +471,25 @@ const RA =
 const PLUS_RA =
     `<g id="+RA">
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="140"
             cy="250"
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="250"
             cy="100"
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="250"
             cy="400"
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="360"
             cy="250"
             rx="80"
@@ -461,36 +499,36 @@ const PLUS_RA =
 const MIN_FZRA =
     `<g id="-FZRA">
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="170"
             cy="250"
             rx="50"
             ry="55"/>
-        ${sine}
+        ${SINE}
     </g>`
 //Moderate to heavy freezing rain
 const FZRA =
     `<g id="FZRA">
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="170"
             cy="250"
             rx="50"
             ry="55"/>
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="345"
             cy="215"
             rx="50"
             ry="55"/>
-        ${sine}
+        ${SINE}
     </g>`
 //Light rain and snow
 const MIN_RASN = 
     `<g id="-RASN" transform="translate(-0.45,160)">
         <g transform="matrix(0.45,0,0,0.4,140,140)">${STAR}</g>
         <ellipse
-            style="fill:#000000"
+            style="fill:black"
             cx="250"
             cy="-15"
             rx="70"
@@ -555,32 +593,167 @@ const PE_PL =
 //Light rain showers
 const MIN_SHRA =
     `<g id="MIN_SHRA">
-        <polygon class="wx_graphic"  points="150 160 350 160 250 475"></polygon>
-        <text x="190" y="140" style="font-size: 200px;">●</text>
+        <ellipse
+            style="fill:black"
+            cx="245"
+            cy="70"
+            rx="50"
+            ry="50" />
+        ${DWN_TRI}
     </g>`
 //Moderate to heavy rain showers
-const SHRA = ""
+const SHRA = 
+    `<g transform="translate(3.14,20)">
+        <ellipse
+            style="fill:black"
+                cx="245"
+                cy="70"
+                rx="50"
+                ry="50" />
+        ${DWN_TRI}
+        <rect
+            style="fill:none;stroke:black;stroke-width:15;"
+            width="100"
+            height="5"
+            x="195"
+            y="205" />
+    </g>`
 //Light rain and snow showers
-const MIN_SHRASN = ""
+const MIN_SHRASN = 
+    `<g transform="translate(9,20)">
+        <ellipse
+            style="fill:black"
+            cx="240"
+            cy="195"
+            rx="50"
+            ry="50"/>
+        ${DWN_TRI_SMALL}
+        <g transform="matrix(0.3,0,0,0.3,165,35)">
+            ${STAR}
+        </g>
+    </g>`
 //Moderate to heavy rain and snow showers
-const SHRASN = ""
+const SHRASN = 
+    `<g transform="translate(9,20)">
+        <ellipse
+            style="fill:black"
+            cx="240"
+            cy="195"
+            rx="50"
+            ry="50"/>
+        ${DWN_TRI_SMALL}
+        <g transform="matrix(0.3,0,0,0.3,165,35)">
+            ${STAR}
+        </g>
+        <rect
+            class="fill:black"
+            width="70"
+            height="20"
+            x="205"
+            y="305" />
+    </g>`
 //Light snow showers
-const MIN_SHSN = ""
+const MIN_SHSN = 
+    `<g id="MIN_SHRA">
+        ${DWN_TRI}
+        <g transform="matrix(0.325,0,0,0.3,165,35)">
+            ${STAR}
+        </g>
+    </g>`
 //Moderate to heavy snow showers
-const SHSN = ""
+const SHSN =
+    `<g id="MIN_SHRA">
+        ${DWN_TRI}
+        <g transform="matrix(0.325,0,0,0.3,165,35)">
+            ${STAR}
+        </g>
+        <rect
+            style="fill:none;stroke:black;stroke-width:15;"
+            width="100"
+            height="5"
+            x="195"
+            y="205" />
+    </g>`
 //Light showers with hail, not with thunder
-const MIN_GR = ""
+const MIN_GR = 
+    `<g transform="translate(3.1476804,20.168937)">
+        <path
+            class="wx_graphic"
+            style="stroke-linecap:butt;stroke-linejoin:round"
+            d="M 200,350 80,140 325,140 Z"
+            transform="matrix(0.54819594,0,0,1.1522448,135.14291,26.25069)" />
+        <path
+            style="fill:black;stroke-linecap:butt;stroke-linejoin:round"
+            d="M 215,106.41301 271.14262,9.7515746 327.2378,105.91474 Z"
+            transform="matrix(1.25,0,0,1.2,-90,25)" />
+    </g>`
 //Moderate to heavy showers with hail, not with thunder
-const GR = ""
+const GR = 
+    `<g transform="translate(3.1476804,20.168937)">
+        <path
+            class="wx_graphic"
+            style="stroke-linecap:butt;stroke-linejoin:round"
+            d="M 200,350 80,140 325,140 Z"
+            transform="matrix(0.55,0,0,1.15,135,25)" />
+        <path
+            style="fill:black;stroke-linecap:butt;stroke-linejoin:round"
+            d="M 215,105 270,10 325,105 Z"
+            transform="matrix(1.25,0,0,1.2,-90,25)" />
+        <rect
+            style="fill:none;stroke:black;stroke-width:15"
+            width="95"
+            height="5"
+            x="200"
+            y="235" />
+    </g>`
 
 // THUNDERSTORMS
 
+const THUNDER = 
+    `<path
+        class="wx_graphic"
+        style="stroke-linecap:butt;stroke-linejoin:round"    
+        d="M 375,425 230,290 355,125 H 125 v 300"/>
+    <path
+        class="wx_graphic"
+        style="stroke-linecap:butt;stroke-linejoin:round"
+        d="M 250,405 380,425 335,305"/>`
 //Light to moderate thunderstorm with rain
-const TSRA = ""
+const TSRA =
+`  <g transform="matrix(0.59808265,0,0,0.58004786,205.87825,107.57905)">
+    <ellipse
+        style="fill:black"
+        cx="75"
+        cy="-75"
+        rx="70"
+        ry="70" />
+    </g>
+    ${THUNDER}`
 //Light to moderate thunderstorm with hail
-const TSGR = ""
+const TSGR = 
+    `<path
+        class="wx_graphic"
+        d="m 190,45 40,-70 40,70 z"
+        transform="matrix(0.8,0,0,0.7,55,60)" />
+        ${THUNDER}`
 //Thunderstorm with heavy rain
-const PLUS_TSRA = ""
+const PLUS_TSRA = 
+    `<g transform="matrix(0.6,0,0,0.6,205,105)">
+        <ellipse
+            style="fill:black"
+            cx="75"
+            cy="-75"
+            rx="70"
+            ry="70" />
+    </g>
+    <path
+        class="wx_graphic"
+        style="stroke-linecap:butt;stroke-linejoin:round"
+        d="M 235,420 295,350 230,290 355,125 H 125 v 300" />
+    <path
+        class="wx_graphic"
+        style="stroke-linecap:butt;stroke-linejoin:round"
+        d="m 240,355 -25,80 80,-20"/>`
 
 /**
  * Map of weather abbriviation to SVG data and Full text
