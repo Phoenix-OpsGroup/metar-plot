@@ -195,6 +195,7 @@ export function parseWeather(metar: string): Array<Weather> {
     let matches = metar.match(re)
     if (matches != null) {
         return matches.map(match => {
+            console.log(match)
             let key = match.trim()
             return {
                 abbreviation: key,

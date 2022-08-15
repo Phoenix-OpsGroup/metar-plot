@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="500.0px"
+   height="500.0px"
+   viewBox="0 0 500.0 500.0"
+   version="1.1"
+   id="svg260"
+   sodipodi:docname="+SS.svg"
+   inkscape:version="1.2.1 (9c6d41e4, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview5392"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     showgrid="false"
+     inkscape:zoom="1.834"
+     inkscape:cx="202.5627"
+     inkscape:cy="250.54526"
+     inkscape:window-width="1390"
+     inkscape:window-height="1067"
+     inkscape:window-x="2568"
+     inkscape:window-y="196"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg260" />
+  <defs
+     id="defs264" />
+  <path
+     id="path342"
+     style="fill:none;stroke:#000000;stroke-width:30;stroke-opacity:1;paint-order:markers stroke fill;stroke-dasharray:none"
+     d="m 322.61133,125.13086 c -16.56384,-20.34934 -42.43354,-31.823704 -69.45117,-30.804688 -11.39949,0.429681 -22.58631,3.074347 -32.87305,7.771488 -35.54781,16.23274 -54.37418,53.88954 -45.19336,90.39648 9.18079,36.50727 43.87857,61.96066 83.29297,61.10156 m -69.90625,126.18555 c 23.94628,29.96696 67.31576,40.40903 104.10937,25.06641 36.79392,-15.34204 57.03041,-52.30668 48.57813,-88.73438 -8.45193,-36.42761 -43.29946,-62.43592 -83.65235,-62.43359" />
+  <path
+     id="path3368"
+     style="fill:none;stroke:#000000;stroke-width:30;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+     d="m 133.76593,231.7914 c 80.0886,-0.026 149.59167,-0.0521 240.54102,-0.0781 l -28.06836,-48.58008"
+     sodipodi:nodetypes="ccc" />
+  <path
+     id="path3368-8"
+     style="fill:none;stroke:#000000;stroke-width:30;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+     d="m 133.58499,287.88974 240.54102,0.0781 -28.06836,48.58008" />
+</svg>

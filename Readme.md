@@ -1,71 +1,47 @@
 [![METAR-PLOT](https://circleci.com/gh/Phoenix-OpsGroup/metar-plot.svg?style=svg)](https://circleci.com/gh/Phoenix-OpsGroup/metar-plot)
 [![npm version](https://badge.fury.io/js/metar-plot.svg)](https://badge.fury.io/js/metar-plot)
 
-# Demo
+# METAR Plot
 
-Demo: [https://phoenix-ops.github.io/metar-plot-demo/](https://phoenix-opsgroup.github.io/metar-plot-demo/)
+StoryBook: [https://phoenix-ops.github.io/metar-plot/](https://phoenix-opsgroup.github.io/metar-plot/)
 
-React example code: [https://github.com/phoenix-opsgroup/metar-plot-demo](https://github.com/phoenix-opsgroup/metar-plot-demo)
-
-# Install
-[npm](https://www.npmjs.com/package/metar-plot) 
+## Install
 
 ```sh
 npm install metar-plot
 ```
 
-# Examples
-
-Javascript
-```javascript
-import metar_plot from 'metar-plot';
-const { METAR, metarToSVG, rawMetarToSVG, getWeatherLegend, genWind, WEATHER } = metar_plot;
-
-var metarPlot = 
-{
-    "visablity": 9,
-    "temp": 12,
-    "dew_point": 7,
-    "station": "WBWI",
-    "wind_direction": 120,
-    "wind_speed": 20
-}
-
-var svg1 = metarToSVG(metarPlot, "100", "100")
-var svg2 = rawMetarToSVG("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006", "100", "100")
-
-var metar = new METAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006")
-
-var weather = WEATHER["VCSH"]
-var weatherSymbol = getWeatherLegend("VCSH");
-```
-
-TypeScript
+## Examples
 
 ```typescript
-import { METAR, MetarPlot, metarToSVG, rawMetarToSVG, getWeatherLegend, genWind, WEATHER } from "metar-plot"
+import { METAR, MetarPlot, rawMetarToMetarPlot } from "metar-plot"
 
-var metarPlot : MetarPlot = 
+let metarPlotManual : MetarPlot = 
 {
     "visablity": 9,
     "temp": 12,
     "dew_point": 7,
     "station": "WBWI",
     "wind_direction": 120,
-    "wind_speed": 20
+    "wind_speed": 20,
+    "wx": "RA"
 }
 
-var svg1 : string = metarToSVG(metarPlot, "100", "100")
-var svg2 : string = rawMetarToSVG("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006", "100", "100")
+let height = "100px"
+let width = "100px"
 
-var metar : METAR = new METAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006")
+let rawMetar = "EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006"
 
-var weather : string = WEATHER["VCSH"]
-var weatherSymbol : string = getWeatherLegend("VCSH");
+let imgSrcManual : string = metarToImg(metarPlotManual)
+let imgSrcRaw : string =  metarToImg(rawMetarToMetarPlot(rawMetar))
 
+let metar : METAR = new METAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006")
+
+<img style={`height:${height};width:${width}`} src={imgSrcManual} alt="metar"/>
+<img style={`height:${height};width:${width}`} src={imgSrcRaw} alt="metar"/>
 ```
 
-METAR Example Object
+Decoded METAR Example Object
 ```javascript 
 {
    "wind": {
@@ -102,21 +78,21 @@ METAR Example Object
 }
 ```
 
-# Documentation
+## Documentation
 
 Data Types:
    * METAR: Object contains extracted METAR data
-      * If your data source is a raw metar and you wish to display human readable values this class will give that data.  This object is displayed in the metar demo. It's definition is found here [Metar.ts](./src/Metar.ts)
-      * Weather codes: [Weather.ts](./src/parts/Weather.ts)
-      * Cloud Codes: [Cloud.ts](./src/parts/Cloud.ts)
+      * If your data source is a raw metar and you wish to display human readable values this class will give that data.  This object is displayed in the metar demo. It's definition is found here [Metar.ts](https://github.com/Phoenix-OpsGroup/metar-plot/blob/main/src/Metar.ts)
+      * Weather codes: [Weather.ts](https://github.com/Phoenix-OpsGroup/metar-plot/blob/main/src/parts/Weather.ts)
+      * Cloud Codes: [Cloud.ts](https://github.com/Phoenix-OpsGroup/metar-plot/blob/main/src/parts/Cloud.ts)
    * MetarPlot: Object maps out all data to the svg plot.
-      * This allows you to use pre extracted data and map it as you please to the plot.  if you have your own METAR structure and want to map it to the plot use this object. It's definitioncan be found here [MetarPlot.ts](./src/Metar.ts)
+      * This allows you to use pre extracted data and map it as you please to the plot.  if you have your own METAR structure and want to map it to the plot use this object. It's definitioncan be found here [MetarPlot.ts](https://github.com/Phoenix-OpsGroup/metar-plot/blob/main/src/MetarPlot.ts)
 
-# Contributors
+## Contributors
 
 * Speacial thanks to [metar.js](https://github.com/skydivejkl/metar.js),
 parsing code was forked and converted to TypeScript from this project
 
-# Change Log
+## Change Log
 
 * [Change Log](https://github.com/phoenix-opsgroup/metar-plot/releases)

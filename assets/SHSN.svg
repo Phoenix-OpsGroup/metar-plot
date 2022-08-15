@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="500.0px"
+   height="500.0px"
+   viewBox="0 0 500.0 500.0"
+   version="1.1"
+   id="svg260"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs264" />
+  <g
+     id="g1827"
+     transform="translate(3.1476804,20.168937)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:16.8379;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       id="path543"
+       d="M 203.57273,348.54119 80.876504,138.69628 323.95563,137.36069 Z"
+       transform="matrix(0.54819594,0,0,1.1522448,135.14291,26.25069)" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:12.4149;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       id="rect2676"
+       width="95.20623"
+       height="4.6070166"
+       x="198.50786"
+       y="237.1217" />
+    <g
+       id="g10180-6-4-5"
+       transform="matrix(0.32455329,0,0,0.28694518,165.08734,33.853721)">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:35.986;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect10131-7-5-3"
+         width="50"
+         height="350"
+         x="224.05963"
+         y="-24.667961" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:35.986;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect10131-5-9-9-9"
+         width="50"
+         height="350"
+         x="236.46613"
+         y="-302.53781"
+         transform="rotate(57.117288)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:35.986;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+         id="rect10131-8-4-7-0"
+         width="50"
+         height="350"
+         x="-10.441442"
+         y="115.54856"
+         transform="rotate(-56.01635)" />
+    </g>
+  </g>
+</svg>

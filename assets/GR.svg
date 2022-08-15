@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="500.0px"
+   height="500.0px"
+   viewBox="0 0 500.0 500.0"
+   version="1.1"
+   id="svg260"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs264" />
+  <g
+     id="g1827"
+     transform="translate(3.1476804,20.168937)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:16.8379;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       id="path543"
+       d="M 203.57273,348.54119 80.876504,138.69628 323.95563,137.36069 Z"
+       transform="matrix(0.54819594,0,0,1.1522448,135.14291,26.25069)" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:12.4149;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       id="rect2676"
+       width="95.20623"
+       height="4.6070166"
+       x="198.50786"
+       y="237.1217" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:14.613;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       id="path6443"
+       d="M 215.91047,106.41301 271.14262,9.7515746 327.2378,105.91474 Z"
+       transform="matrix(1.249354,0,0,1.1914581,-92.456825,24.230574)" />
+  </g>
+</svg>
