@@ -1,6 +1,6 @@
 {
   "exclude": ["./tests"],
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/stories"],
   "declaration": true,
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
