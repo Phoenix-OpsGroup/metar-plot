@@ -172,8 +172,18 @@ const PO =
 //Vicinity sand storm
 const VCSS =
     `<g id="VCSS">
-        <text class="wx_text" x="50" y="360">($)</text>
-        ${RIGHT_ARROW}
+        ${DU_SA}
+        <path
+            class="wx_graphic"
+            d="m 130,245 240,-0.0781 -25,-50" />
+        <path
+            class="wx_graphic" 
+            d="M 390,200 A 195,190 0 0 1 195,150 195,190 0 0 1 145,-40"
+            transform="matrix(0.7,0.7,-0.7,0.7,0,0)" />
+        <path
+            class="wx_graphic" 
+            d="M -285,225 A 190,185 0 0 1 -485,185 190,185 0 0 1 -540,-5"
+            transform="matrix(-0.65,-0.75,0.75,-0.65,0,0)"/>
     </g>`
 //FOG OR SPEACIAL WEATHER
 

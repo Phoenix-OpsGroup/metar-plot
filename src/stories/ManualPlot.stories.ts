@@ -5,64 +5,84 @@ import { CONDITIONS, CLOUDS } from '../parts/Cloud';
 
 export default {
     title: 'MetarPlot/Manual Plot',
+    parameters: {
+        docs: {
+            description: {
+                component: "This Story follows the creation of a plot via manual insertion of data fields.  Use this is you already have a decoded METAR and want to feed those decoded fields to the plot. If you only have the raw METAR check out Raw Plot"
+            }
+        }
+    },
     argTypes: {
         visability: {
             control: {
                 type: "number"
-            }
+            },
+            description: "Raw visablity no unit convertion"
         },
         temperature: {
             control: {
                 type: "number"
-            }
+            },
+            description: "Raw Temperature no unit convertion"
         },
         dewPoint: {
             control: {
                 type: "number"
-            }
+            },
+            description: "Raw Dew Point no unit convertion"
         },
         station: {
-            control: "text"
+            control: "text",
+            description: "Station ICO Abreviation"
         },
         windDirection: {
             control: {
                 type: "number",
                 min: 0,
                 max: 359
-            }
+            },
+            description: "Wind direction in degrees"
         },
         windSpeed: {
             control: {
                 type: "number"
-            }
+            },
+            description: "Wind speed in Knots"
         },
         gustSpeed: {
             control: {
                 type: "number"
-            }
+            },
+            description: "Gust speed in Knots"
         },
         pressure: {
             control: {
                 type: "number"
-            }
+            },
+            description: "Raw Pressure no unit convertion"
         },
         wxCode: {
             control: { type: 'select' },
             options: Object.keys(WEATHER),
+            description: "Weather observation code"
         },
         condition: {
             control: { type: 'select' },
             options: Object.keys(CONDITIONS),
+            description: "Flight Rule conditions, changes color of coverage"
         },
         coverage: {
             control: { type: 'select' },
             options: Object.keys(CLOUDS),
+            description: "Cloud Coverage code"
         },
         height: {
-            control: "text"
+            control: "text",
+            description: "CSS Height"
         },
         width: {
-            control: "text"
+            control: "text",
+            description: "CSS Width"
         }
     },
     args: {
@@ -74,7 +94,6 @@ export default {
         windSpeed: 12,
         gustSpeed: 3,
         pressure: 29,
-        ceiling: 15000,
         wxCode: "RA",
         condition: "VFR",
         coverage: "FEW",
@@ -116,9 +135,9 @@ const Template: Story = (args) => {
 
 export const Default = Template.bind({});
 Default.parameters = {
-    docs:{
-      source: {
-        code: `
+    docs: {
+        source: {
+            code: `
 import { metarToImgSrc, MetarPlot } from 'metar-plot';
 let metar : MetarPlot = {
     //Visbailiy in SM or m if metric is true
@@ -146,38 +165,38 @@ let metar : MetarPlot = {
 }
 <img style={\`height:\${height};width:\${args.width}\`} src={metarToImgSrc(metar)} alt="metar"/>
 `,
-        language: "tsx",
-        type: "auto"
-      }
+            language: "tsx",
+            type: "auto"
+        }
     }
-  }
+}
 
 
 export const React = Template.bind({});
 React.parameters = {
-  docs:{
-    source: {
-      code: `
+    docs: {
+        source: {
+            code: `
 import { metarToImgSrc, MetarPlot } from 'metar-plot';
 import React from 'react';
 
 function getMetarImg(metar: MetarPlot){
   return (<img style={\`height:\${height};width:\${args.width}\`} src={metarToImgSrc(metar)} alt="metar"/>)
 }`,
-      language: "tsx",
-      type: "auto"
+            language: "tsx",
+            type: "auto"
+        }
     }
-  }
 }
 
-export const Angular = Template.bind({}, );
+export const Angular = Template.bind({},);
 Angular.args = {
-  code: "RA",
+    code: "RA",
 };
 Angular.parameters = {
-  docs:{
-    source: {
-      code: `
+    docs: {
+        source: {
+            code: `
 import { metarToImgSrc, MetarPlot } from 'metar-plot';
 
 @Component({
@@ -197,20 +216,20 @@ weather.component.html:
 
 <img style={{style}} src={{metarToImgSrc(metar)}} alt="metar"/>
 `,
-      language: "tsx",
-      type: "auto"
+            language: "tsx",
+            type: "auto"
+        }
     }
-  }
 }
 
-export const Vue = Template.bind({}, );
+export const Vue = Template.bind({},);
 Vue.args = {
-  code: "RA",
+    code: "RA",
 };
 Vue.parameters = {
-  docs:{
-    source: {
-      code: `
+    docs: {
+        source: {
+            code: `
 <script>
   import { metarToImgSrc, MetarPlot } from 'metar-plot';
   let metar : MetarPlot;
@@ -226,20 +245,20 @@ Vue.parameters = {
 <template>
   <img class="metar" src={metarToImgSrc(metar)} alt="metar"/>
 </template>`,
-      language: "tsx",
-      type: "auto"
+            language: "tsx",
+            type: "auto"
+        }
     }
-  }
 }
 
-export const Svelte = Template.bind({}, );
+export const Svelte = Template.bind({},);
 Svelte.args = {
-  code: "RA",
+    code: "RA",
 };
 Svelte.parameters = {
-  docs:{
-    source: {
-      code: `
+    docs: {
+        source: {
+            code: `
 <script lang="ts">
   import { metarToImgSrc, MetarPlot } from 'metar-plot';
   export let metar: MetarPlot;
@@ -254,8 +273,8 @@ Svelte.parameters = {
 
 <img class="metar" src={metarToImgSrc(metar)} alt="metar"/>
 `,
-      language: "tsx",
-      type: "auto"
+            language: "tsx",
+            type: "auto"
+        }
     }
-  }
 }

@@ -1,36 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500" x="140" y="220">
-                <style>
-                    .wx_text{ 
-                        color: black;
-                        font-size: 400px;
-                        font-family: "Noto Sans";
-                        white-space: pre;
-                    }
-                    .snow{ 
-                        color: black;
-                        font-size: 300px;
-                        font-family: "Noto Sans";
-                        white-space: pre;
-                    }
-                    .wx_graphic {
-                        stroke: black;
-                        fill: none;
-                        stroke-width: 30
-                    }
-                    .wx_graphic_thin {
-                        stroke: black;
-                        fill: none;
-                        stroke-width: 15
-                    }
-                </style>
-                <g id="+DZ">
-        <a transform="matrix(0,0,0,0,20,114)"><ellipse style="fill:#000000;" cx="238" cy="178" rx="88" ry="87"></ellipse>
-    <path style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:37;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" d="m 174,335 c 9,2 19,3 30,3 h 2 c 56,0 101,-34 101,-76 v -68 c 0,-42 -45,-76 -101,-76 h -2"></path></a>
-        <a transform="matrix(0,0,0,0,203,114)"><ellipse style="fill:#000000;" cx="238" cy="178" rx="88" ry="87"></ellipse>
-    <path style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:37;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" d="m 174,335 c 9,2 19,3 30,3 h 2 c 56,0 101,-34 101,-76 v -68 c 0,-42 -45,-76 -101,-76 h -2"></path></a>
-        <a transform="matrix(0,0,0,0,108,-31)"><ellipse style="fill:#000000;" cx="238" cy="178" rx="88" ry="87"></ellipse>
-    <path style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:37;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" d="m 174,335 c 9,2 19,3 30,3 h 2 c 56,0 101,-34 101,-76 v -68 c 0,-42 -45,-76 -101,-76 h -2"></path></a>
-        <a transform="matrix(0,0,0,0,108,261)"><ellipse style="fill:#000000;" cx="238" cy="178" rx="88" ry="87"></ellipse>
-    <path style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:37;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill" d="m 174,335 c 9,2 19,3 30,3 h 2 c 56,0 101,-34 101,-76 v -68 c 0,-42 -45,-76 -101,-76 h -2"></path></a>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500">
+                <g id="windBard" transform="rotate(90, 250, 250)">
+                <line stroke-width="3" y1="225" x1="250" y2="50" x2="250"  stroke="#000" fill="none" />
+                <line id="ws-bard-1-long" stroke-width="4" y1="50" x1="250" y2="50" x2="300" stroke="#000" transform="rotate(-35, 250, 50)"/>
+                <line id="ws-bard-2-long" stroke-width="4" y1="70" x1="250" y2="70" x2="300" stroke="#000" transform="rotate(-35, 250, 70)"/>
+                
+                
+                
+            </g>
+                </svg>

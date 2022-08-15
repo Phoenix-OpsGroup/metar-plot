@@ -20,7 +20,7 @@
     "build": "tsc",
     "test": "npx nyc --reporter lcov mocha -r ts-node/register 'tests/**/*.ts'",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -o docs"
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",

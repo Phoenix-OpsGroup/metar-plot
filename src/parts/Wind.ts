@@ -2,7 +2,7 @@
  * Wind Data
  */
 import { MetarPlot } from "..";
- export class Wind {
+export class Wind {
     //wind speed
     public speed?: number;
     //Gust Speed
@@ -28,7 +28,11 @@ const WS_WIDTH = 4;
  * @returns Img src base64 string
  */
 export function windImgSrc(metar: MetarPlot): string {
-    return btoa(unescape(encodeURIComponent(genWind(metar))))
+    let data = btoa(unescape(encodeURIComponent(
+                `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 500 500">
+                    ${genWind(metar)}
+                </svg>`)))
+    return `data:image/svg+xml;base64,${data}`
 }
 
 /**
@@ -36,7 +40,7 @@ export function windImgSrc(metar: MetarPlot): string {
  * @param metar 
  * @returns SVG string
  */
- export function genWind(metar: MetarPlot): string {
+export function genWind(metar: MetarPlot): string {
     const WDD = metar.wind_direction ? metar.wind_direction : 0
     const WSP = metar.wind_speed ? metar.wind_speed : 0
     let wind = ""
