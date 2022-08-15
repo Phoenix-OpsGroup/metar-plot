@@ -14,7 +14,7 @@ export class Weather {
  */
 export function getWeatherSVG(key: string) {
     const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500">
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500" x="140" y="220">
                 <style>
                     .wx_graphic {
                         stroke: black;
@@ -820,8 +820,10 @@ export const WEATHER: any = {
     "+SHSN": { svg: SHSN, text: "Heavy snow showers" },
     "-GR": { svg: MIN_GR, text: "Light showers with hail, not with thunder" },
     "GR": { svg: GR, text: "Moderate to heavy showers with hail, not with thunder" },
-    "TSRA": { svg: TSRA, text: "Light to moderate thunderstorm with rain" },
-    "TSGR": { svg: TSGR, text: "Light to moderate thunderstorm with hail" },
+    "-TSRA": { svg: TSRA, text: "Light thunderstorm with rain" },
+    "TSRA": { svg: TSRA, text: "Moderate thunderstorm with rain" },
+    "-TSGR": { svg: TSGR, text: "Light thunderstorm with hail" },
+    "TSGR": { svg: TSGR, text: "Moderate thunderstorm with hail" },
     "+TSRA": { svg: PLUS_TSRA, text: "Thunderstorm with heavy rain" }
 }
 

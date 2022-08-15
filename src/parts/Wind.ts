@@ -25,7 +25,16 @@ const WS_WIDTH = 4;
 /**
  * Creates a windbarb for the metar
  * @param metar 
- * @returns 
+ * @returns Img src base64 string
+ */
+export function windImgSrc(metar: MetarPlot): string {
+    return btoa(unescape(encodeURIComponent(genWind(metar))))
+}
+
+/**
+ * Creates a windbarb for the metar
+ * @param metar 
+ * @returns SVG string
  */
  export function genWind(metar: MetarPlot): string {
     const WDD = metar.wind_direction ? metar.wind_direction : 0

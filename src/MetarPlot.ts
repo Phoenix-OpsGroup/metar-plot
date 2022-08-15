@@ -55,7 +55,7 @@ export function rawMetarToSVG(rawMetar: string, width: string, height: string, m
  */
 export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPlot {
     let metar = new METAR(rawMetar);
-    let wx = metar.weather.map(weather => weather.abbreviation).join("");
+    let wx = metar.weather[0]?.abbreviation
     //Metric converion
     let pressure
     let vis = undefined
@@ -160,6 +160,15 @@ export function metarToSVG(metar: MetarPlot, width: string, height: string): str
             </svg>`
 }
 
+/**
+ * Turns a Metar plot object to a SVG image
+ * @param metar MetarPlot Object
+ * @returns A Base64 encoded string to be added directly as img src
+ */
+ export function metarToImgSrc(metar: MetarPlot): string {
+    let data = btoa(unescape(encodeURIComponent(metarToSVG(metar,"100px","100px"))))
+    return `data:image/svg+xml;base64,${data}`
+}
 
 /**
  * Convert ºF to ºF
