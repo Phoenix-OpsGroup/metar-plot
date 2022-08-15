@@ -12,8 +12,16 @@
   "types": "src/index.d.ts",
   "main": "dist/index.js",
   "files": [
-    "/dist",
-    "/src",
+    "/dist/parts",
+    "/dist/index.d.js",
+    "/dist/index.js",
+    "/dist/Metar.js",
+    "/dist/MetarPlot.js",
+    "/src/parts",
+    "/src/index.d.ts",
+    "/src/index.ts",
+    "/src/Metar.ts",
+    "/src/MetarPlot.ts",
     "/Readme.md"
   ],
   "scripts": {

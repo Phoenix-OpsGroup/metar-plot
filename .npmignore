@@ -1,9 +1,0 @@
-# .npmignore
-node_modules/
-scrap/
-coverage/
-.nyc_output/
-*.tgz
-dist/
-.DS_Store
-src/stories/
