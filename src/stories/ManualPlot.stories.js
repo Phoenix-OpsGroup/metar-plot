@@ -84,6 +84,30 @@ exports.default = {
         width: {
             control: "text",
             description: "CSS Width"
+        },
+        temp_color: {
+            control: "color",
+            description: "Temperature Color"
+        },
+        station_color: {
+            control: "color",
+            description: "Station Color"
+        },
+        vis_color: {
+            control: "color",
+            description: "Visablility Color"
+        },
+        dewpoint_color: {
+            control: "color",
+            description: "Dew Point Color"
+        },
+        symbol_color: {
+            control: "color",
+            description: "Symbol Color"
+        },
+        wind_color: {
+            control: "color",
+            description: "Wind Color"
         }
     },
     args: {
@@ -100,7 +124,13 @@ exports.default = {
         coverage: "FEW",
         metric: false,
         height: "500px",
-        width: "500px"
+        width: "500px",
+        temp_color: "#000000",
+        wind_color: "#000000",
+        station_color: "#000000",
+        vis_color: "#000000",
+        dewpoint_color: "#000000",
+        symbol_color: "#000000"
     },
 };
 var Template = function (args) {
@@ -189,3 +219,4 @@ exports.Svelte.parameters = {
         }
     }
 };
+o

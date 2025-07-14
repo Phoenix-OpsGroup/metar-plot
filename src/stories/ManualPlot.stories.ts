@@ -83,6 +83,30 @@ export default {
         width: {
             control: "text",
             description: "CSS Width"
+        },
+        temp_color: {
+            control: "color",
+            description: "Temperature Color"
+        },
+        station_color: {
+            control: "color",
+            description: "Station Color"
+        },
+        vis_color: {
+            control: "color",
+            description: "Visablility Color"
+        },
+        dewpoint_color: {
+            control: "color",
+            description: "Dew Point Color"
+        },
+        symbol_color: {
+            control: "color",
+            description: "Symbol Color"
+        },
+        wind_color: {
+            control: "color",
+            description: "Wind Color"
         }
     },
     args: {
@@ -99,7 +123,13 @@ export default {
         coverage: "FEW",
         metric: false,
         height: "500px",
-        width: "500px"
+        width: "500px",
+        temp_color: "#000000",
+        wind_color: "#000000",
+        station_color: "#000000",
+        vis_color: "#000000",
+        dewpoint_color: "#000000",
+        symbol_color: "#000000"
     },
 
 } as Meta;
@@ -130,7 +160,17 @@ const Template: Story = (args) => {
         coverage: args.coverage,
     }
 
-    return `<img style="height:${args.height};width:${args.width}" src=${metarToImgSrc(metar)} alt="metar"/>`
+    let options = {
+        metric: args.metric,
+        temp_color: args.temp_color,
+        wind_color: args.wind_color,
+        station_color: args.station_color,
+        vis_color: args.vis_color,
+        dewpoint_color: args.dewpoint_color,
+        symbol_color: args.symbol_color
+    }
+
+    return `<img style="height:${args.height};width:${args.width}" src=${metarToImgSrc(metar, options)} alt="metar"/>`
 };
 
 export const Default = Template.bind({});

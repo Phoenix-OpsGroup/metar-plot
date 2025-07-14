@@ -34,6 +34,25 @@ export class MetarPlot {
     public metric?: boolean
 }
 
+//Style options for MetarPlot
+export class MetarPlotOptions{
+    //css compbatible color
+    public temperature_color?: string
+    //css compbatible color
+    public station_color?: string
+    //css compbatible color
+    public visibility_color?: string
+    //css compbatible color
+    public dewpoint_color?: string
+    //css compbatible color
+    public symbol_color?: string
+    //css compbatible color
+    public wind_color?: string
+    //display in metric
+    public metric?: boolean
+}
+
+
 /**
  * Turns a raw METAR to an SVG image
  * @param rawMetar RAW metar
@@ -42,8 +61,8 @@ export class MetarPlot {
  * @param metric true for metric units(m, hPa, mps), false for north american units (miles, inHg, Kts)
  * @returns 
  */
-export function rawMetarToSVG(rawMetar: string, width: string, height: string, metric?: boolean): string {
-    let plot = rawMetarToMetarPlot(rawMetar, metric)
+export function rawMetarToSVG(rawMetar: string, width: string, height: string, options?: MetarPlotOptions): string {
+    let plot = rawMetarToMetarPlot(rawMetar, options)
     return metarToSVG(plot, width, height,);
 }
 
@@ -53,7 +72,7 @@ export function rawMetarToSVG(rawMetar: string, width: string, height: string, m
  * @param metric true for metric units(m, hPa, mps), false for north american units (miles, inHg, Kts)
  * @returns 
  */
-export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPlot {
+export function rawMetarToMetarPlot(rawMetar: string, options?: MetarPlotOptions): MetarPlot {
     let metar = new METAR(rawMetar);
     let wx = metar.weather[0]?.abbreviation
     //Metric converion
@@ -61,6 +80,7 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
     let vis = undefined
     let temp = metar.temperature
     let dp = metar.dewpoint
+    let metric = options?.metric ?? false;
     if (metric) {
         pressure = (metar.altimeter != null) ? Math.round(metar.altimeter * 33.86) : undefined
         if (metar.visibility != null) {
@@ -73,7 +93,7 @@ export function rawMetarToMetarPlot(rawMetar: string, metric?: boolean): MetarPl
         vis = milePrettyPrint(metar.visibility?? -1)
     }
     return {
-        metric: metric ?? false,
+        metric: metric,
         visablity: vis,
         temp: temp,
         dew_point: dp,
@@ -132,7 +152,7 @@ function determinCoverage(metar: METAR): string {
  * @param height css height for svg
  * @returns 
  */
-export function metarToSVG(metar: MetarPlot, width: string, height: string): string {
+export function metarToSVG(metar: MetarPlot, width: string, height: string, options?: MetarPlotOptions): string {
     const VIS = metar.visablity ?? ""
     const TMP = metar.temp ?? ""
     const DEW = metar.dew_point ?? ""
@@ -142,20 +162,20 @@ export function metarToSVG(metar: MetarPlot, width: string, height: string): str
     return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 500 500">
                 <style>
                     .txt{ font-size: 47.5px; font-family: sans-serif; }
-                    .tmp{ fill: red }
-                    .sta{ fill: grey }
-                    .dew{ fill: blue }
-                    .vis{ fill: violet }
+                    .tmp{ fill: ${options?.temperature_color ?? "red"} }
+                    .sta{ fill: ${options?.station_color ?? "grey"} }
+                    .dew{ fill: ${options?.dewpoint_color ?? "blue"} }
+                    .vis{ fill: ${options?.visibility_color ?? "violet"} }
                 </style>
                 ${genWind(metar)}
-                ${getWeatherSVG(metar.wx ?? "")}
+                ${getWeatherSVG(metar.wx ?? "", options)}
                 ${genCoverage(metar.coverage, metar.condition)}
                 <g id="text">
-                    <text class="vis txt" fill="#000000" stroke="#000" stroke-width="0" x="80"   y="260" text-anchor="middle" xml:space="preserve">${VIS}</text>
-                    <text class="tmp txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="220" text-anchor="middle" xml:space="preserve" >${TMP}</text>
-                    <text class="dew txt" fill="#000000" stroke="#000" stroke-width="0" x="160"  y="315" text-anchor="middle" xml:space="preserve">${DEW}</text>
-                    <text class="sta txt" fill="#000000" stroke="#000" stroke-width="0" x="275"  y="315" text-anchor="start" xml:space="preserve">${STA}</text>
-                    <text class="sta txt" fill="#000000" stroke="#000" stroke-width="0" x="275"  y="220"  text-anchor="start" xml:space="preserve">${ALT}</text>
+                    <text class="vis txt" stroke="#000" stroke-width="0" x="80"   y="260" text-anchor="middle" xml:space="preserve">${VIS}</text>
+                    <text class="tmp txt" stroke="#000" stroke-width="0" x="160"  y="220" text-anchor="middle" xml:space="preserve" >${TMP}</text>
+                    <text class="dew txt" stroke="#000" stroke-width="0" x="160"  y="315" text-anchor="middle" xml:space="preserve">${DEW}</text>
+                    <text class="sta txt" stroke="#000" stroke-width="0" x="275"  y="315" text-anchor="start" xml:space="preserve">${STA}</text>
+                    <text class="sta txt" stroke="#000" stroke-width="0" x="275"  y="220"  text-anchor="start" xml:space="preserve">${ALT}</text>
                 </g>
             </svg>`
 }
@@ -165,8 +185,8 @@ export function metarToSVG(metar: MetarPlot, width: string, height: string): str
  * @param metar MetarPlot Object
  * @returns A Base64 encoded string to be added directly as img src
  */
- export function metarToImgSrc(metar: MetarPlot): string {
-    let data = btoa(unescape(encodeURIComponent(metarToSVG(metar,"100px","100px"))))
+ export function metarToImgSrc(metar: MetarPlot, options?: MetarPlotOptions): string {
+    let data = btoa(unescape(encodeURIComponent(metarToSVG(metar,"100px","100px", options))))
     return `data:image/svg+xml;base64,${data}`
 }
 

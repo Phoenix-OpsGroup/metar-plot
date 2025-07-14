@@ -2,6 +2,7 @@
  * Wind Data
  */
 import { MetarPlot } from "..";
+import { MetarPlotOptions } from "../MetarPlot";
 export class Wind {
     //wind speed
     public speed?: number;
@@ -61,7 +62,7 @@ export function genWind(metar: MetarPlot): string {
             </g>`
         wind =
             `<g id="windBard" transform="rotate(${WDD}, 250, 250)">
-                <line stroke-width="3" y1="225" x1="250" y2="50" x2="250"  stroke="#000" fill="none" />
+                <line stroke-width="3" y1="225" x1="250" y2="50" x2="250" stroke="#000" fill="none" />
                 ${genBarb1(metar.wind_speed ?? 0, false)}
                 ${genBarb2(metar.wind_speed ?? 0, false)}
                 ${genBarb3(metar.wind_speed ?? 0, false)}

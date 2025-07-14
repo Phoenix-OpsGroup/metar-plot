@@ -1,3 +1,5 @@
+import { MetarPlotOptions } from "../MetarPlot";
+
 /**
  * Weather Descriptor
  */
@@ -12,13 +14,13 @@ export class Weather {
  * Returns SVG icon 
  * @param key weather abbriviation
  */
-export function getWeatherSVG(key: string) {
+export function getWeatherSVG(key: string, options?: MetarPlotOptions) : string {
     const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
     return `<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500" x="140" y="220">
                 <style>
                     .wx_graphic {
-                        stroke: black;
-                        fill: none;
+                        stroke: ${options?.symbol_color ?? "black"};
+                        fill: ${options?.symbol_color ?? "none"};
                         stroke-width: 30
                     }
                 </style>
@@ -31,13 +33,13 @@ export function getWeatherSVG(key: string) {
  * @param key 
  * @returns 
  */
-export function getWeatherImgSrc(key: string) {
+export function getWeatherImgSrc(key: string, options?: MetarPlotOptions): string {
     const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
     let data = btoa(unescape(encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500">
                 <style>
                     .wx_graphic {
-                        stroke: black;
-                        fill: none;
+                        stroke: ${options?.symbol_color ?? "black"};
+                        fill: ${options?.symbol_color ?? "none"};
                         stroke-width: 30
                     }
                 </style>
