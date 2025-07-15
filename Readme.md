@@ -1,4 +1,4 @@
-[![METAR-PLOT](https://circleci.com/gh/Phoenix-OpsGroup/metar-plot.svg?style=svg)](https://circleci.com/gh/Phoenix-OpsGroup/metar-plot)
+
 [![npm version](https://badge.fury.io/js/metar-plot.svg)](https://badge.fury.io/js/metar-plot)
 
 # METAR Plot
