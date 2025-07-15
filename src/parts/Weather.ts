@@ -1,3 +1,5 @@
+import { MetarPlotOptions } from "../MetarPlot";
+
 /**
  * Weather Descriptor
  */
@@ -12,13 +14,18 @@ export class Weather {
  * Returns SVG icon 
  * @param key weather abbriviation
  */
-export function getWeatherSVG(key: string) {
+export function getWeatherSVG(key: string, options?: MetarPlotOptions) : string {
     const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
     return `<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500" x="140" y="220">
                 <style>
                     .wx_graphic {
-                        stroke: black;
+                        stroke: ${options?.symbol_color ?? "black"};
                         fill: none;
+                        stroke-width: 30
+                    }
+                    .wx_graphic_fill {
+                        stroke: ${options?.symbol_color ?? "black"};
+                        fill: ${options?.symbol_color ?? "black"};
                         stroke-width: 30
                     }
                 </style>
@@ -31,15 +38,21 @@ export function getWeatherSVG(key: string) {
  * @param key 
  * @returns 
  */
-export function getWeatherImgSrc(key: string) {
+export function getWeatherImgSrc(key: string, options?: MetarPlotOptions): string {
     const weather = WEATHER[key] != null ? WEATHER[key].svg : "";
     let data = btoa(unescape(encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 500 500">
                 <style>
                     .wx_graphic {
-                        stroke: black;
+                        stroke: ${options?.symbol_color ?? "black"};
                         fill: none;
                         stroke-width: 30
                     }
+                    .wx_graphic_fill {
+                        stroke: ${options?.symbol_color ?? "black"};
+                        fill: ${options?.symbol_color ?? "black"};
+                        stroke-width: 30
+                    }
+                    
                 </style>
                 ${weather}
             </svg>`)))
@@ -59,7 +72,7 @@ const RIGHT_ARROW =
 
 const COMMA =
     `<ellipse
-      style="fill:black;"
+      class="wx_graphic_fill"
       cx="238"
       cy="178"
       rx="88"
@@ -70,20 +83,20 @@ const COMMA =
 
 const STAR =
     `<rect
-        style="fill:black"
+        class="wx_graphic_fill"
         width="50"
         height="350"
         x="225"
         y="-25" />
     <rect
-        style="fill:black"
+        class="wx_graphic_fill"
         width="50"
         height="350"
         x="235"
         y="-300"
         transform="rotate(55)" />
     <rect
-        style="fill:black"
+        class="wx_graphic_fill"
         width="50" height="350"
         x="-10" y="115"
         transform="rotate(-55)" />`
@@ -207,7 +220,7 @@ const VCTS = `<g id="VCTS">${BRK_DWN_ARW}</g>`
 const VIRGA =
     `<g id="VIGRA">
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="250"
             cy="250"
             rx="80"
@@ -220,7 +233,7 @@ const VIRGA =
 const VCSH =
     `<g id="VCSH">
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="250"
             cy="250"
             rx="80"
@@ -418,7 +431,7 @@ const MIN_DZRA =
     `<g id="-DZRA">
         <g transform="matrix(0.6,0,0,0.6,107,193)">${COMMA}</g>
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="250"
             cy="150"
             rx="50"
@@ -430,7 +443,7 @@ const DZRA =
         <g transform="matrix(0.6,0,0,0.6,105,170)">${COMMA}</g>
         <g transform="matrix(0.6,0,0,0.6,105,-140)">${COMMA}</g>
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="250"
             cy="150"
             rx="50"
@@ -443,13 +456,13 @@ const DZRA =
 const MIN_RA =
     `<g id="-RA">
         <ellipse
-            style="fill:#00000"
+            class="wx_graphic_fill"
             cx="130"
             cy="245"
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="370"
             cy="245"
             rx="80"
@@ -459,19 +472,19 @@ const MIN_RA =
 const RA =
     `<g id="RA">
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="135"
             cy="355"
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="250"
             cy="145"
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="365"
             cy="355"
             rx="80"
@@ -481,25 +494,29 @@ const RA =
 const PLUS_RA =
     `<g id="+RA">
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
+            style="stroke-width:15;"
             cx="140"
             cy="250"
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
+            style="stroke-width:15;"
             cx="250"
             cy="100"
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
+            style="stroke-width:15;"
             cx="250"
             cy="400"
             rx="80"
             ry="80" />
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
+            style="stroke-width:15;"
             cx="360"
             cy="250"
             rx="80"
@@ -509,7 +526,7 @@ const PLUS_RA =
 const MIN_FZRA =
     `<g id="-FZRA">
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="170"
             cy="250"
             rx="50"
@@ -520,13 +537,13 @@ const MIN_FZRA =
 const FZRA =
     `<g id="FZRA">
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="170"
             cy="250"
             rx="50"
             ry="55"/>
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="345"
             cy="215"
             rx="50"
@@ -538,7 +555,7 @@ const MIN_RASN =
     `<g id="-RASN" transform="translate(-0.45,160)">
         <g transform="matrix(0.45,0,0,0.4,140,140)">${STAR}</g>
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="250"
             cy="-15"
             rx="70"
@@ -550,6 +567,8 @@ const RASN =
         <g transform="matrix(0.45,0,0,0.4,140,200)">${STAR}</g>
         <g transform="matrix(0.45,0,0,0.4,140,-130)">${STAR}</g>
         <ellipse
+            class="wx_graphic_fill"
+            style="stroke-width:15;"
             cx="250"
             cy="95"
             rx="70"
@@ -596,7 +615,7 @@ const IC =
 const PE_PL =
     `<g id="PE_PL">
       <polygon class="wx_graphic" points="250 150 150 300 350 300"></polygon>
-      <text style="fill: black; font-size: 100px;" x="237.271" y="242.526" dx="-18.412" dy="32.137">●</text>
+      <text class="wx_graphic_fill" style="font-size: 100px;stroke-width: 15;" x="237" y="240" dx="-18" dy="32">●</text>
     </g>`
 //SHOWERY PERCIPITATION
 
@@ -604,7 +623,7 @@ const PE_PL =
 const MIN_SHRA =
     `<g id="MIN_SHRA">
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="245"
             cy="70"
             rx="50"
@@ -615,14 +634,15 @@ const MIN_SHRA =
 const SHRA = 
     `<g transform="translate(3.14,20)">
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
                 cx="245"
                 cy="70"
                 rx="50"
                 ry="50" />
         ${DWN_TRI}
         <rect
-            style="fill:none;stroke:black;stroke-width:15;"
+            class="wx_graphic"
+            style="stroke-width:15;"
             width="100"
             height="5"
             x="195"
@@ -632,7 +652,7 @@ const SHRA =
 const MIN_SHRASN = 
     `<g transform="translate(9,20)">
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="240"
             cy="195"
             rx="50"
@@ -646,7 +666,7 @@ const MIN_SHRASN =
 const SHRASN = 
     `<g transform="translate(9,20)">
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="240"
             cy="195"
             rx="50"
@@ -656,7 +676,7 @@ const SHRASN =
             ${STAR}
         </g>
         <rect
-            class="fill:black"
+            class="wx_graphic_fill"
             width="70"
             height="20"
             x="205"
@@ -678,7 +698,8 @@ const SHSN =
             ${STAR}
         </g>
         <rect
-            style="fill:none;stroke:black;stroke-width:15;"
+            class="wx_graphic"
+            style="stroke-width:15;"
             width="100"
             height="5"
             x="195"
@@ -693,7 +714,8 @@ const MIN_GR =
             d="M 200,350 80,140 325,140 Z"
             transform="matrix(0.54819594,0,0,1.1522448,135.14291,26.25069)" />
         <path
-            style="fill:black;stroke-linecap:butt;stroke-linejoin:round"
+            class="wx_graphic_fill"
+            style="stroke-linecap:butt;stroke-linejoin:round;stroke-width:15"
             d="M 215,106.41301 271.14262,9.7515746 327.2378,105.91474 Z"
             transform="matrix(1.25,0,0,1.2,-90,25)" />
     </g>`
@@ -706,11 +728,13 @@ const GR =
             d="M 200,350 80,140 325,140 Z"
             transform="matrix(0.55,0,0,1.15,135,25)" />
         <path
-            style="fill:black;stroke-linecap:butt;stroke-linejoin:round"
+            class="wx_graphic_fill"
+            style="stroke-linecap:butt;stroke-linejoin:round;stroke-width:15"
             d="M 215,105 270,10 325,105 Z"
             transform="matrix(1.25,0,0,1.2,-90,25)" />
         <rect
-            style="fill:none;stroke:black;stroke-width:15"
+            class="wx_graphic"
+            style="stroke-width:15"
             width="95"
             height="5"
             x="200"
@@ -732,7 +756,7 @@ const THUNDER =
 const TSRA =
 `  <g transform="matrix(0.59808265,0,0,0.58004786,205.87825,107.57905)">
     <ellipse
-        style="fill:black"
+        class="wx_graphic_fill"
         cx="75"
         cy="-75"
         rx="70"
@@ -750,7 +774,7 @@ const TSGR =
 const PLUS_TSRA = 
     `<g transform="matrix(0.6,0,0,0.6,205,105)">
         <ellipse
-            style="fill:black"
+            class="wx_graphic_fill"
             cx="75"
             cy="-75"
             rx="70"

@@ -36,7 +36,7 @@ describe('Generate Images', () => {
         metars.forEach(
             (metar: MetarPlot) => {
                 let svg = metarToSVG(metar, WIDTH, HEIGHT)
-                let svgMetar = metarToSVG(metar, WIDTH, HEIGHT)
+                let svgMetar = metarToSVG(metar, WIDTH, HEIGHT, {metric: true})
                 addRow(metar, svg, svgMetar, undefined)
             }
         )
@@ -51,7 +51,7 @@ describe('Generate Images', () => {
                 try {
                     let plot = rawMetarToMetarPlot(metar.raw)
                     let svg = rawMetarToSVG(metar.raw, WIDTH, HEIGHT)
-                    let svgMetric = rawMetarToSVG(metar.raw, WIDTH, HEIGHT, true)
+                    let svgMetric = rawMetarToSVG(metar.raw, WIDTH, HEIGHT, {metric: true})
                     addRow(plot, svg, svgMetric, new METAR(metar.raw), metar.raw)
                 } catch (error) {
                     errors[metar.raw] = error
@@ -59,6 +59,17 @@ describe('Generate Images', () => {
             }
         )
         assert(Object.keys(errors).length === 0, `Error Parsing the following metars:\n${JSON.stringify(errors, null, 1)}`)
+    })
+})
+
+describe('Generate Custom Color Images', () => {
+    it("Gen Images - Raw Metar", () => {
+
+        let plot = metars[0]
+        let svg = metarToSVG(plot, WIDTH, HEIGHT, {symbol_color: "green"})
+        
+        addRow(plot, svg, "")
+        
     })
 })
 
