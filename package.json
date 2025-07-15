@@ -1,6 +1,6 @@
 {
   "name": "metar-plot",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "METAR parsing and ploting library",
   "keywords": [
     "METAR",
