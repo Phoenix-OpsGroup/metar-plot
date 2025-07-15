@@ -165,7 +165,7 @@ export function metarToSVG(metar: MetarPlot, width: string, height: string, opti
                     .tmp{ fill: ${options?.temperature_color ?? "red"} }
                     .sta{ fill: ${options?.station_color ?? "grey"} }
                     .dew{ fill: ${options?.dewpoint_color ?? "blue"} }
-                    .vis{ fill: ${options?.visibility_color ?? "violet"} }
+                    .vis{ fill: ${options?.visibility_color ?? "purple"} }
                 </style>
                 ${genWind(metar)}
                 ${getWeatherSVG(metar.wx ?? "", options)}

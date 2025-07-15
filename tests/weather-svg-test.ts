@@ -36,7 +36,7 @@ describe('Test Weather Icons', () => {
                     wx: wx,
                     visablity: 9999
                 }
-                addRow(wx, getWeatherSVG(wx), metarToSVG(metar, "300", "300"))
+                addRow(wx, getWeatherSVG(wx), metarToSVG(metar, "300", "300", {symbol_color: "blue"}))
             })
     })
 })
