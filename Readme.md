@@ -3,7 +3,7 @@
 
 # METAR Plot
 
-StoryBook: [https://phoenix-ops.github.io/metar-plot/](https://phoenix-opsgroup.github.io/metar-plot/)
+Metar plot is a small METAR converter and SVG based plot lib with no dependecies. 
 
 ## Install
 
@@ -32,8 +32,8 @@ let width = "100px"
 
 let rawMetar = "EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006"
 
-let imgSrcManual : string = metarToImg(metarPlotManual)
-let imgSrcRaw : string =  metarToImg(rawMetarToMetarPlot(rawMetar))
+let imgSrcManual : string = metarToImgSrc(metarPlotManual)
+let imgSrcRaw : string =  metarToImgSrc(rawMetarToMetarPlot(rawMetar))
 
 let metar : METAR = new METAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006")
 
@@ -77,7 +77,36 @@ Decoded METAR Example Object
    "altimeter": 29.79
 }
 ```
+Customized Plot
 
+```javascript
+import { METAR, MetarPlot, rawMetarToMetarPlot } from "metar-plot"
+
+let metarPlotManual : MetarPlot = 
+{
+    "visablity": 9,
+    "temp": 12,
+    "dew_point": 7,
+    "station": "WBWI",
+    "wind_direction": 120,
+    "wind_speed": 20,
+    "wx": "RA"
+}
+
+let height = "100px"
+let width = "100px"
+
+let options = {
+   temperature_color: "red",
+   symbol_color: "#8d8d8d",
+   metric: true
+}
+
+let imgSrcManual : string = metarToImgSrc(metarPlotManual, options)
+
+<img style={`height:${height};width:${width}`} src={imgSrcManual} alt="metar"/>
+<img style={`height:${height};width:${width}`} src={imgSrcRaw} alt="metar"/>
+```
 ## Documentation
 
 Data Types:
@@ -87,6 +116,9 @@ Data Types:
       * Cloud Codes: [Cloud.ts](https://github.com/Phoenix-OpsGroup/metar-plot/blob/main/src/parts/Cloud.ts)
    * MetarPlot: Object maps out all data to the svg plot.
       * This allows you to use pre extracted data and map it as you please to the plot.  if you have your own METAR structure and want to map it to the plot use this object. It's definitioncan be found here [MetarPlot.ts](https://github.com/Phoenix-OpsGroup/metar-plot/blob/main/src/MetarPlot.ts)
+   * MetarPlotOptions: Contains options to modify a plot
+      * Change colors of text and symbols
+      * Metric/SAE
 
 ## Contributors
 
